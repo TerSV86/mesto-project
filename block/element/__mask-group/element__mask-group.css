@@ -1,0 +1,6 @@
+.element__mask-group {
+    width: 100%;
+    border-top: 10px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}

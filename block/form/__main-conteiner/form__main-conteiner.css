@@ -1,0 +1,17 @@
+.form__main-conteiner {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    display: -webkit-box;
+
+
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+
+    flex-direction: column;
+    -webkit-box-align: center;
+
+    align-items: center;
+}

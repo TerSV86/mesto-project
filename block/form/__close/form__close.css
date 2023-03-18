@@ -1,0 +1,17 @@
+.form__close {
+    cursor: pointer;
+    position: absolute;
+    right: -40px;
+    top: -40px;
+}
+
+@media (max-width: 520px) {
+    .form__close {
+        right: 0;
+    }
+    
+}
+
+.form__close:hover {
+    opacity: 0.6;
+}

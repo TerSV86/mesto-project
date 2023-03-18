@@ -1,0 +1,16 @@
+.profile-info__subtitle {
+    padding: 0;
+    margin: 0;
+    grid-column: 1 / span 2;
+    grid-row: 2 / 3;
+    font-size: 18px;
+    font-weight: normal;
+
+}
+
+@media (max-width: 745px) {
+    .profile-info__subtitle {
+        font-size: 14px;
+    }
+    
+}
