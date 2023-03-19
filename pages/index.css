@@ -2,9 +2,6 @@
 
 @import url(../fonts/fonts.css);
 
-
-@import url(../block/_border/border.css);
-
 @import url(../block/body/body.css);
 
 @import url(../block/root/root.css);
@@ -17,10 +14,6 @@
 
 @import url(../block/main/main.css);
 
-@import url(../block/account/account.css);
-@import url(../block/account/__edit-button/account__edit-button.css);
-@import url(../block/account/__title/account__title.css);
-
 @import url(../block/profile/profile.css);
 @import url(../block/profile/__avatar/profile__avatar.css);
 @import url(../block/profile/__add-button/profile__add-button.css);
@@ -28,11 +21,14 @@
 @import url(../block/profile-info/profile-info.css);
 @import url(../block/profile-info/__subtitle/profile-info__subtitle.css);
 
+@import url(../block/account/account.css);
+@import url(../block/account/__edit-button/account__edit-button.css);
+@import url(../block/account/__title/account__title.css);
 
 @import url(../block/elements/elements.css);
+
 @import url(../block/element/element.css);
 @import url(../block/element/__mask-group/element__mask-group.css);
-
 @import url(../block/element/__content/element__content.css);
 @import url(../block/element/__title/element__title.css);
 @import url(../block/element/__like/element__like.css);
