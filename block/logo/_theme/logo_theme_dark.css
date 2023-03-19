@@ -3,9 +3,16 @@
     background-size: cover; */
 
 
-   /*  background: url(../../../image/logo.svg) no-repeat transparent;
+    background: url(../../../image/logo.svg) no-repeat transparent;
     background-size: contain;
     object-fit: cover;
- */
+
+}
+
+@media (max-width: 680px) {
+    .logo_theme_dark {
+        background-size: 104px;
+        
+    }
 }
 

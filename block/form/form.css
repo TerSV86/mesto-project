@@ -10,17 +10,13 @@
     border: 1px solid #FFF;
     border-radius: 10px;
     display: -webkit-box;
-
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-
     flex-direction: column;
     -webkit-box-pack: justify;
-
     justify-content: space-between;
     -webkit-box-align: center;
-
     align-items: center;
     margin: 19px;
     position: relative;

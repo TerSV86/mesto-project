@@ -7,16 +7,12 @@
     height: 30px;
     font-size: 14px;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
-
-
-
     /* opacity: .2; */
     color: #000;
     /* опускает строки ввода */
     padding-top: 5px;
     /* отодвигает border-bottom */
-    padding-bottom: 2px;
-    
+    padding-bottom: 2px;    
 }
 
 ::placeholder {

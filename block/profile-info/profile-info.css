@@ -1,6 +1,6 @@
 .profile-info {
     width: 100%;
-    /* max-width: 400px; */
+    max-width: 350px;
     grid-column: 2 / 3;
     display: grid;
     grid-template: 39px 18px / 1fr;

@@ -7,21 +7,17 @@
     object-fit: cover;
     gap: 20px 16px;
     display: -webkit-box;
-
     display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-
     flex-direction: row;
-
     flex-wrap: wrap;
     -webkit-box-pack: center;
-
     justify-content: center;
     padding-bottom: 66px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
     .elements {
         padding-bottom: 48px;
     }

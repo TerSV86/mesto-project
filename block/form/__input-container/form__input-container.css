@@ -6,14 +6,11 @@
     max-width: 358px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-
     border: none;
     display: -webkit-box;
-
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-
     flex-direction: column;
     gap: 19px;
     margin-bottom: 0px;

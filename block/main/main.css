@@ -5,9 +5,10 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding-top: 35px;
+    
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
     .main {
         padding-top: 0;
     }

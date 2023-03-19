@@ -1,31 +1,18 @@
 .profile {
+    width: 100%;
     max-width: 880px;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    display: -ms-grid;
     display: grid;
-
-    grid-template: 1fr / minmax(auto, 120px) minmax(auto, 350px) minmax(auto, auto) minmax(auto, 150px);
-
+    grid-template: 1fr / minmax(auto, 120px) minmax(auto, 380px) minmax(auto, auto) minmax(auto, 150px);
     justify-items: start;
-    -webkit-box-align: center;
-
     align-items: center;
     padding-bottom: 50px;
-
 }
 
 @media (max-width:640px) {
     .profile {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-
         flex-direction: column;
-        -webkit-box-pack: center;
-
         justify-content: center;
         gap: 0;
         padding-bottom: 0;
