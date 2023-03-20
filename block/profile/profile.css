@@ -3,17 +3,20 @@
     max-width: 880px;
     box-sizing: border-box;
     display: grid;
-    grid-template: 1fr / minmax(auto, 120px) minmax(auto, 380px) minmax(auto, auto) minmax(auto, 150px);
+    grid-template: minmax(auto, 60px) minmax(auto, 60px) / minmax(auto, 120px) fit-content(350px) minmax(auto, auto) minmax(auto, 150px);
     justify-items: start;
     align-items: center;
     padding-bottom: 50px;
 }
 
-@media (max-width:640px) {
+@media (max-width:745px) {
     .profile {
-        display: flex;
+        /* display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: center; */
+
+        grid-template: minmax(auto, 188px) minmax(auto, 40px) minmax(auto, 16px) minmax(auto, 86px) / 1fr;
+        justify-items: center;
         gap: 0;
         padding-bottom: 0;
     }

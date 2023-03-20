@@ -10,167 +10,86 @@
 </head>
 
 <body class="body">
-
     <div class="root">
-
         <header class="header">
-
-            <div class="logo logo_theme_dark"></div>
-
+            <div class="logo"></div>
         </header>
-
-        <div class="main">
-
-            <div class="profile">
-
-                <img class="profile__avatar" src="./image/avatar.jpg" alt="фотокартачка Жака-Ива Кусто">
-
-                <div class="profile-info">
-
-                    <div class="account">
-
-                        <h1 class="account__title">Жак-Ив Кусто</h1>
-
-                        <button class="account__edit-button"></button>
-
-                    </div>
-
-                    <p class="profile-info__subtitle">Исследователь океана</p>
-
-                </div>
-
-                <button class="profile__add-button"><img src="./image/+.svg" alt="кнопка"></button>
-
-            </div>
-
-            <div class="elements">
-
-                <div class="element">
-
+        <main class="main">
+            <section class="profile">
+                <img class="profile__avatar" src="./image/avatar.jpg" alt="фотокартачка">
+                <h1 class="profile__title">Жак-Ив Кусто</h1>
+                <button class="profile__edit-button" type="button"></button>
+                <p class="profile__subtitle">Исследователь океана</p>
+                <button class="profile__add-button">
+                    <img src="./image/+.svg" alt="кнопка">
+                </button>
+            </section>
+            <section class="elements">
+                <article class="element">
                     <img src="./image/karachaevsk.jpg" alt="фото Карачаевска" class="element__mask-group">
-
                     <div class="element__content">
-
-                        <p class="element__title">Карачаевск</p>
-
+                        <h2 class="element__title">Карачаевск</h2>
                         <button type="button" class="element__like element__like_state_active"></button>
-
                     </div>
-
-                </div>
-
-                <div class="element">
-
+                </article>
+                <article class="element">
                     <img class="element__mask-group" src="./image/elbrus.jpg" alt="фото Эльбруса">
-
                     <div class="element__content">
-
-                        <p class="element__title">Гора Эльбрус</p>
-
+                        <h2 class="element__title">Гора Эльбрус</h2>
                         <button type="button" class="element__like element__like_state_disabled"></button>
-
                     </div>
-
-                </div>
-
-                <div class="element">
-
+                </article>
+                <article class="element">
                     <img src="./image/dombai.jpg" alt="фото Домбая" class="element__mask-group">
-
                     <div class="element__content">
-
-                        <p class="element__title">Домбай</p>
-
+                        <h2 class="element__title">Домбай</h2>
                         <button type="button" class="element__like element__like_state_disabled "></button>
-
                     </div>
-
-                </div>
-
-                <div class="element">
-
+                </article>
+                <article class="element">
                     <img class="element__mask-group" src="./image/elbrus.jpg" alt="фото Эльбруса">
-
                     <div class="element__content">
-
-                        <p class="element__title">Гора Эльбрус</p>
-
+                        <h2 class="element__title">Гора Эльбрус</h2>
                         <button type="button" class="element__like element__like_state_disabled "></button>
-
                     </div>
-
-                </div>
-
-                <div class="element">
-
+                </article>
+                <article class="element">
                     <img src="./image/dombai.jpg" alt="фото Домбая" class="element__mask-group">
-
                     <div class="element__content">
-
-                        <p class="element__title">Домбай</p>
-
+                        <h2 class="element__title">Домбай</h2>
                         <button type="button" class="element__like element__like_state_disabled "></button>
-
                     </div>
-
-                </div>
-
-                <div class="element">
-
+                </article>
+                <article class="element">
                     <img src="./image/karachaevsk.jpg" alt="фото Карачаевска" class="element__mask-group">
-
                     <div class="element__content">
-
-                        <p class="element__title">Карачаево-Черкесия</p>
-
+                        <h2 class="element__title">Карачаево-Черкесия</h2>
                         <button type="button" class="element__like element__like_state_disabled "></button>
-
                     </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
+                </article>
+            </section>
+        </main>
         <footer class="footer ">
-
             <p class="footer__copyright"> &copy; 2023. Mesto Russia</p>
-
         </footer>
-
         <div class="popup">
-
             <div class="popup__body">
-
-                <form class="form">
-
-                    <a href="#" class="form__close"><img src="./image/Close Icon.png" alt="кнопка закрыть"></a>
-
+                <form class="form" action="" name="edit_form">
+                    <button class="form__close" type="button"></button>
                     <div class="form__main-conteiner">
-
                         <h2 class="form__title">Редактировать профиль</h2>
-
                         <fieldset class="form__input-container">
-
-                            <input type='text' class='form__item' name='name' placeholder="Жак-Ив Кусто">
-
-                            <input type='text' class='form__item' name='profession' value="Исследователь океана">
-
+                            <input type="text" class="form__item form__item_el_name" name="name"
+                                placeholder="Жак-Ив Кусто">
+                            <input type="text" class="form__item form__item form__item_el_profession" name="profession"
+                                value="Исследователь океана">
                         </fieldset>
-
                     </div>
-
-                    <fieldset class='form__handlers' type='submit'>Сохранить</fieldset>
-
+                    <button class="form__handlers" type="button">Сохранить</button>
                 </form>
-
             </div>
-
         </div>
-
     </div>
-
 </body>
 
 </html>

@@ -5,12 +5,13 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin-top: 45px;
-    border-bottom: 1px solid #545454;
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
 }
 
-@media (max-width: 680px) {
+@media (max-width: 320px) {
     .header {
+        width: 112%;
         margin-top: 27px;
+        padding-left: 18px;
     }
-
 }

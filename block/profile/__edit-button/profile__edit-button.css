@@ -1,0 +1,28 @@
+.profile__edit-button {
+    width: 100%;
+    max-width: 24px;
+    height: 24px;
+    margin-top: 16px;
+    grid-column: 2 / 3;
+    grid-row: 1;
+    display: inline-block;
+    cursor: pointer;
+    background: url(../../../image/Edit_Button.svg);
+    background-size: cover;
+    border: 1px solid #FFF;
+    margin: 33px 0 0 342px;
+}
+
+@media (max-width: 745px) {
+    .profile__edit-button {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        margin: 0 0 8px 226px;
+        max-width: 18px;
+        max-height: 18px;
+    }
+}
+
+.profile__edit-button:hover {
+    opacity: .6;
+}

@@ -3,6 +3,9 @@
     max-width: 142px;
     max-height: 33px;
     padding-bottom: 78px;
+    background: url(../../../image/logo.svg) no-repeat transparent;
+    background-size: contain;
+    object-fit: cover;
 
 }
 
@@ -14,5 +17,6 @@
         margin-top: 2px;
         margin-bottom: 28px;
         padding-bottom: 28px;
+        background-size: 104px;
     }
 }

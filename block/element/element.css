@@ -1,6 +1,5 @@
 .element {
     width: 282px;
-    height: 362px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background: #FFF;
@@ -9,5 +8,5 @@
     color: #000;
     border-radius: 10px;
     display: grid;
-    grid-template: 1fr 1fr / 1fr;
+    grid-template: 1fr minmax(auto, 79px)/ 1fr;
 }
