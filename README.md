@@ -13,4 +13,4 @@
 * html
 * CSS. 
 
-[Место](git@github.com:TerSV86/mesto-project.git)
+[Место](https://tersv86.github.io/mesto-project /)
