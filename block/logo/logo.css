@@ -3,10 +3,10 @@
     max-width: 142px;
     max-height: 33px;
     padding-bottom: 78px;
-    background: url(../../../image/logo.svg) no-repeat transparent;
+    background: url(../../image/logo.svg) no-repeat transparent;
     background-size: contain;
+    -o-object-fit: cover;
     object-fit: cover;
-
 }
 
 @media (max-width: 680px) {

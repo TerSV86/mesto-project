@@ -20,9 +20,7 @@
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
-                <button class="profile__add-button">
-                    <img src="./image/+.svg" alt="кнопка">
-                </button>
+                <button class="profile__add-button" type="button"></button>
             </section>
             <section class="elements">
                 <article class="element">
@@ -72,7 +70,7 @@
         <footer class="footer ">
             <p class="footer__copyright"> &copy; 2023. Mesto Russia</p>
         </footer>
-        <div class="popup popup_opened">
+        <div class="popup">
             <div class="popup__body">
                 <form class="form" action="url" name="edit_form">
                     <button class="form__close" type="button"></button>
@@ -81,11 +79,11 @@
                         <fieldset class="form__input-container">
                             <input type="text" class="form__item form__item_el_name" name="name"
                                 placeholder="Жак-Ив Кусто">
-                            <input type="text" class="form__item form__item form__item_el_profession" name="profession"
+                            <input type="text" class="form__item form__item_el_profession" name="profession"
                                 value="Исследователь океана">
                         </fieldset>
                     </div>
-                    <button class="form__handlers" type="button">Сохранить</button>
+                    <button class="form__handlers" type="submit">Сохранить</button>
                 </form>
             </div>
         </div>

@@ -5,7 +5,6 @@
     margin-top: 16px;
     grid-column: 2 / 3;
     grid-row: 1;
-    display: inline-block;
     cursor: pointer;
     background: url(../../../image/Edit_Button.svg);
     background-size: cover;
