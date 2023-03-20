@@ -16,7 +16,7 @@
     flex-direction: column;
     -webkit-box-align: center;
     align-items: center;
-    margin-top: 48px;
+    margin-top: 45px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
@@ -28,7 +28,7 @@
     .form__handlers {
         font-size: 14px;
         line-height: calc(17/14);
-       
+        margin-top: 35px;
     }
 }
 
