@@ -1,3 +1,4 @@
+/* Реализация возможности ставить лайк карточкам */
 /* Записываем в переменную все лайки */
 const likes = document.querySelectorAll('.element__like');
 
@@ -9,3 +10,42 @@ likes.forEach((like) => {
 });
 
 
+/*Реализация открытия и закрытия попапа Редактирования */
+
+const formElement = document.querySelector('.form');
+/* console.log(formElement); */
+const nameInput = formElement.querySelector('.form__item_el_name');
+/* console.log(nameInput); */
+const jobInput = formElement.querySelector('.form__item_el_profession');
+
+
+const buttonSubmit = document.querySelector('.form__handlers');
+function handlerFormSubmit(evt) {
+    evt.preventDefault();
+    const profileTitle = document.querySelector('.profile__title');
+    const profileSubtitle = document.querySelector('.profile__subtitle');
+
+    if (nameInput.value === '') {
+        profileTitle.textContent;
+    } else {
+        profileTitle.textContent = nameInput.value;
+    }
+
+    if (jobInput.value === '') {
+        profileSubtitle.textContent;
+    } else {
+        profileSubtitle.textContent = jobInput.value;
+    }
+
+    const popupEdit = document.querySelector('.popup-edit').classList.remove('popup-edit_opened');
+
+}
+
+buttonSubmit.addEventListener('click', handlerFormSubmit);
+
+/* Открывает форму для редактирования профиля */
+const buttonEdit = document.querySelector('.profile__edit-button');
+
+buttonEdit.addEventListener('click', () => {
+    document.querySelector('.popup-edit').classList.add('popup-edit_opened');
+})

@@ -1,0 +1,13 @@
+.popup-edit {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+opacity: 1;
+    visibility: hidden;
+    transition: opacity .5s visibility 0s;
+    -moz-transition: opacity .5s visibility 0s;
+    -ms-transition: opacity .5s visibility 0s;
+    -o-transition: opacity .5s visibility 0s;
+    -webkit-transition: opacity .5s visibility 0s;
+}

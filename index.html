@@ -70,8 +70,8 @@
         <footer class="footer ">
             <p class="footer__copyright"> &copy; 2023. Mesto Russia</p>
         </footer>
-        <div class="popup">
-            <div class="popup__body">
+        <div class="popup-edit popup-edit_opened">
+            <div class="popup-edit__body">
                 <form class="form" action="url" name="edit_form">
                     <button class="form__close" type="button"></button>
                     <div class="form__main-conteiner">
@@ -80,10 +80,28 @@
                             <input type="text" class="form__item form__item_el_name" name="name"
                                 placeholder="Жак-Ив Кусто">
                             <input type="text" class="form__item form__item_el_profession" name="profession"
-                                value="Исследователь океана">
+                                placeholder="Исследователь океана">
                         </fieldset>
                     </div>
                     <button class="form__handlers" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="popup-add">
+            <div class="popup-add__body">
+                <form class="form" action="url" name="add_form">
+                    <button class="form__close" type="button"></button>
+                    <div class="form__main-conteiner">
+                        <h2 class="form__title">Новое место</h2>
+                        <fieldset class="form__input-container">
+                            <input type="text" class="form__item form__item_el_name-pic" name="name"
+                                placeholder="Название">
+                            <input type="text" class="form__item form__item_el_link-pic" name="profession"
+                                placeholder="Ссылка на картинку">
+                        </fieldset>
+                    </div>
+                    <button class="form__handlers" type="submit">Создать</button>
                 </form>
             </div>
         </div>
