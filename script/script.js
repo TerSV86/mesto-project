@@ -1,7 +1,7 @@
 /* Реализация возможности ставить лайк карточкам */
 /* Записываем в переменную все лайки */
 const likes = document.querySelectorAll('.element__like');
-
+console.log(likes);
 /* С помощью forEach перебираем лайки и ловим с помощью addEventListener лайк по которому кликнули, а затем добавляем или убираем класс у элемента  */
 likes.forEach((like) => {
     like.addEventListener('click', () => {
@@ -83,5 +83,24 @@ buttonsClose.forEach((buttonClose) => {
 /* Добавление карточек */
 
 const namePicInput = document.querySelector('.form__item_el_name-pic');
-console.log(namePicInput.value);
-console.log(namePicInput.value);
+const linkPicInput = document.querySelector('.form__item_el_link-pic');
+const addCardTemplate = document.querySelector('#addCard').content;
+const popupAdd = document.querySelector('.popup-add');
+const buttonCreate = popupAdd.querySelector('.form__handlers');
+const elements = document.querySelector('.elements');
+
+function handlersFormAdd (evt) {
+    evt.preventDefault();
+    const newCard = addCardTemplate.querySelector('.element').cloneNode(true);
+    newCard.querySelector('.element__mask-group').src = linkPicInput.value;
+    newCard.querySelector('.element__mask-group').alt = namePicInput.value;
+    newCard.querySelector('.element__title').textContent = namePicInput.value;
+    elements.prepend(newCard);
+    linkPicInput.value = '';
+    namePicInput.value = '';
+    document.querySelector('.popup-add').classList.remove('popup-add_opened');
+}
+
+buttonCreate.addEventListener('click', handlersFormAdd)
+
+

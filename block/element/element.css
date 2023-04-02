@@ -8,5 +8,6 @@
     color: #000;
     border-radius: 10px;
     display: grid;
-    grid-template: 1fr minmax(auto, 79px)/ 1fr;
+    grid-template: minmax(282px, 282px) minmax(auto, 79px)/ 1fr;
+    
 }

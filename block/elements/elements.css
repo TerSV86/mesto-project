@@ -13,7 +13,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     -webkit-box-pack: center;
-    justify-content: center;
+    /* justify-content: center; */
     padding-bottom: 66px;
 }
 
