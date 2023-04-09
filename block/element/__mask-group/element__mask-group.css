@@ -4,4 +4,5 @@
     border-top: 10px;
     -o-object-fit: cover;
     object-fit: cover;
+    cursor: pointer;
 }

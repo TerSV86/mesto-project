@@ -1,0 +1,10 @@
+.popup-pic__title {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    line-height: calc(15/12);
+    font-weight: 400;
+    color: #FFF;
+    align-self: start;
+    padding-top: 8px;
+}

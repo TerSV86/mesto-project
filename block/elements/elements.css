@@ -12,14 +12,21 @@
     -webkit-box-direction: normal;
     flex-direction: row;
     flex-wrap: wrap;
-    -webkit-box-pack: center;
-    /* justify-content: center; */
     padding-bottom: 66px;
+
 }
+
+@media (max-width: 914px) {
+    .elements {
+        justify-content: center;
+    }
+}
+
 
 @media (max-width: 680px) {
     .elements {
         padding-bottom: 48px;
+
     }
 
 }

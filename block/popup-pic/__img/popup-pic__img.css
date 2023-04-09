@@ -1,0 +1,6 @@
+.popup-pic__img {
+    max-width: 75vw;
+    max-height: 540px;
+    object-fit: cover;
+
+}

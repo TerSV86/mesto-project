@@ -29,6 +29,7 @@
                         <h2 class="element__title">Карачаевск</h2>
                         <button type="button" class="element__like"></button>
                     </div>
+                    <button class="element__trash" type="button"></button>
                 </article>
                 <article class="element">
                     <img class="element__mask-group" src="./image/elbrus.jpg" alt="фото Эльбруса">
@@ -36,6 +37,7 @@
                         <h2 class="element__title">Гора Эльбрус</h2>
                         <button type="button" class="element__like"></button>
                     </div>
+                    <button class="element__trash" type="button"></button>
                 </article>
                 <article class="element">
                     <img src="./image/dombai.jpg" alt="фото Домбая" class="element__mask-group">
@@ -43,6 +45,7 @@
                         <h2 class="element__title">Домбай</h2>
                         <button type="button" class="element__like"></button>
                     </div>
+                    <button class="element__trash" type="button"></button>
                 </article>
                 <article class="element">
                     <img class="element__mask-group" src="./image/elbrus.jpg" alt="фото Эльбруса">
@@ -50,6 +53,7 @@
                         <h2 class="element__title">Гора Эльбрус</h2>
                         <button type="button" class="element__like"></button>
                     </div>
+                    <button class="element__trash" type="button"></button>
                 </article>
                 <article class="element">
                     <img src="./image/dombai.jpg" alt="фото Домбая" class="element__mask-group">
@@ -57,6 +61,7 @@
                         <h2 class="element__title">Домбай</h2>
                         <button type="button" class="element__like"></button>
                     </div>
+                    <button class="element__trash" type="button"></button>
                 </article>
                 <article class="element">
                     <img src="./image/karachaevsk.jpg" alt="фото Карачаевска" class="element__mask-group">
@@ -64,6 +69,7 @@
                         <h2 class="element__title">Карачаево-Черкесия</h2>
                         <button type="button" class="element__like"></button>
                     </div>
+                    <button class="element__trash" type="button"></button>
                 </article>
             </section>
         </main>
@@ -88,7 +94,7 @@
             </div>
         </div>
 
-        <div class="popup-add popup-add_opened">
+        <div class="popup-add">
             <div class="popup-add__body">
                 <form class="form" action="url" name="add_form">
                     <button class="form__close" type="button"></button>
@@ -105,18 +111,26 @@
                 </form>
             </div>
         </div>
+        <div class="popup-pic">
+            <figure class="popup-pic__body">
+                <button class="popup-pic__close" type="button"></button>
+                <img src="" alt="" class="popup-pic__img">
+                <figcaption class="popup-pic__title"></figcaption>
+            </figure>
+        </div>
     </div>
     <template id="addCard">
         <article class="element">
-            <img src="./image/" alt="" class="element__mask-group">
+            <img src="" alt="" class="element__mask-group">
             <div class="element__content">
                 <h2 class="element__title"></h2>
                 <button type="button" class="element__like"></button>
             </div>
+            <button class="element__trash" type="button"></button>
         </article>
     </template>
     <script src='./script/script.js'></script>
-    
+
 </body>
 
 </html>

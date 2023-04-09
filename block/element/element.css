@@ -9,5 +9,5 @@
     border-radius: 10px;
     display: grid;
     grid-template: minmax(282px, 282px) minmax(auto, 79px)/ 1fr;
-    
+    position: relative;       
 }
