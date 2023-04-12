@@ -1,4 +1,4 @@
-.popup-edit_opened {
+.popup_opened {
     opacity: 1;
     visibility: inherit;
     transition: opacity 1s ;

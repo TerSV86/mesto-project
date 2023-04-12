@@ -22,71 +22,22 @@
                 <p class="profile__subtitle">Исследователь океана</p>
                 <button class="profile__add-button" type="button"></button>
             </section>
-            <section class="elements">
-                <article class="element">
-                    <img src="./image/karachaevsk.jpg" alt="фото Карачаевска" class="element__mask-group">
-                    <div class="element__content">
-                        <h2 class="element__title">Карачаевск</h2>
-                        <button type="button" class="element__like"></button>
-                    </div>
-                    <button class="element__trash" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__mask-group" src="./image/elbrus.jpg" alt="фото Эльбруса">
-                    <div class="element__content">
-                        <h2 class="element__title">Гора Эльбрус</h2>
-                        <button type="button" class="element__like"></button>
-                    </div>
-                    <button class="element__trash" type="button"></button>
-                </article>
-                <article class="element">
-                    <img src="./image/dombai.jpg" alt="фото Домбая" class="element__mask-group">
-                    <div class="element__content">
-                        <h2 class="element__title">Домбай</h2>
-                        <button type="button" class="element__like"></button>
-                    </div>
-                    <button class="element__trash" type="button"></button>
-                </article>
-                <article class="element">
-                    <img class="element__mask-group" src="./image/elbrus.jpg" alt="фото Эльбруса">
-                    <div class="element__content">
-                        <h2 class="element__title">Гора Эльбрус</h2>
-                        <button type="button" class="element__like"></button>
-                    </div>
-                    <button class="element__trash" type="button"></button>
-                </article>
-                <article class="element">
-                    <img src="./image/dombai.jpg" alt="фото Домбая" class="element__mask-group">
-                    <div class="element__content">
-                        <h2 class="element__title">Домбай</h2>
-                        <button type="button" class="element__like"></button>
-                    </div>
-                    <button class="element__trash" type="button"></button>
-                </article>
-                <article class="element">
-                    <img src="./image/karachaevsk.jpg" alt="фото Карачаевска" class="element__mask-group">
-                    <div class="element__content">
-                        <h2 class="element__title">Карачаево-Черкесия</h2>
-                        <button type="button" class="element__like"></button>
-                    </div>
-                    <button class="element__trash" type="button"></button>
-                </article>
-            </section>
+            <section class="elements"></section>
         </main>
         <footer class="footer ">
             <p class="footer__copyright"> &copy; 2023. Mesto Russia</p>
         </footer>
-        <div class="popup-edit">
-            <div class="popup-edit__body">
+        <div class="popup" id="popup-edit-form">
+            <div class="popup__body">
                 <form class="form" action="url" name="edit_form">
                     <button class="form__close" type="button"></button>
                     <div class="form__main-conteiner">
                         <h2 class="form__title">Редактировать профиль</h2>
                         <fieldset class="form__input-container">
                             <input type="text" class="form__item form__item_el_name" name="name"
-                                placeholder="Жак-Ив Кусто">
+                                placeholder="Жак-Ив Кусто" required>
                             <input type="text" class="form__item form__item_el_profession" name="profession"
-                                placeholder="Исследователь океана">
+                                placeholder="Исследователь океана" required>
                         </fieldset>
                     </div>
                     <button class="form__handlers" type="submit">Сохранить</button>
@@ -94,8 +45,8 @@
             </div>
         </div>
 
-        <div class="popup-add">
-            <div class="popup-add__body">
+        <div class="popup" id="popup-add-form">
+            <div class="popup__body">
                 <form class="form" action="url" name="add_form">
                     <button class="form__close" type="button"></button>
                     <div class="form__main-conteiner">
@@ -103,20 +54,22 @@
                         <fieldset class="form__input-container">
                             <input type="text" class="form__item form__item_el_name-pic" name="name"
                                 placeholder="Название">
-                            <input type="text" class="form__item form__item_el_link-pic" name="profession"
+                            <input type="url" class="form__item form__item_el_link-pic" name="profession"
                                 placeholder="Ссылка на картинку">
                         </fieldset>
                     </div>
                     <button class="form__handlers" type="submit">Создать</button>
                 </form>
             </div>
-        </div>
-        <div class="popup-pic">
-            <figure class="popup-pic__body">
-                <button class="popup-pic__close" type="button"></button>
-                <img src="" alt="" class="popup-pic__img">
-                <figcaption class="popup-pic__title"></figcaption>
-            </figure>
+        </div>      
+        <div class="popup" id="popup-pic">
+            <div class="popup__body">
+                <figure class="popup__pic">
+                    <button class="popup__close" type="button"></button>
+                    <img src="" alt="" class="popup__img">
+                    <figcaption class="popup__title"></figcaption>
+                </figure>
+            </div>
         </div>
     </div>
     <template id="addCard">

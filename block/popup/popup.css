@@ -1,8 +1,10 @@
-.popup-edit {
+.popup {
     position: fixed;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, .5);
     opacity: 0;
-    visibility: hidden;   
+    visibility: hidden;  
+    /*  */
+    
 }
