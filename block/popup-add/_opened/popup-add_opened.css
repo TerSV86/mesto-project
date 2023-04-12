@@ -1,9 +1,0 @@
-.popup-add_opened {
-    visibility: inherit;
-    opacity: 1;
-    transition: opacity 1s;
-    -webkit-transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -ms-transition: opacity 1s;
-    -o-transition: opacity 1s;
-}
