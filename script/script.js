@@ -19,7 +19,6 @@ const cardTemplate = document.querySelector('#addCard').content;
 const elementTemplate = cardTemplate.querySelector('.element');
 const buttonNewCard = popupAddForm.querySelector('.form__handlers');//
 const formNewCard = popupAddForm.querySelector('.form');
-const heartNewCard = elementTemplate.querySelector('.element__like');
 const elementsCard = document.querySelector('.elements');
 const popupPicSrc = popupPic.querySelector('.popup__img');
 const popupPicTitle = popupPic.querySelector('.popup__title');
@@ -62,7 +61,11 @@ function handleFormProfileSubmit(evt) {
     closePopup(popupEditForm);
 }
 
-
+function handleOpenPopupProfile() {
+    nameInputFormProfile.value = profileTitle.textContent;
+    jobInputFormProfile.value = profileSubtitle.textContent;
+    openPopup(popupEditForm);
+}
 
 
 function openPopup(popup) {
@@ -92,7 +95,7 @@ function createCard(data) {
 
     elementTrashNewCard.addEventListener('click', () => removeCards(elementTrashNewCard));
     elementLikeNewCard.addEventListener('click', () => putLikes(elementLikeNewCard));
-    elementImgNewCard.addEventListener('click', () => openPopupPic(elementImgNewCard, popupPic));
+    elementImgNewCard.addEventListener('click', () => openPopupPic(data));
 
     return newCard;
 }
@@ -117,25 +120,24 @@ function handlersFormAdd(evt) {
 
 
 
-function createPopupPic(link) {
-    const title = link.nextElementSibling.textContent;
-    popupPicTitle.textContent = title;
-    popupPicSrc.setAttribute('src', link.src);
-    popupPicTitle.setAttribute('alt', title);
+function createPopupPic(data) {
+    popupPicTitle.textContent = data.name;
+    popupPicSrc.setAttribute('src', data.link);
+    popupPicSrc.setAttribute('alt', data.name);
 }
 
-function openPopupPic(img, popup) {
+function openPopupPic(img) {
 
     createPopupPic(img);
 
-    openPopup(popup);
+    openPopup(popupPic);
 }
 
 
 
 
 function removeCards(trash) {
-    trash.parentElement.remove();
+    trash.closest('.element').remove();
 }
 
 
@@ -150,18 +152,17 @@ function putLikes(heart) {
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
-buttonOpenPopupProfile.addEventListener('click', () => openPopup(popupEditForm));
+buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
+
 buttonOpenPopupAddNewCard.addEventListener('click', () => openPopup(popupAddForm));
 
 buttonCloseFormEdit.addEventListener('click', () => {
-    nameInputFormProfile.value = profileTitle.textContent;
-    jobInputFormProfile.value = profileSubtitle.textContent;
     closePopup(popupEditForm);
 });
 
 buttonCloseFormAdd.addEventListener('click', () => {
     formNewCard.reset();
-    closePopup(popupAddForm)
+    closePopup(popupAddForm);
 });
 
 buttonClosePopupPic.addEventListener('click', () => closePopup(popupPic));
