@@ -49,6 +49,13 @@ const initialCards = [
     }
 ];
 
+const popups = document.querySelectorAll('.popup');
+const popupsBody = document.querySelectorAll('.popup__body');
+const body = document.querySelector('.body');
+const popupFigurePic = document.querySelector('.popup__pic');
+const formAddNewCard = popupAddForm.querySelector('.form');
+
+/* Переменные для ошибок */
 
 
 
@@ -149,6 +156,36 @@ function putLikes(heart) {
 
 
 
+/* function closePopupEsc(evt, popup) {
+       if (evt.key === 'Escape') {
+        closePopup(popup)
+    }
+} */
+
+function closePopupEsc(evt) {
+    if (evt.key === 'Escape') {
+        return popups.forEach((popup) => {
+            if (popup.classList.contains('popup_opened')) {
+                closePopup(popup);
+            }
+        })
+    }
+}
+
+
+function closePopupOverlay(ovr) {
+    const selectedPopupPic = ovr.closest('.popup__pic');
+    const selectedForm = ovr.closest('.form');
+    if (!selectedForm && !selectedPopupPic) {
+        closePopup(ovr.closest('.popup'));
+    }
+}
+
+
+
+
+
+
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
@@ -169,3 +206,105 @@ buttonClosePopupPic.addEventListener('click', () => closePopup(popupPic));
 
 formNewCard.addEventListener('submit', handlersFormAdd);
 initialCards.forEach(item => renderCard(item, conteinerForElementsNewCard));
+
+/* document.addEventListener('keydown', (evt) => {    
+    popups.forEach((popup) => {
+        if (popup.classList.contains('popup_opened')) {
+            return closePopupEsc(evt, popup)
+        }
+    })
+}) */
+
+document.addEventListener('keydown', (evt) => closePopupEsc(evt))
+
+popupsBody.forEach((popupBody) => {
+    popupBody.addEventListener('click', (evt) => {
+
+        closePopupOverlay(evt.target)
+    })
+})
+
+
+
+
+const inputGroupFormAddNewCard = popupAddForm.querySelector('.form__input-group');
+
+
+const inputErrorFormAddNewCard = inputGroupFormAddNewCard.querySelector(`.${inputNameFormAddCard.id}-error`);
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add('form__input_type_error');
+    
+    errorElement.textContent = errorMessage;
+    
+    errorElement.classList.add('form__input-error_active');
+}
+
+
+
+const hideInputError = (formElement, inputElement) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove('form__input_type_error');
+    errorElement.classList.remove('form__input-error_active');
+    errorElement.textContent = '';
+}
+
+const isValid = (formElement, inputElement) => {
+    
+    if (!inputElement.validity.valid) {
+        showInputError(formElement, inputElement, inputElement.validationMessage)
+        
+        console.log('ошибка');
+    } else {
+        console.log('всё норм');
+        hideInputError(formElement, inputElement)
+    }
+}
+
+
+
+
+
+const setEventListeners = (formElement) => {
+    const inputList = Array.from(formElement.querySelectorAll('.form__item'));
+    const buttonElement = formElement.querySelector('.form__handlers');
+    toggleButtonState(inputList, buttonElement);
+    inputList.forEach((inputElement) => {
+        inputElement.addEventListener('input', () => {
+            console.log(inputElement);
+            isValid(formElement, inputElement);
+           toggleButtonState(inputList, buttonElement);          
+        })
+        
+    })
+}
+
+const enableValidation = () => {
+    const formList = Array.from(document.querySelectorAll('.form'));
+   
+
+    formList.forEach((formElement) => {
+        setEventListeners(formElement);
+        
+    })
+}
+
+enableValidation();
+
+
+function hasInvalidInput (inputList) {
+    return inputList.some((inputElement) => {
+        return !inputElement.validity.valid;
+    })
+}
+
+
+function toggleButtonState (inputList, buttonElement) {
+    console.log("tyt");
+    if (hasInvalidInput(inputList)) {
+        buttonElement.setAttribute('disabled', '');
+    } else {
+        buttonElement.removeAttribute('disabled')
+    }
+}

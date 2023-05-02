@@ -36,3 +36,11 @@
 .form__handlers:focus {
     opacity: 0.8;
 }
+
+.form__handlers:disabled {
+    opacity: .2;
+    background: #FFF;
+    color: #000;
+    border: 1px solid #000;
+    cursor: default;
+}
