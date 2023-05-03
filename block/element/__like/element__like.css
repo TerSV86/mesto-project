@@ -7,7 +7,7 @@
     border: none;
     cursor: pointer;
     padding: 0 16px 0;
-    background: url(../../../../image/like_disabled.svg) no-repeat center;
+    background: url(../../../image/like_disabled.svg) no-repeat center;
 }
 
 .element__like:hover {

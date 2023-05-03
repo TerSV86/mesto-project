@@ -1,7 +1,7 @@
 import { enableValidation } from '../src/components/validator.js';
-import { handlersFormAdd} from '../src/components/cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm} from '../src/components/data.js';
-import { handleFormProfileSubmit, handleOpenPopupProfile, closePopupEsc} from '../src/components/modal.js';
+import { handlersFormAdd } from '../src/components/cards.js'
+import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm } from '../src/components/data.js';
+import { handleFormProfileSubmit, handleOpenPopupProfile, closePopupEsc } from '../src/components/modal.js';
 import { closePopupOverlay, closePopup, openPopup } from '../src/components/modal.js'
 
 

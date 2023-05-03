@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css">
+    <title>Mesto</title>    
 </head>
 
 <body class="body">
@@ -16,7 +15,7 @@
         </header>
         <main class="main">
             <section class="profile">
-                <img class="profile__avatar" src="./image/avatar.jpg" alt="фотокартачка">
+                <img class="profile__avatar" src="<%=require('./image/avatar.jpg')%>" alt="фотокартачка">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
@@ -59,7 +58,6 @@
                         <h2 class="form__title">Новое место</h2>
                         <fieldset class="form__input-container">
                             <div class="form__input-group">
-
                                 <input type="text" id="name-pic-input" class="form__item form__item_el_name-pic "
                                     name="name" placeholder="Название" required minlength="2" maxlength="30">
                                 <span class="name-pic-input-error form__input-error"></span>
@@ -68,7 +66,6 @@
                                 <input type="url" id="url-input" class="form__item form__item_el_link-pic"
                                     name="profession" placeholder="Ссылка на картинку" required >
                                 <span class="url-input-error form__input-error"></span>
-
                             </div>
                         </fieldset>
                     </div>
@@ -96,9 +93,5 @@
             <button class="element__trash" type="button"></button>
         </article>
     </template>
-    
-    <script type='module' src='./script/script.js'></script>
-
 </body>
-
 </html>
