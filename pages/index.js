@@ -36,21 +36,19 @@ formNewCard.addEventListener('submit', handlersFormAdd);
     })
 }) */
 
-document.addEventListener('keydown', (evt) => closePopupEsc(evt))
-
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
         closePopupOverlay(evt.target)
     })
 })
 
-/* enableValidation({
+enableValidation({
     formSelector: '.form',
     inputSelector: '.form__item',
     submitButtonSelector: '.form__handlers',
     inputErrorClass: 'form__input_type_error',
     errorClass: 'form__input-error_active'
-}); */
+});
 
 
 
