@@ -46,12 +46,6 @@ function closePopup(popup) {
 }
 
 
-/* function closePopupEsc(evt, popup) {
-       if (evt.key === 'Escape') {
-        closePopup(popup)
-    }
-} */
-
 function closePopupEsc(evt) {
     if (evt.key === 'Escape') {
         return popups.forEach((popup) => {
