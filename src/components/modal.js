@@ -1,5 +1,5 @@
 import {popupPicTitle, popupPicSrc, popupPic, popups, nameInputFormProfile, profileTitle, profileSubtitle, jobInputFormProfile, popupEditForm} from './data.js'
-
+import { enableValidation } from './validator.js';
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
 
@@ -7,12 +7,21 @@ function handleFormProfileSubmit(evt) {
     profileSubtitle.textContent = jobInputFormProfile.value;
 
     closePopup(popupEditForm);
+ 
+    
 }
 
 function handleOpenPopupProfile() {
     nameInputFormProfile.value = profileTitle.textContent;
     jobInputFormProfile.value = profileSubtitle.textContent;
     openPopup(popupEditForm);
+    enableValidation({
+        formSelector: '.form',
+        inputSelector: '.form__item',
+        submitButtonSelector: '.form__handlers',
+        inputErrorClass: 'form__input_type_error',
+        errorClass: 'form__input-error_active'
+    });
 }
 
 function createPopupPic(data) {

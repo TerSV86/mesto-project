@@ -15,6 +15,7 @@ buttonOpenPopupAddNewCard.addEventListener('click', () => openPopup(popupAddForm
 
 buttonCloseFormEdit.addEventListener('click', () => {
     closePopup(popupEditForm);
+
 });
 
 buttonCloseFormAdd.addEventListener('click', () => {
@@ -43,13 +44,13 @@ popupsBody.forEach((popupBody) => {
     })
 })
 
-enableValidation({
+/* enableValidation({
     formSelector: '.form',
     inputSelector: '.form__item',
     submitButtonSelector: '.form__handlers',
     inputErrorClass: 'form__input_type_error',
     errorClass: 'form__input-error_active'
-});
+}); */
 
 
 

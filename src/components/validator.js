@@ -20,6 +20,11 @@ const hideInputError = (formElement, inputElement, selectors) => {
 }
 
 const isValid = (formElement, inputElement, selectors) => {
+    if (inputElement.validity.patternMismatch) {
+        inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+    } else {
+        inputElement.setCustomValidity('');
+    }
 
     if (!inputElement.validity.valid) {
         showInputError(formElement, inputElement, inputElement.validationMessage, selectors)
@@ -35,7 +40,9 @@ const isValid = (formElement, inputElement, selectors) => {
 const setEventListeners = (formElement, selectors) => {
     const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
     const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
-    toggleButtonState(inputList, buttonElement);
+
+    toggleButtonState(inputList, buttonElement);   
+
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
             isValid(formElement, inputElement, selectors);
@@ -46,6 +53,7 @@ const setEventListeners = (formElement, selectors) => {
 }
 
 const enableValidation = (selectors) => {
+   
     const formList = Array.from(document.querySelectorAll(selectors.formSelector));
     formList.forEach((formElement) => {
         setEventListeners(formElement, selectors);
@@ -71,4 +79,4 @@ function toggleButtonState(inputList, buttonElement) {
     }
 }
 
-export {enableValidation}
+export { enableValidation }

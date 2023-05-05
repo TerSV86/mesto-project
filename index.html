@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesto</title>    
+    <title>Mesto</title>
 </head>
 
 <body class="body">
@@ -28,19 +28,23 @@
         </footer>
         <div class="popup" id="popup-edit-form">
             <div class="popup__body">
-                <form class="form" action="url" name="edit_form">
+                <form class="form" action="url" name="edit_form" novalidate>
                     <button class="form__close" type="button"></button>
                     <div class="form__main-conteiner">
                         <h2 class="form__title">Редактировать профиль</h2>
                         <fieldset class="form__input-container">
                             <div class="form__input-group">
                                 <input type="text" id="name-input" class="form__item form__item_el_name" name="name"
-                                    placeholder="Жак-Ив Кусто" required minlength="2" maxlength="40">
+                                    placeholder="Имя" required minlength="2" maxlength="40"
+                                    pattern="^[a-zA-Zа-яА-ЯёЁ\-\s]+$"
+                                    data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
                                 <span class="name-input-error form__input-error"></span>
                             </div>
                             <div class="form__input-group">
-                            <input type="text" id="profession-input" class="form__item form__item_el_profession" name="profession"
-                                placeholder="Исследователь океана" required minlength="2" maxlength="200"> 
+                                <input type="text" id="profession-input" class="form__item form__item_el_profession"
+                                    name="profession" placeholder="О себе" required minlength="2"
+                                    maxlength="200" pattern="^[a-zA-Zа-яА-ЯёЁ\-\s]+$"
+                                    data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
                                 <span class="profession-input-error form__input-error"></span>
                             </div>
                         </fieldset>
@@ -59,12 +63,14 @@
                         <fieldset class="form__input-container">
                             <div class="form__input-group">
                                 <input type="text" id="name-pic-input" class="form__item form__item_el_name-pic "
-                                    name="name" placeholder="Название" required minlength="2" maxlength="30">
+                                    name="name" placeholder="Название" required minlength="2" maxlength="30"
+                                    pattern="^[a-zA-Zа-яА-ЯёЁ\-\s]+$"
+                                    data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
                                 <span class="name-pic-input-error form__input-error"></span>
                             </div>
                             <div class="form__input-group">
                                 <input type="url" id="url-input" class="form__item form__item_el_link-pic"
-                                    name="profession" placeholder="Ссылка на картинку" required >
+                                    name="profession" placeholder="Ссылка на картинку" required>
                                 <span class="url-input-error form__input-error"></span>
                             </div>
                         </fieldset>
@@ -94,4 +100,5 @@
         </article>
     </template>
 </body>
+
 </html>
