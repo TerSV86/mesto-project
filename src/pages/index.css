@@ -1,0 +1,54 @@
+@import url(../../vendor/normalize.css);
+
+@import url(../../fonts/fonts.css);
+
+@import url(../../block/body/body.css);
+
+@import url(../../block/root/root.css);
+
+@import url(../../block/header/header.css);
+
+@import url(../../block/logo/logo.css);
+
+@import url(../../block/main/main.css);
+
+@import url(../../block/profile/profile.css);
+@import url(../../block/profile/__avatar/profile__avatar.css);
+@import url(../../block/profile/__add-button/profile__add-button.css);
+@import url(../../block/profile/__title/profile__title.css);
+@import url(../../block/profile/__edit-button/profile__edit-button.css);
+@import url(../../block/profile/__subtitle/profile__subtitle.css);
+
+@import url(../../block/elements/elements.css);
+
+@import url(../../block/element/element.css);
+@import url(../../block/element/__mask-group/element__mask-group.css);
+@import url(../../block/element/__content/element__content.css);
+@import url(../../block/element/__title/element__title.css);
+@import url(../../block/element/__like/element__like.css);
+@import url(../../block/element/__like/_active/element__like_active.css);
+@import url(../../block/element/__trash/element__trash.css);
+
+@import url(../../block/footer/footer.css);
+@import url(../../block/footer/__copyright/footer__copyright.css);
+
+@import url(../../block/popup/popup.css);
+@import url(../../block/popup/_opened/popup_opened.css);
+@import url(../../block/popup/__body/popup__body.css);
+@import url(../../block/popup/__img/popup__img.css);
+@import url(../../block/popup/__close/popup__close.css);
+@import url(../../block/popup/__title/popup__title.css);
+@import url(../../block/popup/__pic/popup__pic.css);
+
+@import url(../../block/form/form.css);
+@import url(../../block/form/__close/form__close.css);
+@import url(../../block/form/__main-conteiner/form__main-conteiner.css);
+@import url(../../block/form/__title/form__title.css);
+@import url(../../block/form/__input-container/form__input-container.css);
+@import url(../../block/form/__input-group/form__input-group.css);
+@import url(../../block/form/__item/form__item.css);
+@import url(../../block/form/__item/_type/form__input_type_error.css);
+@import url(../../block/form/__input-error/form__input-error.css);
+@import url(../../block/form/__input-error/_active/form__input-error_active.css);
+@import url(../../block/form/__handlers/form__handlers.css);
+@import url(../../block/form/__handlers/_disabled/form__handlers_disabled.css);
