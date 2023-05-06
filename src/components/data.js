@@ -55,4 +55,5 @@ const body = document.querySelector('.body');
 const popupFigurePic = document.querySelector('.popup__pic');
 const formAddNewCard = popupAddForm.querySelector('.form');
 
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, initialCards, popups, popupsBody, body, popupFigurePic, formAddNewCard }
+
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, initialCards, popups, popupsBody, body, popupFigurePic, formAddNewCard}

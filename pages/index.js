@@ -46,6 +46,7 @@ enableValidation({
     formSelector: '.form',
     inputSelector: '.form__item',
     submitButtonSelector: '.form__handlers',
+    inactiveButtonClass: 'form__handlers_disabled',
     inputErrorClass: 'form__input_type_error',
     errorClass: 'form__input-error_active'
 });

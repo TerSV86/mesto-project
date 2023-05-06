@@ -1,5 +1,5 @@
 import { popupPicTitle, popupPicSrc, popupPic, popups, nameInputFormProfile, profileTitle, profileSubtitle, jobInputFormProfile, popupEditForm } from './data.js'
-import { enableValidation } from './validator.js';
+import { toggleButtonState } from "./validator.js"
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
 
@@ -15,7 +15,7 @@ function handleOpenPopupProfile() {
     nameInputFormProfile.value = profileTitle.textContent;
     jobInputFormProfile.value = profileSubtitle.textContent;
     openPopup(popupEditForm);
-    
+
 }
 
 function createPopupPic(data) {
@@ -33,7 +33,13 @@ function openPopupPic(img) {
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupEsc)
+    document.addEventListener('keydown', closePopupEsc);
+    const buttonSubmitForm = popup.querySelector('.form__handlers');
+    const inputsForm = Array.from(popup.querySelectorAll('.form__item'));
+    const selector = { inactiveButtonClass: 'form__handlers_disabled' }
+    if (buttonSubmitForm) {
+        toggleButtonState(inputsForm, buttonSubmitForm, selector)
+    }
 }
 
 function closePopup(popup) {
@@ -47,6 +53,7 @@ function closePopupEsc(evt) {
         return popups.forEach((popup) => {
             if (popup.classList.contains('popup_opened')) {
                 closePopup(popup);
+                popup.querySelector('.form').reset();
             }
         })
     }
@@ -55,8 +62,14 @@ function closePopupEsc(evt) {
 function closePopupOverlay(ovr) {
     const selectedPopupPic = ovr.closest('.popup__pic');
     const selectedForm = ovr.closest('.form');
+    const popupForm = ovr.querySelector('.form');
+    const popup = ovr.closest('.popup');
     if (!selectedForm && !selectedPopupPic) {
-        closePopup(ovr.closest('.popup'));
+        closePopup(popup);
+        if (popupForm) {            
+            popupForm.reset();
+        }
+
     }
 }
 
