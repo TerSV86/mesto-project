@@ -3,15 +3,15 @@ import './index.css'
 import { enableValidation } from '../components/validator.js';
 import { handlersFormAdd } from '../components/cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm } from '../components/data.js';
-import { handleFormProfileSubmit, handleOpenPopupProfile, closePopupEsc } from '../components/modal.js';
-import { closePopupOverlay, closePopup, openPopup } from '../components/modal.js'
+import { handleFormProfileSubmit, handleOpenPopupProfile } from '../components/modal.js';
+import { closePopupOverlay, closePopup, handleOpenPopupAddNewCard } from '../components/modal.js'
 
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 
-buttonOpenPopupAddNewCard.addEventListener('click', () => openPopup(popupAddForm));
+buttonOpenPopupAddNewCard.addEventListener('click',  handleOpenPopupAddNewCard) 
 
 buttonCloseFormEdit.addEventListener('click', () => {
     closePopup(popupEditForm);

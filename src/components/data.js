@@ -1,6 +1,6 @@
 const nameInputFormProfile = document.querySelector('.form__item_el_name');
 const jobInputFormProfile = document.querySelector('.form__item_el_profession');
-const buttonSubmitFormProfile = document.querySelector('.form__handlers');  //??
+const buttonSubmitFormProfile = document.querySelector('.form__handlers');
 const buttonOpenPopupProfile = document.querySelector('.profile__edit-button');
 const buttonOpenPopupAddNewCard = document.querySelector('.profile__add-button');
 const profileTitle = document.querySelector('.profile__title');
@@ -17,9 +17,9 @@ const buttonCloseFormAdd = popupAddForm.querySelector('.form__close');
 const buttonClosePopupPic = popupPic.querySelector('.popup__close');
 const cardTemplate = document.querySelector('#addCard').content;
 const elementTemplate = cardTemplate.querySelector('.element');
-const buttonNewCard = popupAddForm.querySelector('.form__handlers'); //??
+const buttonNewCard = popupAddForm.querySelector('.form__handlers');
 const formNewCard = popupAddForm.querySelector('.form');
-const elementsCard = document.querySelector('.elements'); //??
+const elementsCard = document.querySelector('.elements');
 const popupPicSrc = popupPic.querySelector('.popup__img');
 const popupPicTitle = popupPic.querySelector('.popup__title');
 const initialCards = [
@@ -54,6 +54,14 @@ const popupsBody = document.querySelectorAll('.popup__body');
 const body = document.querySelector('.body');
 const popupFigurePic = document.querySelector('.popup__pic');
 const formAddNewCard = popupAddForm.querySelector('.form');
+const inputsFormAddNewCard = Array.from(formAddNewCard.querySelectorAll('.form__item'));
+const buttonSubmitFormAddNewCard = popupAddForm.querySelector('.form__handlers');
+const selector = {
+    inactiveButtonClass: 'form__handlers_disabled',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__input-error_active'
+};
+const inputsFormProfile = Array.from(popupEditForm.querySelectorAll('.form__item'));
 
 
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, initialCards, popups, popupsBody, body, popupFigurePic, formAddNewCard}
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, initialCards, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile }

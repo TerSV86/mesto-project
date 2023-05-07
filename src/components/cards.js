@@ -1,4 +1,4 @@
-import { elementTemplate, initialCards, conteinerForElementsNewCard, inputNameFormAddCard, inputLinkAddNewCard, popupAddForm, formNewCard} from "./data.js";
+import { elementTemplate, initialCards, conteinerForElementsNewCard, inputNameFormAddCard, inputLinkAddNewCard, popupAddForm, formNewCard, } from "./data.js";
 import {openPopupPic, closePopup} from './modal.js'
 
 function createCard(data) {
@@ -46,5 +46,9 @@ function putLikes(heart) {
     heart.classList.toggle('element__like_active');
 }
 
+function resetForm (popup) {
+    popup.querySelector('.form').reset();
+}
 
-export {handlersFormAdd, renderCard}
+
+export {handlersFormAdd, renderCard, resetForm}
