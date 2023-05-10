@@ -15,7 +15,8 @@
         </header>
         <main class="main">
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('../../image/avatar.jpg')%>" alt="фотокартачка">
+                <!-- <img class="profile__avatar" src="<%=require('../../image/avatar.jpg')%>" alt="фотокартачка"> -->
+                <button class="profile__avatar" type="button" ></button>
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
@@ -79,6 +80,33 @@
                 </form>
             </div>
         </div>
+
+        <div class="popup popup_opened" id="popup-avatar-form">
+            <div class="popup__body">
+                <form class="form" action="url" name="add_form" novalidate>
+                    <button class="form__close" type="button"></button>
+                    <div class="form__main-conteiner">
+                        <h2 class="form__title">Обновить аватар</h2>
+                        <fieldset class="form__input-container">
+                            <!-- <div class="form__input-group">
+                                <input type="text" id="name-pic-input" class="form__item form__item_el_name-pic "
+                                    name="name" placeholder="Название" required minlength="2" maxlength="30"
+                                    pattern="^[a-zA-Zа-яА-ЯёЁ\-\s]+$"
+                                    data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
+                                <span class="name-pic-input-error form__input-error"></span>
+                            </div> -->
+                            <div class="form__input-group">
+                                <input type="url" id="url-input" class="form__item form__item_el_link-pic"
+                                    name="profession" placeholder="Ссылка на картинку" required>
+                                <span class="url-input-error form__input-error"></span>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <button class="form__handlers" type="submit">Создать</button>
+                </form>
+            </div>
+        </div>
+
         <div class="popup" id="popup-pic">
             <div class="popup__body">
                 <figure class="popup__pic">
