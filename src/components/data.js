@@ -62,6 +62,15 @@ const selector = {
     errorClass: 'form__input-error_active'
 };
 const inputsFormProfile = Array.from(popupEditForm.querySelectorAll('.form__item'));
+const popupAvatarForm = document.getElementById('popup-avatar-form');
+const buttonCloseFormAvatar = popupAvatarForm.querySelector('.form__close');
+const formAvatar = popupAvatarForm.querySelector('.form');
+const buttonOpenPopupAvatar = document.querySelector('.profile__avatar');
+const inputFormAvatar = formAvatar.querySelector('.form__item');
+const buttonSubmitFormAvatar = formAvatar.querySelector('.form__handlers');
 
 
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, initialCards, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile }
+
+
+
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, initialCards, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar }

@@ -2,8 +2,8 @@ import './index.css'
 
 import { enableValidation } from '../components/validator.js';
 import { handlersFormAdd } from '../components/cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm } from '../components/data.js';
-import { handleFormProfileSubmit, handleOpenPopupProfile } from '../components/modal.js';
+import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar } from '../components/data.js';
+import { handleFormProfileSubmit, handleOpenPopupProfile, openPopup,  handleOpenPopupAvatar } from '../components/modal.js';
 import { closePopupOverlay, closePopup, handleOpenPopupAddNewCard } from '../components/modal.js'
 
 
@@ -11,7 +11,9 @@ formProfile.addEventListener('submit', handleFormProfileSubmit);
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 
-buttonOpenPopupAddNewCard.addEventListener('click',  handleOpenPopupAddNewCard) 
+buttonOpenPopupAddNewCard.addEventListener('click',  handleOpenPopupAddNewCard)
+
+buttonOpenPopupAvatar.addEventListener('click',  handleOpenPopupAvatar)
 
 buttonCloseFormEdit.addEventListener('click', () => {
     closePopup(popupEditForm);
@@ -22,6 +24,11 @@ buttonCloseFormAdd.addEventListener('click', () => {
     formNewCard.reset();
     closePopup(popupAddForm);
 });
+
+buttonCloseFormAvatar.addEventListener('click', () => {
+    formAvatar.reset();
+    closePopup(popupAvatarForm)
+})
 
 buttonClosePopupPic.addEventListener('click', () => closePopup(popupPic));
 
