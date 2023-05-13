@@ -5,6 +5,7 @@ import { handlersFormAdd } from '../components/cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar } from '../components/data.js';
 import { handleFormProfileSubmit, handleOpenPopupProfile, openPopup,  handleOpenPopupAvatar } from '../components/modal.js';
 import { closePopupOverlay, closePopup, handleOpenPopupAddNewCard } from '../components/modal.js'
+import {} from '../components/api'
 
 
 formProfile.addEventListener('submit', handleFormProfileSubmit);

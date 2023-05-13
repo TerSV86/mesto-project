@@ -1,4 +1,4 @@
-import { popupPicTitle, popupPicSrc, popupPic, popups, nameInputFormProfile, profileTitle, profileSubtitle, jobInputFormProfile, popupEditForm, popupAddForm, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormProfile, formProfile, popupAvatarForm, inputFormAvatar, buttonSubmitFormAvatar, formAvatar } from './data.js'
+import { popupPicTitle, popupPicSrc, popupPic, popups, nameInputFormProfile, profileTitle, profileSubtitle, jobInputFormProfile, popupEditForm, popupAddForm, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormProfile, formProfile, popupAvatarForm, inputFormAvatar, buttonSubmitFormAvatar, formAvatar, imgAvatar } from './data.js'
 import { toggleButtonState, hideInputError, isValid } from "./validator.js"
 import { resetForm } from './cards.js'
 function handleFormProfileSubmit(evt) {
@@ -82,4 +82,14 @@ function handleOpenPopupAvatar() {
   //добавить валидацию
 }
 
+buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
+function handlersFormAvatar(evt) {
+    evt.preventDefault()
+    
+       imgAvatar.setAttribute('src', inputFormAvatar.value) 
+       closePopup(popupAvatarForm)
+}
+
+
 export { handleFormProfileSubmit, handleOpenPopupProfile, createPopupPic, openPopupPic, openPopup, closePopup, closePopupEsc, closePopupOverlay, handleOpenPopupAddNewCard,  handleOpenPopupAvatar }
+

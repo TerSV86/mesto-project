@@ -15,8 +15,10 @@
         </header>
         <main class="main">
             <section class="profile">
-                <!-- <img class="profile__avatar" src="<%=require('../../image/avatar.jpg')%>" alt="фотокартачка"> -->
-                <button class="profile__avatar" type="button" ></button>
+
+                <button class="profile__avatar" type="button">
+                    <img class="profile__avatar-img" src="<%=require('../../image/avatar.jpg')%>" alt="фотокартачка">
+                </button>
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
@@ -43,8 +45,8 @@
                             </div>
                             <div class="form__input-group">
                                 <input type="text" id="profession-input" class="form__item form__item_el_profession"
-                                    name="profession" placeholder="О себе" required minlength="2"
-                                    maxlength="200" pattern="^[a-zA-Zа-яА-ЯёЁ\-\s]+$"
+                                    name="profession" placeholder="О себе" required minlength="2" maxlength="200"
+                                    pattern="^[a-zA-Zа-яА-ЯёЁ\-\s]+$"
                                     data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы">
                                 <span class="profession-input-error form__input-error"></span>
                             </div>
@@ -102,7 +104,7 @@
                             </div>
                         </fieldset>
                     </div>
-                    <button class="form__handlers" type="submit">Создать</button>
+                    <button class="form__handlers" type="submit">Сохранить</button>
                 </form>
             </div>
         </div>
@@ -123,12 +125,11 @@
             <div class="element__content">
                 <h2 class="element__title"></h2>
                 <div class="element__like-group">
-                  <button type="button" class="element__like"></button>
-                  <p class="element__counter">0</p>  
+                    <button type="button" class="element__like"></button>
+                    <p class="element__counter">0</p>
                 </div>
-                
             </div>
-            <button class="element__trash" type="button"></button>
+            <!-- <button class="element__trash" type="button"></button> -->
         </article>
     </template>
 </body>
