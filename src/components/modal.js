@@ -1,13 +1,14 @@
-import { popupPicTitle, popupPicSrc, popupPic, popups, nameInputFormProfile, profileTitle, profileSubtitle, jobInputFormProfile, popupEditForm, popupAddForm, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormProfile, formProfile, popupAvatarForm, inputFormAvatar, buttonSubmitFormAvatar, formAvatar, imgAvatar } from './data.js'
+import { popupPicTitle, popupPicSrc, popupPic, popups, nameInputFormProfile, profileTitle, profileSubtitle, jobInputFormProfile, popupEditForm, popupAddForm, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormProfile, formProfile, popupAvatarForm, inputFormAvatar, buttonSubmitFormAvatar, formAvatar, imgAvatar, popupRemovalCard } from './data.js'
 import { toggleButtonState, hideInputError, isValid } from "./validator.js"
 import { resetForm } from './cards.js'
+import { editProfile, editAvatar, idCardRemoval, delCard } from './api.js';
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
 
     profileTitle.textContent = nameInputFormProfile.value;
     profileSubtitle.textContent = jobInputFormProfile.value;
-
-    closePopup(popupEditForm);
+    editProfile(profileTitle.textContent, profileSubtitle.textContent)
+    /* closePopup(popupEditForm); */
 }
 
 function handleOpenPopupProfile() {
@@ -37,7 +38,7 @@ function openPopupPic(img) {
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupEsc); 
+    document.addEventListener('keydown', closePopupEsc);
 }
 
 function closePopup(popup) {
@@ -50,7 +51,7 @@ function closePopupEsc(evt) {
     if (evt.key === 'Escape') {
         return popups.forEach((popup) => {
             if (popup.classList.contains('popup_opened')) {
-                closePopup(popup);                
+                closePopup(popup);
             }
         })
     }
@@ -71,7 +72,7 @@ function handleOpenPopupAddNewCard() {
     toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
     if (formAddNewCard.querySelector('.form__input_type_error')) {
         inputsFormAddNewCard.forEach((input) => {
-            hideInputError(formAddNewCard, input, selector);            
+            hideInputError(formAddNewCard, input, selector);
         })
     }
 }
@@ -79,17 +80,33 @@ function handleOpenPopupAddNewCard() {
 function handleOpenPopupAvatar() {
     openPopup(popupAvatarForm)
     resetForm(popupAvatarForm)
-  //добавить валидацию
+    //добавить валидацию
 }
+
+
 
 buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
+
 function handlersFormAvatar(evt) {
     evt.preventDefault()
-    
-       imgAvatar.setAttribute('src', inputFormAvatar.value) 
-       closePopup(popupAvatarForm)
+
+    /* imgAvatar.setAttribute('src', inputFormAvatar.value)  */
+
+    editAvatar(inputFormAvatar.value)
+    /* closePopup(popupAvatarForm) */
 }
 
 
-export { handleFormProfileSubmit, handleOpenPopupProfile, createPopupPic, openPopupPic, openPopup, closePopup, closePopupEsc, closePopupOverlay, handleOpenPopupAddNewCard,  handleOpenPopupAvatar }
+function handeleOpenPopupRemovalCard () {
+    openPopup(popupRemovalCard)
+}
+
+function handeleSubmitPopupRemovalCard(evt) {
+    evt.preventDefault();
+
+    delCard(idCardRemoval)
+    closePopup(popupRemovalCard)
+}
+
+export { handleFormProfileSubmit, handleOpenPopupProfile, createPopupPic, openPopupPic, openPopup, closePopup, closePopupEsc, closePopupOverlay, handleOpenPopupAddNewCard, handleOpenPopupAvatar, handeleOpenPopupRemovalCard, handeleSubmitPopupRemovalCard }
 

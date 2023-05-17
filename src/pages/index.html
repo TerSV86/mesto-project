@@ -17,7 +17,8 @@
             <section class="profile">
 
                 <button class="profile__avatar" type="button">
-                    <img class="profile__avatar-img" src="<%=require('../../image/avatar.jpg')%>" alt="фотокартачка">
+                    <!-- <img class="profile__avatar-img" src="<%=require('../../image/avatar.jpg')%>" alt="фотокартачка"> -->
+                    <img class="profile__avatar-img" src="" alt="фотокартачка">
                 </button>
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button"></button>
@@ -53,6 +54,7 @@
                         </fieldset>
                     </div>
                     <button class="form__handlers" type="submit">Сохранить</button>
+                    <div class="form__conservation">Сохранение...</div>
                 </form>
             </div>
         </div>
@@ -79,6 +81,7 @@
                         </fieldset>
                     </div>
                     <button class="form__handlers" type="submit">Создать</button>
+                    <div class="form__conservation">Сохранение...</div>
                 </form>
             </div>
         </div>
@@ -104,7 +107,20 @@
                             </div>
                         </fieldset>
                     </div>
-                    <button class="form__handlers" type="submit">Сохранить</button>
+                    <button class="form__handlers " type="submit">Сохранить</button>
+                    <div class="form__conservation">Сохранение...</div>
+                </form>
+            </div>
+        </div>
+
+        <div class="popup" id="popup-removal-card">
+            <div class="popup__body">
+                <form class="form">
+                    <button class="form__close" type="button"></button>
+                    <div class="form__main-conteiner">
+                        <h2 class="form__title">Вы уверены?</h2>                        
+                    </div>
+                    <button class="form__handlers " type="submit">Да</button>                    
                 </form>
             </div>
         </div>
@@ -125,7 +141,7 @@
             <div class="element__content">
                 <h2 class="element__title"></h2>
                 <div class="element__like-group">
-                    <button type="button" class="element__like"></button>
+                    <button type="button" class="element__like" ></button>
                     <p class="element__counter">0</p>
                 </div>
             </div>
