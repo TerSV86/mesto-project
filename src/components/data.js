@@ -49,7 +49,17 @@ const popupRemovalCard = document.getElementById('popup-removal-card');
 const buttonSubmitPopupRemovalCard = popupRemovalCard.querySelector('.form__handlers');
 const buttonClosePopupRemovalCard = popupRemovalCard.querySelector('.form__close')
 
+const config = {
+    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-24',
+    headers: {
+        authorization: '1f4caeaf-a831-4781-be39-58597bdf5036',
+        'Content-Type': 'application/json'
+    }
+}
+
+const userId = {}
 
 
 
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, plugButtonSubmitFormProfile, plugButtonSubmitFormNewCard, plugButtonSubmitFormAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard}
+
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, plugButtonSubmitFormProfile, plugButtonSubmitFormNewCard, plugButtonSubmitFormAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, userId}

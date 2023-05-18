@@ -1,11 +1,11 @@
-import { elementTemplate, conteinerForElementsNewCard, inputNameFormAddCard, inputLinkAddNewCard, popupAddForm, formNewCard, } from "./data.js";
-import { openPopupPic, closePopup } from './modal.js'
+import { elementTemplate,  inputNameFormAddCard, inputLinkAddNewCard, formNewCard, userId} from "./data.js";
+import { openPopupPic } from './modal.js'
 import { createNewCard } from "./api.js";
 
 
 function createCard(data) {
     const newCard = elementTemplate.cloneNode(true);
-    /*  const elementTrashNewCard = newCard.querySelector('.element__trash'); */
+    
     const elementLikeNewCard = newCard.querySelector('.element__like');
     const elementImgNewCard = newCard.querySelector('.element__mask-group');
     const elementTitleNewCard = newCard.querySelector('.element__title');
@@ -18,10 +18,7 @@ function createCard(data) {
     elementTitleNewCard.textContent = data.name;
     elementCounterLikesCard.textContent = data.count_likes;
     newCard.setAttribute('id', `${data.crd_id}`)
-    /* elementTrashNewCard.addEventListener('click', () => removeCards(elementTrashNewCard));*/
-    /* document.querySelector('.element__trash').addEventListener('click', async () =>{ await console.log('click')} ) */
-
-    /* elementLikeNewCard.addEventListener('click', () => putLikes(elementLikeNewCard)); */
+    
     elementImgNewCard.addEventListener('click', () => openPopupPic(data));
 
     return newCard;
@@ -39,12 +36,9 @@ function handlersFormAdd(evt) {
         name: inputNameFormAddCard.value,
         link: inputLinkAddNewCard.value
     }
-    createNewCard(data)
-    /* renderCard(data, conteinerForElementsNewCard); */
-    /* closePopup(popupAddForm); */
+    createNewCard(data)  
 
-    formNewCard.reset();
-    
+    formNewCard.reset(); 
 
 }
 
@@ -64,7 +58,31 @@ function resetForm(popup) {
     popup.querySelector('.form').reset();
 }
 
+function createButtonTrashCard() {
+    return `<button class="element__trash" type="button"></button>`
+}
+function renderButtonTrashCard(data) {
 
+    const cardForButtonTrashCard = document.getElementById(`${data}`);
 
+    cardForButtonTrashCard.insertAdjacentHTML('afterbegin', createButtonTrashCard())
 
-export { handlersFormAdd, renderCard, resetForm }
+}
+
+//прорисовка лайков
+function drawsLikes(result) {
+    result.forEach((el) => {
+        el.likes.forEach((user) => {
+            if (user._id === userId.id) {
+                document.getElementById(`${el._id}`).querySelector('.element__like').classList.add('element__like_active')
+            }
+        })
+    })
+}
+
+function searchIdCard(element) {
+    return element.closest('.element').id
+
+}
+
+export { handlersFormAdd, renderCard, resetForm, renderButtonTrashCard, drawsLikes, searchIdCard }

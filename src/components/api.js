@@ -1,18 +1,9 @@
-import { renderCard, handlersFormAdd } from "./cards";
-import { conteinerForElementsNewCard, imgAvatar, profileTitle, profileSubtitle, formNewCard, body, plugButtonSubmitFormProfile, buttonSubmitFormProfile, popupEditForm, popupAddForm, popupAvatarForm, plugButtonSubmitFormNewCard, buttonSubmitFormAddNewCard, plugButtonSubmitFormAvatar, buttonSubmitFormAvatar } from './data'
-import { closePopup, handeleOpenPopupRemovalCard } from "./modal";
+import { renderCard, renderButtonTrashCard, drawsLikes, searchIdCard } from "./cards";
+import { conteinerForElementsNewCard, imgAvatar, profileTitle, profileSubtitle, plugButtonSubmitFormProfile, buttonSubmitFormProfile, popupEditForm, popupAddForm, popupAvatarForm, plugButtonSubmitFormNewCard, buttonSubmitFormAddNewCard, plugButtonSubmitFormAvatar, buttonSubmitFormAvatar, config, userId} from './data'
+import { closePopup, handeleOpenPopupRemovalCard, renderLoading } from "./modal";
 
-const config = {
-    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-24',
-    headers: {
-        authorization: '1f4caeaf-a831-4781-be39-58597bdf5036',
-        'Content-Type': 'application/json'
-    }
-}
 
-const userId = {}
 let idCardRemoval;
-
 
 async function loadingProfile() {
     return await fetch(`${config.baseUrl}/users/me`, {
@@ -140,16 +131,7 @@ async function loadingCards() {
 loadingCards()
 
 
-function createButtonTrashCard() {
-    return `<button class="element__trash" type="button"></button>`
-}
-function renderButtonTrashCard(data) {
 
-    const cardForButtonTrashCard = document.getElementById(`${data}`);
-
-    cardForButtonTrashCard.insertAdjacentHTML('afterbegin', createButtonTrashCard())
-
-}
 
 function createNewCard(data) {
     renderLoading(true, plugButtonSubmitFormNewCard, buttonSubmitFormAddNewCard)
@@ -199,16 +181,7 @@ function delCard(card_id) {
         .catch((err) => console.error('Could not fetch', err))
 }
 
-//прорисовка лайков
-function drawsLikes(result) {
-    result.forEach((el) => {
-        el.likes.forEach((user) => {
-            if (user._id === userId.id) {
-                document.getElementById(`${el._id}`).querySelector('.element__like').classList.add('element__like_active')
-            }
-        })
-    })
-}
+
 
 
 
@@ -232,10 +205,7 @@ function putLikes(card_id, heart) {
 
 }
 
-function searchIdCard(element) {
-    return element.closest('.element').id
 
-}
 
 function delLikes(card_id) {
     console.log('tyt');
@@ -254,23 +224,6 @@ function delLikes(card_id) {
         })
         .catch((err) => console.error('Could not fetch', err))
 }
-
-
-
-
-function renderLoading(isLoading, plugButton, button) {
-    console.log("tyt");
-    if (isLoading) {
-        plugButton.classList.add('form__conservation_visible');
-        button.classList.add('form__handlers_hidden');        
-    } else {
-        plugButton.classList.remove('form__conservation_visible')
-        button.classList.remove('form__handlers_hidden')       
-    }
-}
-
-
-
 
 
 export { createNewCard, editProfile, editAvatar, delCard, idCardRemoval }

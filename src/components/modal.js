@@ -108,5 +108,16 @@ function handeleSubmitPopupRemovalCard(evt) {
     closePopup(popupRemovalCard)
 }
 
-export { handleFormProfileSubmit, handleOpenPopupProfile, createPopupPic, openPopupPic, openPopup, closePopup, closePopupEsc, closePopupOverlay, handleOpenPopupAddNewCard, handleOpenPopupAvatar, handeleOpenPopupRemovalCard, handeleSubmitPopupRemovalCard }
+function renderLoading(isLoading, plugButton, button) {
+    
+    if (isLoading) {
+        plugButton.classList.add('form__conservation_visible');
+        button.classList.add('form__handlers_hidden');        
+    } else {
+        plugButton.classList.remove('form__conservation_visible')
+        button.classList.remove('form__handlers_hidden')       
+    }
+}
+
+export { handleFormProfileSubmit, handleOpenPopupProfile, createPopupPic, openPopupPic, openPopup, closePopup, closePopupEsc, closePopupOverlay, handleOpenPopupAddNewCard, handleOpenPopupAvatar, handeleOpenPopupRemovalCard, handeleSubmitPopupRemovalCard, renderLoading }
 
