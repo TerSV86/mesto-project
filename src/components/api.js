@@ -1,30 +1,42 @@
 import { renderCard, renderButtonTrashCard, drawsLikes, searchIdCard } from "./cards";
-import { conteinerForElementsNewCard, imgAvatar, profileTitle, profileSubtitle, plugButtonSubmitFormProfile, buttonSubmitFormProfile, popupEditForm, popupAddForm, popupAvatarForm, plugButtonSubmitFormNewCard, buttonSubmitFormAddNewCard, plugButtonSubmitFormAvatar, buttonSubmitFormAvatar, config, userId} from './data'
+import { conteinerForElementsNewCard, imgAvatar, profileTitle, profileSubtitle, plugButtonSubmitFormProfile, buttonSubmitFormProfile, popupEditForm, popupAddForm, popupAvatarForm, plugButtonSubmitFormNewCard, buttonSubmitFormAddNewCard, plugButtonSubmitFormAvatar, buttonSubmitFormAvatar, config, userId } from './data'
 import { closePopup, handeleOpenPopupRemovalCard, renderLoading } from "./modal";
 
 
 let idCardRemoval;
 
+function getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json()
+}
+
+
 async function loadingProfile() {
     return await fetch(`${config.baseUrl}/users/me`, {
         headers: config.headers
     })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then((data) => {
+            transmitsDataProfile(data)
 
-            return imgAvatar.setAttribute('src', data.avatar),
-                profileTitle.textContent = data.name,
-                profileSubtitle.textContent = data.about,
-                userId.id = data._id
-
+            /*  return imgAvatar.setAttribute('src', data.avatar),
+                 profileTitle.textContent = data.name,
+                 profileSubtitle.textContent = data.about,
+                 userId.id = data._id
+  */
         })
         .catch((err) => console.error('Could not fetch', err))
 }
 loadingProfile()
+
+function transmitsDataProfile(data) {
+    return imgAvatar.setAttribute('src', data.avatar),
+        profileTitle.textContent = data.name,
+        profileSubtitle.textContent = data.about,
+        userId.id = data._id
+}
 
 function editProfile(name, about) {
     renderLoading(true, plugButtonSubmitFormProfile, buttonSubmitFormProfile)
@@ -36,11 +48,7 @@ function editProfile(name, about) {
             about: `${about}`
         })
     })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then((data) => {
             console.log(data);
         })
@@ -61,11 +69,7 @@ function editAvatar(url) {
             avatar: `${url}`
         })
     })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then((data) => {
             console.log(data);
         })
@@ -82,12 +86,7 @@ async function loadingCards() {
     return await fetch(`${config.baseUrl}/cards`, {
         headers: config.headers
     })
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            return Promise.reject(`Ошибка: ${res.status}`)
-        })
+        .then((res) => getResponseData(res))
         .then((result) => {
             const initialCards = result.map((el) => {
                 return el = { 'name': el.name, 'link': el.link, 'user_id': el.owner._id, 'count_likes': el.likes.length, 'crd_id': el._id }
@@ -107,8 +106,9 @@ async function loadingCards() {
             const trashElementList = document.querySelectorAll('.element__trash');
             trashElementList.forEach((trashElement) => {
                 trashElement.addEventListener('click', (evt) => {
+
                     handeleOpenPopupRemovalCard(evt)
-                    idCardRemoval = searchIdCard(evt.target)                    
+                    idCardRemoval = searchIdCard(evt.target)
                 })
             })
 
@@ -143,11 +143,7 @@ function createNewCard(data) {
         }),
         headers: config.headers
     })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then((data) => {
             console.log(data)
         })
@@ -169,11 +165,7 @@ function delCard(card_id) {
         method: "DELETE",
         headers: config.headers
     })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then((data) => {
             alert(data.message);
             location.reload()
@@ -192,11 +184,7 @@ function putLikes(card_id, heart) {
         method: "PUT",
         headers: config.headers
     })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then(() => {
             heart.classList.add('element__like_active')
             location.reload()
@@ -213,11 +201,7 @@ function delLikes(card_id) {
         method: "DELETE",
         headers: config.headers
     })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
+        .then((res) => getResponseData(res))
         .then((data) => {
             console.log(data)
             location.reload()
@@ -226,4 +210,4 @@ function delLikes(card_id) {
 }
 
 
-export { createNewCard, editProfile, editAvatar, delCard, idCardRemoval }
+export { createNewCard, editProfile, editAvatar, delCard, idCardRemoval, transmitsDataProfile }
