@@ -73,6 +73,7 @@ function hasInvalidInput(inputList) {
 
 
 function toggleButtonState(inputList, buttonElement, selectors) {
+    console.log(selectors);
 
     if (hasInvalidInput(inputList)) {
         buttonElement.setAttribute('disabled', '');
@@ -82,5 +83,8 @@ function toggleButtonState(inputList, buttonElement, selectors) {
         buttonElement.classList.remove(selectors.inactiveButtonClass);
     }
 }
+
+
+
 
 export { enableValidation, toggleButtonState, hideInputError, isValid }

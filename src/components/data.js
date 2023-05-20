@@ -42,9 +42,7 @@ const buttonOpenPopupAvatar = document.querySelector('.profile__avatar');
 const inputFormAvatar = formAvatar.querySelector('.form__item');
 const buttonSubmitFormAvatar = formAvatar.querySelector('.form__handlers');
 const imgAvatar = document.querySelector('.profile__avatar-img');
-const plugButtonSubmitFormProfile = document.querySelector('.form__conservation');
-const plugButtonSubmitFormNewCard = popupAddForm.querySelector('.form__conservation');
-const plugButtonSubmitFormAvatar = popupAvatarForm.querySelector('.form__conservation');
+
 const popupRemovalCard = document.getElementById('popup-removal-card');
 const buttonSubmitPopupRemovalCard = popupRemovalCard.querySelector('.form__handlers');
 const buttonClosePopupRemovalCard = popupRemovalCard.querySelector('.form__close')
@@ -58,8 +56,8 @@ const config = {
 }
 
 const userId = {}
+const servisInfoCard = []
 
 
 
-
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, plugButtonSubmitFormProfile, plugButtonSubmitFormNewCard, plugButtonSubmitFormAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, userId}
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, userId, servisInfoCard}
