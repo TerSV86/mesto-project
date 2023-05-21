@@ -3,6 +3,7 @@ import { openPopupPic, handeleOpenPopupRemovalCard } from './modal.js'
 import { putLikesServer, delLikesServer } from "./api.js";
 
 let idCardRemoval;
+let elCardRemoval;
 
 function createCard(data) {
     const newCard = elementTemplate.cloneNode(true);
@@ -19,22 +20,25 @@ function createCard(data) {
     elementImgNewCard.alt = data.name;
     elementTitleNewCard.textContent = data.name;
     elementCounterLikesCard.textContent = data.count_likes;
-    
+
 
     elementImgNewCard.addEventListener('click', () => openPopupPic(data));
     elementLikeNewCard.addEventListener('click', (evt) => {
-        if ((evt.target.classList.contains('element__like_active'))) {
-            delLikesServer(searchIdCard(evt))
-                .then(() => {
-                    evt.target.classList.remove('element__like_active');
-                    elementCounterLikesCard.textContent = +elementCounterLikesCard.textContent - 1
+        if ((elementLikeNewCard.classList.contains('element__like_active'))) {
+
+            delLikesServer(data.crd_id) //
+                .then((data) => {
+                    
+                    elementLikeNewCard.classList.remove('element__like_active');
+                    elementCounterLikesCard.textContent = data.likes.length
                 })
-                .catch((err) => console.error('Could not fetch', err))           
+                .catch((err) => console.error('Could not fetch', err))
         } else {
-            putLikesServer((searchIdCard(evt)))
-                .then(() => {
-                    evt.target.classList.add('element__like_active');
-                    elementCounterLikesCard.textContent = data.like.length + 1;
+            putLikesServer(data.crd_id) //
+                .then((data) => {
+                    
+                    elementLikeNewCard.classList.add('element__like_active');
+                    elementCounterLikesCard.textContent = data.likes.length;
                 })
                 .catch((err) => console.error('Could not fetch', err))
         }
@@ -52,7 +56,8 @@ function createCard(data) {
 
     elementTrashNewCard.addEventListener('click', (evt) => {
         handeleOpenPopupRemovalCard(evt);
-        idCardRemoval = searchIdCard(evt);
+        elCardRemoval = evt.target.closest('.element')
+        idCardRemoval = data.crd_id; //
     })
     servisInfoCard.push({
         'card': newCard,
@@ -61,6 +66,7 @@ function createCard(data) {
 
     return newCard;
 }
+
 
 
 function renderCard(data) {
@@ -74,14 +80,14 @@ function renderCardClient(data) {
 
 
 // ищет по событию evt в массиве servisInfoCard картачу и присвоенный ей id  
-function searchIdCard(evt) {
-    let id
-    servisInfoCard.forEach((el) => {
-        if (el.card === evt.target.closest('.element')) {
-            id = el.card_id
-        }
-    })
-    return id
-}
+// function searchIdCard(evt) {
+//     let id
+//     servisInfoCard.forEach((el) => {
+//         if (el.card === evt.target.closest('.element')) {
+//             id = el.card_id
+//         }
+//     })
+//     return id
+// }
 
-export { renderCard, searchIdCard, idCardRemoval, renderCardClient }
+export { renderCard, /* searchIdCard, */ idCardRemoval, elCardRemoval, renderCardClient }

@@ -11,6 +11,7 @@
     /* background: url(../../../image/avatar.jpg) center no-repeat; */
     background-size: 100%;
     position: relative;
+    border: none;
 }
 
 @media (max-width: 745px) {

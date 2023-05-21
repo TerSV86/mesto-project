@@ -1,7 +1,7 @@
 import './index.css'
 
 import { enableValidation } from '../components/validator.js';
-import { idCardRemoval, renderCard, renderCardClient } from '../components/cards.js'
+import { idCardRemoval, elCardRemoval, renderCard, renderCardClient } from '../components/cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile } from '../components/data.js';
 import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
@@ -32,11 +32,12 @@ Promise.all([requestsDataProfile(), loadingCards()])
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
 function handleFormProfileSubmit(evt) {
-    evt.preventDefault();
-    profileTitle.textContent = nameInputFormProfile.value;
-    profileSubtitle.textContent = jobInputFormProfile.value;
-    editProfile(profileTitle.textContent, profileSubtitle.textContent)
-        .then(() => {
+    evt.preventDefault();     
+    editProfile(nameInputFormProfile.value,  jobInputFormProfile.value)
+        .then((data) => {
+            console.log(data);
+            profileTitle.textContent = data.name;
+            profileSubtitle.textContent = data.about;
             closePopup(popupEditForm)
         })
         .finally(() => {
@@ -142,7 +143,7 @@ function handlersFormAdd(evt) {
 
         })
         .catch((err) => console.error('Could not fetch', err))
-    formNewCard.reset();
+    
 }
 
 
@@ -167,14 +168,15 @@ buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemoval
 
 function handeleSubmitPopupRemovalCard(evt) {
     evt.preventDefault();
-    console.log(idCardRemoval);
+   
     delCard(idCardRemoval)
         .then((data) => {
             console.log(data.message);
-            servisInfoCard.forEach((card) => {
+            elCardRemoval.remove()
+           /*  servisInfoCard.forEach((card) => {
                 if (card.card_id === idCardRemoval)
                     card.card.remove()
-            })
+            }) */
         })
         .catch((err) => console.error('Could not fetch', err))
 
@@ -188,8 +190,10 @@ function handlersFormAvatar(evt) {
     evt.preventDefault()
 
     editAvatar(inputFormAvatar.value)
-        .then(() => {
-            rendersNewAvatar()
+        .then((data) => {
+            
+            imgAvatar.setAttribute('src', data.avatar)
+            /* rendersNewAvatar() */
             closePopup(popupAvatarForm)
         })
         .finally(() => {
@@ -199,9 +203,9 @@ function handlersFormAvatar(evt) {
 
 }
 
-function rendersNewAvatar() {
+/* function rendersNewAvatar() {
     imgAvatar.setAttribute('src', inputFormAvatar.value)
-}
+} */
 
 function transmitsDataProfile(data) {
     return imgAvatar.setAttribute('src', data.avatar),

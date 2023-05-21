@@ -1,7 +1,6 @@
 
-import { renderCard, /* renderButtonTrashCard, */ /* drawsLikes, */ searchIdCard, renderCardClient } from "./cards";
-import { conteinerForElementsNewCard, buttonSubmitFormProfile, popupEditForm, popupAddForm, popupAvatarForm, buttonSubmitFormAddNewCard, buttonSubmitFormAvatar, config, userId } from './data'
-import { closePopup, handeleOpenPopupRemovalCard,  rendersNewAvatar } from "./modal";
+
+import { buttonSubmitFormProfile, buttonSubmitFormAddNewCard, buttonSubmitFormAvatar, config } from './data'
 import {renderLoading} from '../pages/index'
 
 function getResponseData(res) {
@@ -69,8 +68,7 @@ function createNewCard(data) {
 
 
 function delCard(card_id) {
-    console.log('delCard');
-    console.log(card_id);
+    
     return fetch(`${config.baseUrl}/cards/${card_id}`, {
         method: "DELETE",
         headers: config.headers
