@@ -1,15 +1,14 @@
 import './index.css'
 import { enableValidation } from '../components/validator.js';
-import { idCardRemoval, elCardRemoval, renderCard, renderCardClient } from '../components/Cards.js'
+import { idCardRemoval, elCardRemoval, renderCard, renderCardClient } from '../components/cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile } from '../components/data.js';
 import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
-import api from "../components/Api.js"
-import { Card } from '../components/Cards.js';
+import Api from "../components/Api.js"
 
 import { toggleButtonState, hideInputError } from '../components/validator'
 
-Promise.all([api.requestsDataProfile(), api.loadingCards()])
+Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
         const initialCards = result.map((el) => {
@@ -32,7 +31,7 @@ formProfile.addEventListener('submit', handleFormProfileSubmit);
 
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
-    api.editProfile(nameInputFormProfile.value, jobInputFormProfile.value)
+    Api.editProfile(nameInputFormProfile.value, jobInputFormProfile.value)
         .then((data) => {
             console.log(data);
             profileTitle.textContent = data.name;
@@ -43,7 +42,6 @@ function handleFormProfileSubmit(evt) {
             renderLoading(false, buttonSubmitFormProfile)
         })
         .catch((err) => console.error('Could not fetch', err))
-
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
@@ -107,7 +105,6 @@ buttonClosePopupPic.addEventListener('click', () => closePopup(popupPic));
 
 buttonClosePopupRemovalCard.addEventListener('click', () => closePopup(popupRemovalCard))
 
-
 formNewCard.addEventListener('submit', handlersFormAdd);
 
 function handlersFormAdd(evt) {
@@ -116,7 +113,7 @@ function handlersFormAdd(evt) {
         name: inputNameFormAddCard.value,
         link: inputLinkAddNewCard.value
     }
-    api.createNewCard(data)
+    Api.createNewCard(data)
         .then((data) => {
             const el = {
                 'name': data.name,
@@ -156,7 +153,7 @@ buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemoval
 function handeleSubmitPopupRemovalCard(evt) {
     evt.preventDefault();
 
-    api.delCard(idCardRemoval)
+    Api.delCard(idCardRemoval)
         .then((data) => {
             console.log(data.message);
             elCardRemoval.remove()
@@ -175,7 +172,7 @@ buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
 function handlersFormAvatar(evt) {
     evt.preventDefault()
 
-    api.editAvatar(inputFormAvatar.value)
+    Api.editAvatar(inputFormAvatar.value)
         .then((data) => {
 
             imgAvatar.setAttribute('src', data.avatar)
