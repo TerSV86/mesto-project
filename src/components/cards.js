@@ -5,6 +5,8 @@ import Api from "./Api.js"
 let idCardRemoval;
 let elCardRemoval;
 
+
+
 function createCard(data) {
   const newCard = elementTemplate.cloneNode(true);
   const elementLikeNewCard = newCard.querySelector('.element__like');
@@ -20,17 +22,17 @@ function createCard(data) {
   elementCounterLikesCard.textContent = data.count_likes;
 
   elementImgNewCard.addEventListener('click', () => openPopupPic(data));
-  elementLikeNewCard.addEventListener('click', (evt) => {
+  elementLikeNewCard.addEventListener('click', () => {
     if ((elementLikeNewCard.classList.contains('element__like_active'))) {
 
-      delLikesServer(data.crd_id)
+      Api.delLikesServer(data.crd_id)
         .then((data) => {
           elementLikeNewCard.classList.remove('element__like_active');
           elementCounterLikesCard.textContent = data.likes.length
         })
         .catch((err) => console.error('Could not fetch', err))
     } else {
-      putLikesServer(data.crd_id)
+      Api.putLikesServer(data.crd_id)
         .then((data) => {
 
           elementLikeNewCard.classList.add('element__like_active');

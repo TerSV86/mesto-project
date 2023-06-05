@@ -33,7 +33,6 @@ function handleFormProfileSubmit(evt) {
     evt.preventDefault();
     Api.editProfile(nameInputFormProfile.value, jobInputFormProfile.value)
         .then((data) => {
-            console.log(data);
             profileTitle.textContent = data.name;
             profileSubtitle.textContent = data.about;
             closePopup(popupEditForm)
