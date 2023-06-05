@@ -65,12 +65,5 @@ function createCard(data) {
   return newCard;
 }
 
-function renderCard(data) {
-  conteinerForElementsNewCard.append(createCard(data));
-}
 
-function renderCardClient(data) {
-  conteinerForElementsNewCard.prepend(createCard(data));
-}
-
-export { renderCard, idCardRemoval, elCardRemoval, renderCardClient }
+export { idCardRemoval, elCardRemoval , createCard}

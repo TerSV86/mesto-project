@@ -1,7 +1,7 @@
 import './index.css'
 import { enableValidation } from '../components/validator.js';
-import { idCardRemoval, elCardRemoval, renderCard, renderCardClient } from '../components/cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile } from '../components/data.js';
+import { idCardRemoval, elCardRemoval, createCard } from '../components/cards.js'
+import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard } from '../components/data.js';
 import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
 import Api from "../components/Api.js"
@@ -122,7 +122,7 @@ function handlersFormAdd(evt) {
                 'crd_id': data._id,
                 'like': data.likes
             }
-            renderCardClient(el)
+            renderCard(el, 'prepend')
             closePopup(popupAddForm)
         })
         .finally(() => {
@@ -175,7 +175,6 @@ function handlersFormAvatar(evt) {
         .then((data) => {
 
             imgAvatar.setAttribute('src', data.avatar)
-            /* rendersNewAvatar() */
             closePopup(popupAvatarForm)
         })
         .finally(() => {
@@ -185,9 +184,7 @@ function handlersFormAvatar(evt) {
 
 }
 
-/* function rendersNewAvatar() {
-    imgAvatar.setAttribute('src', inputFormAvatar.value)
-} */
+
 
 function transmitsDataProfile(data) {
     return imgAvatar.setAttribute('src', data.avatar),
@@ -200,6 +197,25 @@ function transmitsDataProfile(data) {
 function resetForm(popup) {
     popup.querySelector('.form').reset();
 }
+
+function renderCard(data, position = 'append') {
+    const newCard = createCard(data);
+    switch (position) {
+        case 'append':
+            conteinerForElementsNewCard.append(newCard);
+            break;
+        case 'prepend':
+            conteinerForElementsNewCard.prepend(newCard);
+            break;
+        default:
+            console.error('Не валидное значение для параметра position');
+            break
+    }
+}
+
+
+
+
 
 export function renderLoading(isLoading, button) {
     if (isLoading) {
