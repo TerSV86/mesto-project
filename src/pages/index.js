@@ -1,15 +1,15 @@
 import './index.css'
-
 import { enableValidation } from '../components/validator.js';
-import { idCardRemoval, elCardRemoval, renderCard, renderCardClient } from '../components/cards.js'
+import { idCardRemoval, elCardRemoval, renderCard, renderCardClient } from '../components/Cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile } from '../components/data.js';
 import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
-import { requestsDataProfile, editProfile, editAvatar, loadingCards, createNewCard, delCard } from "../components/api.js"
+import api from "../components/Api.js"
+import { Card } from '../components/Cards.js';
 
 import { toggleButtonState, hideInputError } from '../components/validator'
 
-Promise.all([requestsDataProfile(), loadingCards()])
+Promise.all([api.requestsDataProfile(), api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
         const initialCards = result.map((el) => {
@@ -28,12 +28,11 @@ Promise.all([requestsDataProfile(), loadingCards()])
     })
     .catch((err) => console.error('Could not fetch', err))
 
-
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
 function handleFormProfileSubmit(evt) {
-    evt.preventDefault();     
-    editProfile(nameInputFormProfile.value,  jobInputFormProfile.value)
+    evt.preventDefault();
+    api.editProfile(nameInputFormProfile.value, jobInputFormProfile.value)
         .then((data) => {
             console.log(data);
             profileTitle.textContent = data.name;
@@ -46,9 +45,6 @@ function handleFormProfileSubmit(evt) {
         .catch((err) => console.error('Could not fetch', err))
 
 }
-
-
-
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 
@@ -64,8 +60,6 @@ function handleOpenPopupProfile() {
     openPopup(popupEditForm);
 }
 
-
-
 buttonOpenPopupAddNewCard.addEventListener('click', handleOpenPopupAddNewCard)
 
 function handleOpenPopupAddNewCard() {
@@ -78,8 +72,6 @@ function handleOpenPopupAddNewCard() {
         })
     }
 }
-
-
 
 buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 
@@ -95,7 +87,6 @@ function handleOpenPopupAvatar() {
         buttonSubmitFormAvatar.classList.remove('form__handlers');
     }
 }
-
 
 buttonCloseFormEdit.addEventListener('click', () => {
     closePopup(popupEditForm);
@@ -125,7 +116,7 @@ function handlersFormAdd(evt) {
         name: inputNameFormAddCard.value,
         link: inputLinkAddNewCard.value
     }
-    createNewCard(data)
+    api.createNewCard(data)
         .then((data) => {
             const el = {
                 'name': data.name,
@@ -143,10 +134,7 @@ function handlersFormAdd(evt) {
 
         })
         .catch((err) => console.error('Could not fetch', err))
-    
 }
-
-
 
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
@@ -163,35 +151,33 @@ enableValidation({
     errorClass: 'form__input-error_active'
 });
 
-
 buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemovalCard)
 
 function handeleSubmitPopupRemovalCard(evt) {
     evt.preventDefault();
-   
-    delCard(idCardRemoval)
+
+    api.delCard(idCardRemoval)
         .then((data) => {
             console.log(data.message);
             elCardRemoval.remove()
-           /*  servisInfoCard.forEach((card) => {
-                if (card.card_id === idCardRemoval)
-                    card.card.remove()
-            }) */
+            /*  servisInfoCard.forEach((card) => {
+                 if (card.card_id === idCardRemoval)
+                     card.card.remove()
+             }) */
         })
         .catch((err) => console.error('Could not fetch', err))
 
     closePopup(popupRemovalCard)
 }
 
-
 buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
 
 function handlersFormAvatar(evt) {
     evt.preventDefault()
 
-    editAvatar(inputFormAvatar.value)
+    api.editAvatar(inputFormAvatar.value)
         .then((data) => {
-            
+
             imgAvatar.setAttribute('src', data.avatar)
             /* rendersNewAvatar() */
             closePopup(popupAvatarForm)
@@ -215,11 +201,9 @@ function transmitsDataProfile(data) {
 
 }
 
-
 function resetForm(popup) {
     popup.querySelector('.form').reset();
 }
-
 
 export function renderLoading(isLoading, button) {
     if (isLoading) {
@@ -228,6 +212,3 @@ export function renderLoading(isLoading, button) {
         button.textContent = "Сохранить"
     }
 }
-
-
-
