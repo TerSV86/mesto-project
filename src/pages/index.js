@@ -1,12 +1,14 @@
 import './index.css'
 import { enableValidation } from '../components/validator.js';
-import { idCardRemoval, elCardRemoval, createCard } from '../components/cards.js'
+import { idCardRemoval, elCardRemoval } from '../components/Cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard } from '../components/data.js';
 import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
-import Api from "../components/Api.js"
-
 import { toggleButtonState, hideInputError } from '../components/validator'
+import Api from "../components/Api.js"
+import { Card } from '../components/Cards.js';
+
+
 
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
@@ -156,10 +158,6 @@ function handeleSubmitPopupRemovalCard(evt) {
         .then((data) => {
             console.log(data.message);
             elCardRemoval.remove()
-            /*  servisInfoCard.forEach((card) => {
-                 if (card.card_id === idCardRemoval)
-                     card.card.remove()
-             }) */
         })
         .catch((err) => console.error('Could not fetch', err))
 
@@ -199,7 +197,7 @@ function resetForm(popup) {
 }
 
 function renderCard(data, position = 'append') {
-    const newCard = createCard(data);
+    const newCard = new Card(data, '#addCard').createCard();
     switch (position) {
         case 'append':
             conteinerForElementsNewCard.append(newCard);
@@ -212,9 +210,6 @@ function renderCard(data, position = 'append') {
             break
     }
 }
-
-
-
 
 
 export function renderLoading(isLoading, button) {
