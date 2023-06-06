@@ -1,6 +1,4 @@
-import { Card } from './Cards.js';
-
-class Section {
+export default class Section {
     #renderer;
     #container;
     constructor(renderer, containerSelector) {
@@ -22,12 +20,4 @@ class Section {
         }
 
     }
-}
-
-const sectionList = new Section(renderCards, '.elements')
-
-export function renderCards({ data, position }) {
-    const newCard = new Card(data, '#addCard').createCard();
-    sectionList.addCard({ elementNode: newCard, position });
-
 }

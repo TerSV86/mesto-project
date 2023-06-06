@@ -1,12 +1,24 @@
 import './index.css'
 import { enableValidation } from '../components/validator.js';
-import { idCardRemoval, elCardRemoval } from '../components/Cards.js'
+import { idCardRemoval, elCardRemoval, Card } from '../components/Cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard } from '../components/data.js';
 import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
 import { toggleButtonState, hideInputError } from '../components/validator'
 import Api from "../components/Api.js"
-import { renderCards } from "../components/Section.js"
+import Section from "../components/Section.js"
+import Form from "../components/Form.js"
+
+const sectionList = new Section(renderCards, '.elements')
+
+function renderCards({ data, position }) {
+    const newCard = new Card(data, '#addCard').createCard();
+    sectionList.addCard({ elementNode: newCard, position });
+}
+
+const submitForm = new Form('.form', handleFormProfileSubmit)
+
+submitForm.setEventListener();
 
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
@@ -27,7 +39,7 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     })
     .catch((err) => console.error('Could not fetch', err))
 
-formProfile.addEventListener('submit', handleFormProfileSubmit);
+submitForm.setSubmitAction(handleFormProfileSubmit)
 
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
@@ -165,7 +177,6 @@ function handlersFormAvatar(evt) {
 
     Api.editAvatar(inputFormAvatar.value)
         .then((data) => {
-
             imgAvatar.setAttribute('src', data.avatar)
             closePopup(popupAvatarForm)
         })
