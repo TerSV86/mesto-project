@@ -33,7 +33,7 @@ export class Card {
       elementTitleNewCard.textContent = this.#data.name;
       elementCounterLikesCard.textContent = this.#data.count_likes;
 
-      elementImgNewCard.addEventListener('click', () => openPopupPic(this.data)); //нужно вынисти наружу
+      elementImgNewCard.addEventListener('click', () => openPopupPic(this.#data)); //нужно вынисти наружу
       elementLikeNewCard.addEventListener('click', () => {
           if ((elementLikeNewCard.classList.contains('element__like_active'))) {
               Api.delLikesServer(this.#data.crd_id)

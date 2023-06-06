@@ -6,9 +6,7 @@ import { openPopup } from '../components/modal.js';
 import { closePopupOverlay, closePopup } from '../components/modal.js'
 import { toggleButtonState, hideInputError } from '../components/validator'
 import Api from "../components/Api.js"
-import { Card } from '../components/Cards.js';
-
-
+import { renderCards } from "../components/Section.js"
 
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
@@ -24,7 +22,7 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
             }
         })
         initialCards.forEach((item) => {
-            renderCard(item)
+            renderCards({ data: item, position: 'append' })
         })
     })
     .catch((err) => console.error('Could not fetch', err))
@@ -89,7 +87,6 @@ function handleOpenPopupAvatar() {
 
 buttonCloseFormEdit.addEventListener('click', () => {
     closePopup(popupEditForm);
-
 });
 
 buttonCloseFormAdd.addEventListener('click', () => {
@@ -124,12 +121,11 @@ function handlersFormAdd(evt) {
                 'crd_id': data._id,
                 'like': data.likes
             }
-            renderCard(el, 'prepend')
+            renderCards({ data: el, position: 'prepend' })
             closePopup(popupAddForm)
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormAddNewCard)
-
         })
         .catch((err) => console.error('Could not fetch', err))
 }
@@ -153,14 +149,12 @@ buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemoval
 
 function handeleSubmitPopupRemovalCard(evt) {
     evt.preventDefault();
-
     Api.delCard(idCardRemoval)
         .then((data) => {
             console.log(data.message);
             elCardRemoval.remove()
         })
         .catch((err) => console.error('Could not fetch', err))
-
     closePopup(popupRemovalCard)
 }
 
@@ -179,38 +173,18 @@ function handlersFormAvatar(evt) {
             renderLoading(false, buttonSubmitFormAvatar)
         })
         .catch((err) => console.error('Could not fetch', err))
-
 }
-
-
 
 function transmitsDataProfile(data) {
     return imgAvatar.setAttribute('src', data.avatar),
         profileTitle.textContent = data.name,
         profileSubtitle.textContent = data.about,
         userId.id = data._id
-
 }
 
 function resetForm(popup) {
     popup.querySelector('.form').reset();
 }
-
-function renderCard(data, position = 'append') {
-    const newCard = new Card(data, '#addCard').createCard();
-    switch (position) {
-        case 'append':
-            conteinerForElementsNewCard.append(newCard);
-            break;
-        case 'prepend':
-            conteinerForElementsNewCard.prepend(newCard);
-            break;
-        default:
-            console.error('Не валидное значение для параметра position');
-            break
-    }
-}
-
 
 export function renderLoading(isLoading, button) {
     if (isLoading) {
