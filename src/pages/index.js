@@ -2,17 +2,18 @@ import './index.css'
 import { enableValidation } from '../components/validator.js';
 import { idCardRemoval, elCardRemoval, Card } from '../components/Cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard } from '../components/data.js';
-import { openPopup } from '../components/modal.js';
-import { closePopupOverlay, closePopup } from '../components/modal.js'
+import  Popup  from '../components/modal.js'
 import { toggleButtonState, hideInputError } from '../components/validator'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import Form from "../components/Form.js"
 
+
 const sectionList = new Section(renderCards, '.elements')
 
 function renderCards({ data, position }) {
-    const newCard = new Card(data, '#addCard').createCard();
+    const newCard = new Card(data, '#addCard', Popup.openPopupPic, Popup.handeleOpenPopupRemovalCard).createCard();
+   
     sectionList.addCard({ elementNode: newCard, position });
 }
 
@@ -47,7 +48,7 @@ function handleFormProfileSubmit(evt) {
         .then((data) => {
             profileTitle.textContent = data.name;
             profileSubtitle.textContent = data.about;
-            closePopup(popupEditForm)
+            Popup.closePopup(popupEditForm)
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
@@ -66,13 +67,13 @@ function handleOpenPopupProfile() {
         })
     }
     toggleButtonState(inputsFormProfile, buttonSubmitFormProfile, selector);
-    openPopup(popupEditForm);
+    Popup.openPopup(popupEditForm);
 }
 
 buttonOpenPopupAddNewCard.addEventListener('click', handleOpenPopupAddNewCard)
 
 function handleOpenPopupAddNewCard() {
-    openPopup(popupAddForm);
+    Popup.openPopup(popupAddForm);
     resetForm(popupAddForm);
     toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
     if (formAddNewCard.querySelector('.form__input_type_error')) {
@@ -85,7 +86,7 @@ function handleOpenPopupAddNewCard() {
 buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 
 function handleOpenPopupAvatar() {
-    openPopup(popupAvatarForm)
+    Popup.openPopup(popupAvatarForm)
     resetForm(popupAvatarForm)
 
     if (!(popupAddForm.querySelector('.form__item').validity.valid)) {
@@ -98,22 +99,22 @@ function handleOpenPopupAvatar() {
 }
 
 buttonCloseFormEdit.addEventListener('click', () => {
-    closePopup(popupEditForm);
+    Popup.closePopup(popupEditForm);
 });
 
 buttonCloseFormAdd.addEventListener('click', () => {
     formNewCard.reset();
-    closePopup(popupAddForm);
+    Popup.closePopup(popupAddForm);
 });
 
 buttonCloseFormAvatar.addEventListener('click', () => {
     formAvatar.reset();
-    closePopup(popupAvatarForm)
+    Popup.closePopup(popupAvatarForm)
 })
 
-buttonClosePopupPic.addEventListener('click', () => closePopup(popupPic));
+buttonClosePopupPic.addEventListener('click', () => Popup.closePopup(popupPic));
 
-buttonClosePopupRemovalCard.addEventListener('click', () => closePopup(popupRemovalCard))
+buttonClosePopupRemovalCard.addEventListener('click', () => Popup.closePopup(popupRemovalCard))
 
 formNewCard.addEventListener('submit', handlersFormAdd);
 
@@ -134,7 +135,7 @@ function handlersFormAdd(evt) {
                 'like': data.likes
             }
             renderCards({ data: el, position: 'prepend' })
-            closePopup(popupAddForm)
+            Popup.closePopup(popupAddForm)
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormAddNewCard)
@@ -144,7 +145,7 @@ function handlersFormAdd(evt) {
 
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
-        closePopupOverlay(evt.target)
+        Popup.closePopupOverlay(evt.target)
     })
 })
 
@@ -167,7 +168,7 @@ function handeleSubmitPopupRemovalCard(evt) {
             elCardRemoval.remove()
         })
         .catch((err) => console.error('Could not fetch', err))
-    closePopup(popupRemovalCard)
+        Popup.closePopup(popupRemovalCard)
 }
 
 buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
@@ -178,7 +179,7 @@ function handlersFormAvatar(evt) {
     Api.editAvatar(inputFormAvatar.value)
         .then((data) => {
             imgAvatar.setAttribute('src', data.avatar)
-            closePopup(popupAvatarForm)
+            Popup.closePopup(popupAvatarForm)
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormAvatar)
