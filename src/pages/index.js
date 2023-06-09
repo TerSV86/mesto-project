@@ -1,19 +1,18 @@
 import './index.css'
-import { enableValidation } from '../components/validator.js';
 import { idCardRemoval, elCardRemoval, Card } from '../components/Cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard } from '../components/data.js';
-import  Popup  from '../components/modal.js'
-import { toggleButtonState, hideInputError } from '../components/validator'
+import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard, buttonSubmitFormEditProfile } from '../components/data.js';
+import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import Form from "../components/Form.js"
+import Validator from "../components/validator.js"
 
+const validator = new Validator();
 
 const sectionList = new Section(renderCards, '.elements')
 
 function renderCards({ data, position }) {
     const newCard = new Card(data, '#addCard', Popup.openPopupPic, Popup.handeleOpenPopupRemovalCard).createCard();
-   
     sectionList.addCard({ elementNode: newCard, position });
 }
 
@@ -63,10 +62,12 @@ function handleOpenPopupProfile() {
     jobInputFormProfile.value = profileSubtitle.textContent;
     if (formProfile.querySelector('.form__input_type_error')) {
         inputsFormProfile.forEach((input) => {
-            isValid(formProfile, input, selector)
+            validator.isValid(formProfile, input, selector)
         })
     }
-    toggleButtonState(inputsFormProfile, buttonSubmitFormProfile, selector);
+    validator.toggleButtonState(inputsFormProfile, buttonSubmitFormProfile, selector);
+    buttonSubmitFormEditProfile.setAttribute('disabled', '');
+    buttonSubmitFormEditProfile.classList.add('form__handlers');
     Popup.openPopup(popupEditForm);
 }
 
@@ -75,10 +76,10 @@ buttonOpenPopupAddNewCard.addEventListener('click', handleOpenPopupAddNewCard)
 function handleOpenPopupAddNewCard() {
     Popup.openPopup(popupAddForm);
     resetForm(popupAddForm);
-    toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
+    validator.toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
     if (formAddNewCard.querySelector('.form__input_type_error')) {
         inputsFormAddNewCard.forEach((input) => {
-            hideInputError(formAddNewCard, input, selector);
+            validator.hideInputError(formAddNewCard, input, selector);
         })
     }
 }
@@ -88,14 +89,11 @@ buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 function handleOpenPopupAvatar() {
     Popup.openPopup(popupAvatarForm)
     resetForm(popupAvatarForm)
-
-    if (!(popupAddForm.querySelector('.form__item').validity.valid)) {
-        buttonSubmitFormAvatar.setAttribute('disabled', '');
-        buttonSubmitFormAvatar.classList.add('form__handlers');
-    } else {
-        buttonSubmitFormAvatar.removeAttribute('disabled')
-        buttonSubmitFormAvatar.classList.remove('form__handlers');
+    if (popupAvatarForm.querySelector('.form__input_type_error')) {
+        validator.hideInputError(popupAvatarForm, inputFormAvatar, selector)
     }
+    buttonSubmitFormAvatar.setAttribute('disabled', '');
+    buttonSubmitFormAvatar.classList.add('form__handlers');
 }
 
 buttonCloseFormEdit.addEventListener('click', () => {
@@ -149,7 +147,7 @@ popupsBody.forEach((popupBody) => {
     })
 })
 
-enableValidation({
+validator.enableValidation({
     formSelector: '.form',
     inputSelector: '.form__item',
     submitButtonSelector: '.form__handlers',
@@ -168,7 +166,7 @@ function handeleSubmitPopupRemovalCard(evt) {
             elCardRemoval.remove()
         })
         .catch((err) => console.error('Could not fetch', err))
-        Popup.closePopup(popupRemovalCard)
+    Popup.closePopup(popupRemovalCard)
 }
 
 buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)

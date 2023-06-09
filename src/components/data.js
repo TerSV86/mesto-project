@@ -40,6 +40,7 @@ const buttonCloseFormAvatar = popupAvatarForm.querySelector('.form__close');
 const formAvatar = popupAvatarForm.querySelector('.form');
 const buttonOpenPopupAvatar = document.querySelector('.profile__avatar');
 const inputFormAvatar = formAvatar.querySelector('.form__item');
+const buttonSubmitFormEditProfile = formProfile.querySelector('.form__handlers'); 
 const buttonSubmitFormAvatar = formAvatar.querySelector('.form__handlers');
 const imgAvatar = document.querySelector('.profile__avatar-img');
 
@@ -58,4 +59,4 @@ const config = {
 const userId = {}
 const servisInfoCard = []
 
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, userId, servisInfoCard }
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, userId, servisInfoCard, buttonSubmitFormEditProfile }
