@@ -1,7 +1,7 @@
 import Popup from './modal.js'
 import { popupPicTitle, popupPicSrc, popupPic, popups, popupRemovalCard } from './data.js'
 
- class CardPopup extends Popup {
+class CardPopup extends Popup {
     data;
     constructor(data, popup = null) {
         super(popup);
@@ -16,7 +16,6 @@ import { popupPicTitle, popupPicSrc, popupPic, popups, popupRemovalCard } from '
         super.closePopup()
     }
     closePopupOverlay(ovr) {
-        console.log('tyt');
         super.closePopupOverlay(ovr)
     }
     closePopupEsc(evt) {
@@ -31,7 +30,7 @@ import { popupPicTitle, popupPicSrc, popupPic, popups, popupRemovalCard } from '
     openPopupPic() {
         this.createPopupPic(this.data);
         super.openPopup(this.popup);
-    }    
+    }
 }
 
-export {CardPopup}
+export { CardPopup }

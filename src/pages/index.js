@@ -154,13 +154,12 @@ function handlersFormAdd(evt) {
 
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
-        renderPopupCard().closePopupOverlay(evt.target)
-        profilePopup.closePopupOverlay(evt.target)
-        newCardPopup.closePopupOverlay(evt.target)
-        avatarPopup.closePopupOverlay(evt.target)
-        removalCardPopup.closePopupOverlay(evt.target)
-         // ?
-         
+        (evt.target.closest('#popup-pic')) ? renderPopupCard().closePopupOverlay(evt.target) : 
+        (evt.target.closest('#popup-edit-form')) ? profilePopup.closePopupOverlay(evt.target) : 
+        (evt.target.closest('#popup-add-form')) ? newCardPopup.closePopupOverlay(evt.target) : 
+        (evt.target.closest('#popup-avatar-form')) ? avatarPopup.closePopupOverlay(evt.target) : 
+        (evt.target.closest('#popup-removal-card')) ? removalCardPopup.closePopupOverlay(evt.target) : 
+        false;           
     })
 })
 

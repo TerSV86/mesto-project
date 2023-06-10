@@ -17,12 +17,10 @@ export default class Popup {
             document.removeEventListener('keydown', () => { this.closePopupEsc })
     }
     closePopupOverlay(ovr) {
-        console.log(ovr);
         const selectedPopupPic = ovr.closest('.popup__pic');
         const selectedForm = ovr.closest('.form');
         const popup = ovr.closest('.popup');
         if (!selectedForm && !selectedPopupPic) {
-            console.log('tyt');
             this.closePopup(popup);
         }
     }
