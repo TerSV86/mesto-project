@@ -7,16 +7,16 @@ import Section from "../components/Section.js"
 import Form from "../components/Form.js"
 import Validator from "../components/validator.js"
 
-const validator = new Validator();
+const validator = new Validator({ selectors: selector });
 
-const sectionList = new Section(renderCards, '.elements')
+const sectionList = new Section(renderCards, '.elements');
 
 function renderCards({ data, position }) {
     const newCard = new Card(data, '#addCard', Popup.openPopupPic, Popup.handeleOpenPopupRemovalCard).createCard();
     sectionList.addCard({ elementNode: newCard, position });
-}
+};
 
-const submitForm = new Form('.form', handleFormProfileSubmit)
+const submitForm = new Form('.form', handleFormProfileSubmit);
 
 submitForm.setEventListener();
 
@@ -62,7 +62,7 @@ function handleOpenPopupProfile() {
     jobInputFormProfile.value = profileSubtitle.textContent;
     if (formProfile.querySelector('.form__input_type_error')) {
         inputsFormProfile.forEach((input) => {
-            validator.isValid(formProfile, input, selector)
+            validator.isValid(formProfile, input)
         })
     }
     validator.toggleButtonState(inputsFormProfile, buttonSubmitFormProfile, selector);
@@ -79,7 +79,7 @@ function handleOpenPopupAddNewCard() {
     validator.toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
     if (formAddNewCard.querySelector('.form__input_type_error')) {
         inputsFormAddNewCard.forEach((input) => {
-            validator.hideInputError(formAddNewCard, input, selector);
+            validator.hideInputError(formAddNewCard, input);
         })
     }
 }
@@ -90,7 +90,7 @@ function handleOpenPopupAvatar() {
     Popup.openPopup(popupAvatarForm)
     resetForm(popupAvatarForm)
     if (popupAvatarForm.querySelector('.form__input_type_error')) {
-        validator.hideInputError(popupAvatarForm, inputFormAvatar, selector)
+        validator.hideInputError(popupAvatarForm, inputFormAvatar)
     }
     buttonSubmitFormAvatar.setAttribute('disabled', '');
     buttonSubmitFormAvatar.classList.add('form__handlers');
