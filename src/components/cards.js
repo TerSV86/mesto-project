@@ -1,6 +1,5 @@
-import { elementTemplate, userId, conteinerForElementsNewCard, servisInfoCard, popupPic } from "./data.js";
+import { userId, servisInfoCard} from "./data.js";
 import Api from "./Api.js"
-import Popup from "./modal.js";
 
 let idCardRemoval;
 let elCardRemoval;
@@ -16,12 +15,12 @@ export class Card {
       .querySelector('.element')
       .cloneNode(true)
   }
-  constructor(data, templateSelector, popup, handeleOpenPopupRemovalCard) {
+  constructor(data, templateSelector, renderPopupCard, removalCardPopup) {
     this.#data = data;
     this.#templateSelector = templateSelector;
-    this.popup = popup;
-    this.handeleOpenPopupRemovalCard = handeleOpenPopupRemovalCard;
-    console.log(this.popup);
+    this.renderPopupCard = renderPopupCard;
+    this.removalCardPopup = removalCardPopup;
+
   }
   createCard() {
     this.#newCard = this.#getTemplate();
@@ -37,8 +36,8 @@ export class Card {
     elementCounterLikesCard.textContent = this.#data.count_likes;
 
     elementImgNewCard.addEventListener('click', () => {
-      this.popup.bind(Popup, this.#data)()    
-    }); 
+      this.renderPopupCard(this.#data).openPopupPic()
+    });
     elementLikeNewCard.addEventListener('click', () => {
       if ((elementLikeNewCard.classList.contains('element__like_active'))) {
         Api.delLikesServer(this.#data.crd_id)
@@ -65,7 +64,7 @@ export class Card {
       elementTrashNewCard.remove()
     }
     elementTrashNewCard.addEventListener('click', (evt) => {
-      this.handeleOpenPopupRemovalCard.call(Popup, evt); 
+      this.removalCardPopup.openPopup()
       elCardRemoval = evt.target.closest('.element')
       idCardRemoval = this.#data.crd_id;
     })
