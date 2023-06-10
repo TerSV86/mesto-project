@@ -1,18 +1,29 @@
 import './index.css'
 import { idCardRemoval, elCardRemoval, Card } from '../components/Cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, servisInfoCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, conteinerForElementsNewCard, buttonSubmitFormEditProfile } from '../components/data.js';
+import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile } from '../components/data.js';
 import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import Form from "../components/Form.js"
 import Validator from "../components/validator.js"
+import { CardPopup } from '../components/CardPopup';
 
 const validator = new Validator();
 
 const sectionList = new Section(renderCards, '.elements')
 
+const profilePopup = new Popup(popupEditForm)
+const newCardPopup = new Popup(popupAddForm)
+const avatarPopup = new Popup(popupAvatarForm)
+const removalCardPopup = new Popup(popupRemovalCard)
+function renderPopupCard(data) {
+    const cardPopup = new CardPopup(data, popupPic)
+    return cardPopup
+}
+
+
 function renderCards({ data, position }) {
-    const newCard = new Card(data, '#addCard', Popup.openPopupPic, Popup.handeleOpenPopupRemovalCard).createCard();
+    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 }
 
@@ -47,7 +58,7 @@ function handleFormProfileSubmit(evt) {
         .then((data) => {
             profileTitle.textContent = data.name;
             profileSubtitle.textContent = data.about;
-            Popup.closePopup(popupEditForm)
+            profilePopup.closePopup()
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
@@ -68,13 +79,13 @@ function handleOpenPopupProfile() {
     validator.toggleButtonState(inputsFormProfile, buttonSubmitFormProfile, selector);
     buttonSubmitFormEditProfile.setAttribute('disabled', '');
     buttonSubmitFormEditProfile.classList.add('form__handlers');
-    Popup.openPopup(popupEditForm);
+    profilePopup.openPopup();
 }
 
 buttonOpenPopupAddNewCard.addEventListener('click', handleOpenPopupAddNewCard)
 
 function handleOpenPopupAddNewCard() {
-    Popup.openPopup(popupAddForm);
+    newCardPopup.openPopup();
     resetForm(popupAddForm);
     validator.toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
     if (formAddNewCard.querySelector('.form__input_type_error')) {
@@ -87,7 +98,7 @@ function handleOpenPopupAddNewCard() {
 buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 
 function handleOpenPopupAvatar() {
-    Popup.openPopup(popupAvatarForm)
+    avatarPopup.openPopup()
     resetForm(popupAvatarForm)
     if (popupAvatarForm.querySelector('.form__input_type_error')) {
         validator.hideInputError(popupAvatarForm, inputFormAvatar, selector)
@@ -97,22 +108,22 @@ function handleOpenPopupAvatar() {
 }
 
 buttonCloseFormEdit.addEventListener('click', () => {
-    Popup.closePopup(popupEditForm);
+    profilePopup.closePopup();
 });
 
 buttonCloseFormAdd.addEventListener('click', () => {
     formNewCard.reset();
-    Popup.closePopup(popupAddForm);
+    newCardPopup.closePopup();
 });
 
 buttonCloseFormAvatar.addEventListener('click', () => {
     formAvatar.reset();
-    Popup.closePopup(popupAvatarForm)
+    avatarPopup.closePopup()
 })
 
-buttonClosePopupPic.addEventListener('click', () => Popup.closePopup(popupPic));
+buttonClosePopupPic.addEventListener('click', () => renderPopupCard().closePopup());
 
-buttonClosePopupRemovalCard.addEventListener('click', () => Popup.closePopup(popupRemovalCard))
+buttonClosePopupRemovalCard.addEventListener('click', () => removalCardPopup.closePopup())
 
 formNewCard.addEventListener('submit', handlersFormAdd);
 
@@ -133,7 +144,7 @@ function handlersFormAdd(evt) {
                 'like': data.likes
             }
             renderCards({ data: el, position: 'prepend' })
-            Popup.closePopup(popupAddForm)
+            newCardPopup.closePopup()
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormAddNewCard)
@@ -143,7 +154,13 @@ function handlersFormAdd(evt) {
 
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
-        Popup.closePopupOverlay(evt.target)
+        renderPopupCard().closePopupOverlay(evt.target)
+        profilePopup.closePopupOverlay(evt.target)
+        newCardPopup.closePopupOverlay(evt.target)
+        avatarPopup.closePopupOverlay(evt.target)
+        removalCardPopup.closePopupOverlay(evt.target)
+         // ?
+         
     })
 })
 
@@ -166,7 +183,7 @@ function handeleSubmitPopupRemovalCard(evt) {
             elCardRemoval.remove()
         })
         .catch((err) => console.error('Could not fetch', err))
-    Popup.closePopup(popupRemovalCard)
+    removalCardPopup.closePopup()
 }
 
 buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
@@ -177,7 +194,7 @@ function handlersFormAvatar(evt) {
     Api.editAvatar(inputFormAvatar.value)
         .then((data) => {
             imgAvatar.setAttribute('src', data.avatar)
-            Popup.closePopup(popupAvatarForm)
+            avatarPopup.closePopup(popupAvatarForm)
         })
         .finally(() => {
             renderLoading(false, buttonSubmitFormAvatar)
