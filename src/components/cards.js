@@ -1,6 +1,3 @@
-import { userId, servisInfoCard} from "./data.js";
-import Api from "./Api.js"
-
 let idCardRemoval;
 let elCardRemoval;
 
@@ -15,12 +12,14 @@ export class Card {
       .querySelector('.element')
       .cloneNode(true)
   }
-  constructor(data, templateSelector, renderPopupCard, removalCardPopup) {
+  constructor(data, templateSelector, renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
     this.#data = data;
     this.#templateSelector = templateSelector;
     this.renderPopupCard = renderPopupCard;
     this.removalCardPopup = removalCardPopup;
-
+    this.userId = userId;
+    this.handlerDelLikes = handlerDelLikes;
+    this.handlePutLikes = handlePutLikes;
   }
   createCard() {
     this.#newCard = this.#getTemplate();
@@ -33,44 +32,31 @@ export class Card {
     elementImgNewCard.src = this.#data.link;
     elementImgNewCard.alt = this.#data.name;
     elementTitleNewCard.textContent = this.#data.name;
-    elementCounterLikesCard.textContent = this.#data.count_likes;
+    elementCounterLikesCard.textContent = this.#data.likes.length;
 
     elementImgNewCard.addEventListener('click', () => {
-      this.renderPopupCard(this.#data).openPopupPic()
+      this.renderPopupCard(this.#data).openPopup()
     });
     elementLikeNewCard.addEventListener('click', () => {
       if ((elementLikeNewCard.classList.contains('element__like_active'))) {
-        Api.delLikesServer(this.#data.crd_id)
-          .then((data) => {
-            elementLikeNewCard.classList.remove('element__like_active');
-            elementCounterLikesCard.textContent = data.likes.length
-          })
-          .catch((err) => console.error('Could not fetch', err))
+        this.handlerDelLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
       } else {
-        Api.putLikesServer(this.#data.crd_id)
-          .then((data) => {
-            elementLikeNewCard.classList.add('element__like_active');
-            elementCounterLikesCard.textContent = data.likes.length;
-          })
-          .catch((err) => console.error('Could not fetch', err))
+        this.handlePutLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
       }
     })
-    this.#data.like.forEach((el) => {
-      if (el._id === userId.id) {
+    this.#data.likes.forEach((el) => {
+      if (el._id === this.userId) {
         elementLikeNewCard.classList.add('element__like_active')
       }
     })
-    if (!(this.#data.user_id === userId.id)) {
+
+    if (!(this.#data.owner._id === this.userId)) {
       elementTrashNewCard.remove()
     }
     elementTrashNewCard.addEventListener('click', (evt) => {
       this.removalCardPopup.openPopup()
       elCardRemoval = evt.target.closest('.element')
-      idCardRemoval = this.#data.crd_id;
-    })
-    servisInfoCard.push({
-      'card': this.#newCard,
-      'card_id': this.#data.crd_id
+      idCardRemoval = this.#data._id;
     })
     return this.#newCard;
   }

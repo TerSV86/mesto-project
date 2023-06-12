@@ -1,12 +1,12 @@
 import './index.css'
 import { idCardRemoval, elCardRemoval, Card } from '../components/Cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, userId, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile } from '../components/data.js';
+import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc } from '../components/data.js';
 import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import Form from "../components/Form.js"
 import Validator from "../components/validator.js"
-import { CardPopup } from '../components/CardPopup';
+import { PopupWithImage } from '../components/PopupWithImage';
 
 const validator = new Validator({ selectors: selector });
 
@@ -17,13 +17,13 @@ const newCardPopup = new Popup(popupAddForm)
 const avatarPopup = new Popup(popupAvatarForm)
 const removalCardPopup = new Popup(popupRemovalCard)
 function renderPopupCard(data) {
-    const cardPopup = new CardPopup(data, popupPic)
+    const cardPopup = new PopupWithImage(data, popupPic, popupPicTitle, popupPicSrc)
     return cardPopup
 }
 
 
-function renderCards({ data, position }) {
-    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup).createCard();
+function renderCards({ data, position, userId }) {
+    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes).createCard();//*
     sectionList.addCard({ elementNode: newCard, position });
 };
 
@@ -34,18 +34,8 @@ submitForm.setEventListener();
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
-        const initialCards = result.map((el) => {
-            return el = {
-                'name': el.name,
-                'link': el.link,
-                'user_id': el.owner._id,
-                'count_likes': el.likes.length,
-                'crd_id': el._id,
-                'like': el.likes
-            }
-        })
-        initialCards.forEach((item) => {
-            renderCards({ data: item, position: 'append' })
+        result.forEach((item) => {
+            renderCards({ data: item, position: 'append', userId: data._id }) //*
         })
     })
     .catch((err) => console.error('Could not fetch', err))
@@ -60,10 +50,10 @@ function handleFormProfileSubmit(evt) {
             profileSubtitle.textContent = data.about;
             profilePopup.closePopup()
         })
+        .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
         })
-        .catch((err) => console.error('Could not fetch', err))
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
@@ -135,31 +125,23 @@ function handlersFormAdd(evt) {
     }
     Api.createNewCard(data)
         .then((data) => {
-            const el = {
-                'name': data.name,
-                'link': data.link,
-                'user_id': data.owner._id,
-                'count_likes': data.likes.length,
-                'crd_id': data._id,
-                'like': data.likes
-            }
-            renderCards({ data: el, position: 'prepend' })
+            renderCards({ data: data, position: 'prepend', userId: data.owner._id })
             newCardPopup.closePopup()
         })
+        .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
             renderLoading(false, buttonSubmitFormAddNewCard)
         })
-        .catch((err) => console.error('Could not fetch', err))
 }
 
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
-        (evt.target.closest('#popup-pic')) ? renderPopupCard().closePopupOverlay(evt.target) : 
-        (evt.target.closest('#popup-edit-form')) ? profilePopup.closePopupOverlay(evt.target) : 
-        (evt.target.closest('#popup-add-form')) ? newCardPopup.closePopupOverlay(evt.target) : 
-        (evt.target.closest('#popup-avatar-form')) ? avatarPopup.closePopupOverlay(evt.target) : 
-        (evt.target.closest('#popup-removal-card')) ? removalCardPopup.closePopupOverlay(evt.target) : 
-        false;           
+        (evt.target.closest('#popup-pic')) ? renderPopupCard().closePopupOverlay(evt.target) :
+            (evt.target.closest('#popup-edit-form')) ? profilePopup.closePopupOverlay(evt.target) :
+                (evt.target.closest('#popup-add-form')) ? newCardPopup.closePopupOverlay(evt.target) :
+                    (evt.target.closest('#popup-avatar-form')) ? avatarPopup.closePopupOverlay(evt.target) :
+                        (evt.target.closest('#popup-removal-card')) ? removalCardPopup.closePopupOverlay(evt.target) :
+                            false;
     })
 })
 
@@ -195,21 +177,38 @@ function handlersFormAvatar(evt) {
             imgAvatar.setAttribute('src', data.avatar)
             avatarPopup.closePopup(popupAvatarForm)
         })
+        .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
             renderLoading(false, buttonSubmitFormAvatar)
         })
-        .catch((err) => console.error('Could not fetch', err))
 }
 
 function transmitsDataProfile(data) {
     return imgAvatar.setAttribute('src', data.avatar),
         profileTitle.textContent = data.name,
-        profileSubtitle.textContent = data.about,
-        userId.id = data._id
+        profileSubtitle.textContent = data.about
 }
 
 function resetForm(popup) {
     popup.querySelector('.form').reset();
+}
+
+function handlerDelLikes(idCard, elemLike, elemCount) {
+    Api.delLikesServer(idCard)
+        .then((data) => {
+            elemLike.classList.remove('element__like_active');
+            elemCount.textContent = data.likes.length
+        })
+        .catch((err) => console.error('Could not fetch', err))
+}
+
+function handlePutLikes(idCard, elemLike, elemCount) {
+    Api.putLikesServer(idCard)
+    .then((data) => {
+        elemLike.classList.add('element__like_active');
+        elemCount.textContent = data.likes.length;
+    })
+    .catch((err) => console.error('Could not fetch', err))
 }
 
 export function renderLoading(isLoading, button) {

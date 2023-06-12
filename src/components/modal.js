@@ -1,20 +1,20 @@
-import { popupPicTitle, popupPicSrc, popupPic, popups, popupRemovalCard } from './data.js'
 
 export default class Popup {
-
-
     constructor(popup) {
         this.popup = popup;
+        this.closePopupEsc = (evt) => {
+            if (evt.key === 'Escape' && this.popup.classList.contains('popup_opened')) {
+                this.closePopup(this.popup);
+            }
+        }
     }
     openPopup() {
         this.popup.classList.add('popup_opened')
-        document.addEventListener('keydown', (evt) => {
-            this.closePopupEsc(evt)
-        });
+        document.addEventListener('keydown', this.closePopupEsc)        
     }
     closePopup() {
-        return this.popup.classList.remove('popup_opened'),
-            document.removeEventListener('keydown', () => { this.closePopupEsc })
+        this.popup.classList.remove('popup_opened')
+        document.removeEventListener('keydown', this.closePopupEsc)        
     }
     closePopupOverlay(ovr) {
         const selectedPopupPic = ovr.closest('.popup__pic');
@@ -23,16 +23,7 @@ export default class Popup {
         if (!selectedForm && !selectedPopupPic) {
             this.closePopup(popup);
         }
-    }
-    closePopupEsc(evt) {
-        if (evt.key === 'Escape') {
-            return popups.forEach((popup) => {
-                if (popup.classList.contains('popup_opened')) {
-                    this.closePopup(popup);
-                }
-            })
-        }
-    }
+    }  
 }
 
 

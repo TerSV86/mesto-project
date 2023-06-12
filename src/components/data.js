@@ -56,7 +56,7 @@ const config = {
     }
 }
 
-const userId = {}
-const servisInfoCard = []
+/* const userId = {} */
+/* const servisInfoCard = [] */
 
-export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, userId, servisInfoCard, buttonSubmitFormEditProfile }
+export { nameInputFormProfile, jobInputFormProfile, buttonSubmitFormProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, profileTitle, profileSubtitle, inputNameFormAddCard, inputLinkAddNewCard, conteinerForElementsNewCard, popupEditForm, popupAddForm, popupPic, formProfile, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, cardTemplate, elementTemplate, buttonNewCard, formNewCard, elementsCard, popupPicSrc, popupPicTitle, popups, popupsBody, body, popupFigurePic, formAddNewCard, inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector, inputsFormProfile, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, inputFormAvatar, buttonSubmitFormAvatar, imgAvatar, popupRemovalCard, buttonSubmitPopupRemovalCard, buttonClosePopupRemovalCard, config, /* userId, */ /* servisInfoCard, */ buttonSubmitFormEditProfile }
