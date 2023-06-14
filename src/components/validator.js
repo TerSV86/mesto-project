@@ -1,11 +1,15 @@
 export default class Validator {
+    #formElement;
     #selectors;
-    constructor({ selectors }) {
+    #config;
+    constructor({ formElement , selectors, config }) {
         this.#selectors = selectors;
+        this.#formElement = formElement;
+        this.#config = config;
     }
 
-    showInputError = (formElement, inputElement, errorMessage) => {
-        const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    showInputError = (inputElement, errorMessage) => {
+        const errorElement = this.#formElement.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.add(this.#selectors.inputErrorClass);
 
         errorElement.textContent = errorMessage;
@@ -13,23 +17,23 @@ export default class Validator {
         errorElement.classList.add(this.#selectors.errorClass);
     }
 
-    hideInputError = (formElement, inputElement) => {
-        const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    hideInputError = (inputElement) => {
+        const errorElement = this.#formElement.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.remove(this.#selectors.inputErrorClass);
         errorElement.classList.remove(this.#selectors.errorClass);
         errorElement.textContent = '';
     }
 
-    isValid = (formElement, inputElement) => {
+    isValid = (inputElement) => {
         if (inputElement.validity.patternMismatch) {
             inputElement.setCustomValidity(inputElement.dataset.errorMessage);
         } else {
             inputElement.setCustomValidity('');
         }
         if (!inputElement.validity.valid) {
-            this.showInputError(formElement, inputElement, inputElement.validationMessage)
+            this.showInputError(inputElement, inputElement.validationMessage)
         } else {
-            this.hideInputError(formElement, inputElement)
+            this.hideInputError(inputElement)
         }
     }
 
@@ -41,17 +45,15 @@ export default class Validator {
 
         inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
-                this.isValid(formElement, inputElement);
+                this.isValid(inputElement);
                 this.toggleButtonState(inputList, buttonElement, selectors);
             })
-        })
+        });
     }
 
-    enableValidation = (selectors) => {
-        const formList = Array.from(document.querySelectorAll(selectors.formSelector));
-        formList.forEach((formElement) => {
-            this.setEventListeners(formElement, selectors);
-        })
+    enableValidation = () => {
+        const formList = document.querySelector(this.#config.formSelector);
+            this.setEventListeners(formList, this.#config);
     }
 
     hasInvalidInput(inputList) {

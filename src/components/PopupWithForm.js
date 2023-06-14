@@ -1,9 +1,12 @@
-export default class Form {
+import Popup from './modal.js'
+
+export default class PopupWithForm extends Popup {
     #formElement;
     #submitHandler;
 
-    constructor(formSelector, submitHandler = null) {
-        this.#formElement = document.querySelector(formSelector);
+    constructor(formSelector, submitHandler = null, popup = null) {
+        super(popup);
+        this.#formElement = document.getElementById(formSelector);
         this.#submitHandler = submitHandler;
     }
 

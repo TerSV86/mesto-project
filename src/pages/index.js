@@ -4,11 +4,22 @@ import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonC
 import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
-import Form from "../components/Form.js"
+import PopupWithForm from "../components/PopupWithForm.js"
 import Validator from "../components/validator.js"
 import { PopupWithImage } from '../components/PopupWithImage';
 
-const validator = new Validator({ selectors: selector });
+const selectorsConfig = {
+    formSelector: '.form',
+    inputSelector: '.form__item',
+    submitButtonSelector: '.form__handlers',
+    inactiveButtonClass: 'form__handlers_disabled',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__input-error_active'
+};
+
+const validatorFormProfile = new Validator({ formElement: formProfile, selectors: selector, config: selectorsConfig });
+const validatorFormAddCard = new Validator({ formElement: formAddNewCard, selectors: selector, config: selectorsConfig });
+const validatorFormEditAvatar = new Validator({ formElement: formAvatar, selectors: selector, config: selectorsConfig });
 
 const sectionList = new Section(renderCards, '.elements');
 
@@ -21,15 +32,17 @@ function renderPopupCard(data) {
     return cardPopup
 }
 
-
 function renderCards({ data, position, userId }) {
     const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes).createCard();//*
     sectionList.addCard({ elementNode: newCard, position });
 };
 
-const submitForm = new Form('.form', handleFormProfileSubmit);
-
-submitForm.setEventListener();
+const submitFormEditProfile = new PopupWithForm('popup-edit-form');
+const submitFormAddCard = new PopupWithForm('popup-add-form');
+const submitFormEditAvatar = new PopupWithForm('popup-avatar-form');
+submitFormEditProfile.setEventListener();
+submitFormAddCard.setEventListener();
+submitFormEditAvatar.setEventListener();
 
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
@@ -39,8 +52,6 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
         })
     })
     .catch((err) => console.error('Could not fetch', err))
-
-submitForm.setSubmitAction(handleFormProfileSubmit)
 
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
@@ -59,14 +70,16 @@ function handleFormProfileSubmit(evt) {
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 
 function handleOpenPopupProfile() {
+    validatorFormProfile.enableValidation();
+    submitFormEditProfile.setSubmitAction(handleFormProfileSubmit);
     nameInputFormProfile.value = profileTitle.textContent;
     jobInputFormProfile.value = profileSubtitle.textContent;
     if (formProfile.querySelector('.form__input_type_error')) {
         inputsFormProfile.forEach((input) => {
-            validator.isValid(formProfile, input)
+            validatorFormProfile.hideInputError(input);
+
         })
-    }
-    validator.toggleButtonState(inputsFormProfile, buttonSubmitFormProfile, selector);
+    };
     buttonSubmitFormEditProfile.setAttribute('disabled', '');
     buttonSubmitFormEditProfile.classList.add('form__handlers');
     profilePopup.openPopup();
@@ -74,13 +87,32 @@ function handleOpenPopupProfile() {
 
 buttonOpenPopupAddNewCard.addEventListener('click', handleOpenPopupAddNewCard)
 
+function handlersFormAdd(evt) {
+    evt.preventDefault();
+    const data = {
+        name: inputNameFormAddCard.value,
+        link: inputLinkAddNewCard.value
+    }
+    Api.createNewCard(data)
+        .then((data) => {
+            renderCards({ data: data, position: 'prepend', userId: data.owner._id })
+            newCardPopup.closePopup()
+        })
+        .catch((err) => console.error('Could not fetch', err))
+        .finally(() => {
+            renderLoading(false, buttonSubmitFormAddNewCard)
+        })
+}
+
 function handleOpenPopupAddNewCard() {
+    validatorFormAddCard.enableValidation();
+    submitFormAddCard.setSubmitAction(handlersFormAdd);
     newCardPopup.openPopup();
     resetForm(popupAddForm);
-    validator.toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
+    validatorFormAddCard.toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
     if (formAddNewCard.querySelector('.form__input_type_error')) {
         inputsFormAddNewCard.forEach((input) => {
-            validator.hideInputError(formAddNewCard, input);
+            validatorFormAddCard.hideInputError(input)
         })
     }
 }
@@ -88,13 +120,29 @@ function handleOpenPopupAddNewCard() {
 buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 
 function handleOpenPopupAvatar() {
+    validatorFormEditAvatar.enableValidation();
+    submitFormEditAvatar.setSubmitAction(handlersFormAvatar);
     avatarPopup.openPopup()
     resetForm(popupAvatarForm)
     if (popupAvatarForm.querySelector('.form__input_type_error')) {
-        validator.hideInputError(popupAvatarForm, inputFormAvatar)
+        validatorFormEditAvatar.hideInputError(inputFormAvatar)
     }
     buttonSubmitFormAvatar.setAttribute('disabled', '');
     buttonSubmitFormAvatar.classList.add('form__handlers');
+}
+
+function handlersFormAvatar(evt) {
+    evt.preventDefault()
+
+    Api.editAvatar(inputFormAvatar.value)
+        .then((data) => {
+            imgAvatar.setAttribute('src', data.avatar)
+            avatarPopup.closePopup(popupAvatarForm)
+        })
+        .catch((err) => console.error('Could not fetch', err))
+        .finally(() => {
+            renderLoading(false, buttonSubmitFormAvatar)
+        })
 }
 
 buttonCloseFormEdit.addEventListener('click', () => {
@@ -115,25 +163,6 @@ buttonClosePopupPic.addEventListener('click', () => renderPopupCard().closePopup
 
 buttonClosePopupRemovalCard.addEventListener('click', () => removalCardPopup.closePopup())
 
-formNewCard.addEventListener('submit', handlersFormAdd);
-
-function handlersFormAdd(evt) {
-    evt.preventDefault();
-    const data = {
-        name: inputNameFormAddCard.value,
-        link: inputLinkAddNewCard.value
-    }
-    Api.createNewCard(data)
-        .then((data) => {
-            renderCards({ data: data, position: 'prepend', userId: data.owner._id })
-            newCardPopup.closePopup()
-        })
-        .catch((err) => console.error('Could not fetch', err))
-        .finally(() => {
-            renderLoading(false, buttonSubmitFormAddNewCard)
-        })
-}
-
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
         (evt.target.closest('#popup-pic')) ? renderPopupCard().closePopupOverlay(evt.target) :
@@ -144,15 +173,6 @@ popupsBody.forEach((popupBody) => {
                             false;
     })
 })
-
-validator.enableValidation({
-    formSelector: '.form',
-    inputSelector: '.form__item',
-    submitButtonSelector: '.form__handlers',
-    inactiveButtonClass: 'form__handlers_disabled',
-    inputErrorClass: 'form__input_type_error',
-    errorClass: 'form__input-error_active'
-});
 
 buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemovalCard)
 
@@ -165,22 +185,6 @@ function handeleSubmitPopupRemovalCard(evt) {
         })
         .catch((err) => console.error('Could not fetch', err))
     removalCardPopup.closePopup()
-}
-
-buttonSubmitFormAvatar.addEventListener('click', handlersFormAvatar)
-
-function handlersFormAvatar(evt) {
-    evt.preventDefault()
-
-    Api.editAvatar(inputFormAvatar.value)
-        .then((data) => {
-            imgAvatar.setAttribute('src', data.avatar)
-            avatarPopup.closePopup(popupAvatarForm)
-        })
-        .catch((err) => console.error('Could not fetch', err))
-        .finally(() => {
-            renderLoading(false, buttonSubmitFormAvatar)
-        })
 }
 
 function transmitsDataProfile(data) {
@@ -204,11 +208,11 @@ function handlerDelLikes(idCard, elemLike, elemCount) {
 
 function handlePutLikes(idCard, elemLike, elemCount) {
     Api.putLikesServer(idCard)
-    .then((data) => {
-        elemLike.classList.add('element__like_active');
-        elemCount.textContent = data.likes.length;
-    })
-    .catch((err) => console.error('Could not fetch', err))
+        .then((data) => {
+            elemLike.classList.add('element__like_active');
+            elemCount.textContent = data.likes.length;
+        })
+        .catch((err) => console.error('Could not fetch', err))
 }
 
 export function renderLoading(isLoading, button) {
