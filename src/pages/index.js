@@ -57,7 +57,7 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
     submitFormEditProfile._getInputValues(nameInputFormProfile, jobInputFormProfile);
-    Api.editProfile(a, b)
+    Api.editProfile(a.value, b.value)
         .then((data) => {
             profileTitle.textContent = data.name;
             profileSubtitle.textContent = data.about;
