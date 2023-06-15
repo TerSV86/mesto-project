@@ -1,8 +1,5 @@
 import Popup from './modal.js'
 
-export let a;
-export let b;
-
 export default class PopupWithForm extends Popup {
     #formElement;
     #submitHandler;
@@ -17,9 +14,14 @@ export default class PopupWithForm extends Popup {
         this.#submitHandler = handler;
     }
 
-    _getInputValues(name, about) {
-        a = name;
-        b = about;
+    _getInputValues() {
+        const allInputs = Array.from(this.#formElement.querySelectorAll('.form__item'));
+        const objectInputs = {};
+        allInputs.forEach((input) => {
+            objectInputs[input.name] = input.value
+        });
+
+        return objectInputs;
     }
 
     setEventListener() {

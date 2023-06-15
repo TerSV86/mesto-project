@@ -5,7 +5,6 @@ import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import PopupWithForm from "../components/PopupWithForm.js"
-import { a, b } from "../components/PopupWithForm.js"
 import Validator from "../components/validator.js"
 import { PopupWithImage } from '../components/PopupWithImage';
 
@@ -56,8 +55,7 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
 
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
-    submitFormEditProfile._getInputValues(nameInputFormProfile, jobInputFormProfile);
-    Api.editProfile(a.value, b.value)
+    Api.editProfile(submitFormEditProfile._getInputValues().name, submitFormEditProfile._getInputValues().profession)
         .then((data) => {
             profileTitle.textContent = data.name;
             profileSubtitle.textContent = data.about;
