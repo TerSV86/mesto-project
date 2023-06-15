@@ -1,10 +1,13 @@
 import Popup from './modal.js'
 
+export let a;
+export let b;
+
 export default class PopupWithForm extends Popup {
     #formElement;
     #submitHandler;
 
-    constructor(formSelector, submitHandler = null, popup = null) {
+    constructor({ formSelector, submitHandler = null, popup = null }) {
         super(popup);
         this.#formElement = document.getElementById(formSelector);
         this.#submitHandler = submitHandler;
@@ -12,6 +15,11 @@ export default class PopupWithForm extends Popup {
 
     setSubmitAction(handler) {
         this.#submitHandler = handler;
+    }
+
+    _getInputValues(name, about) {
+        a = name;
+        b = about;
     }
 
     setEventListener() {

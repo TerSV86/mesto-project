@@ -5,6 +5,7 @@ import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import PopupWithForm from "../components/PopupWithForm.js"
+import { a, b } from "../components/PopupWithForm.js"
 import Validator from "../components/validator.js"
 import { PopupWithImage } from '../components/PopupWithImage';
 
@@ -17,9 +18,9 @@ const selectorsConfig = {
     errorClass: 'form__input-error_active'
 };
 
-const validatorFormProfile = new Validator({ formElement: formProfile, selectors: selector, config: selectorsConfig });
-const validatorFormAddCard = new Validator({ formElement: formAddNewCard, selectors: selector, config: selectorsConfig });
-const validatorFormEditAvatar = new Validator({ formElement: formAvatar, selectors: selector, config: selectorsConfig });
+const validatorFormProfile = new Validator({ formElement: popupEditForm, selectors: selector, config: selectorsConfig });
+const validatorFormAddCard = new Validator({ formElement: popupAddForm, selectors: selector, config: selectorsConfig });
+const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, selectors: selector, config: selectorsConfig });
 
 const sectionList = new Section(renderCards, '.elements');
 
@@ -37,9 +38,9 @@ function renderCards({ data, position, userId }) {
     sectionList.addCard({ elementNode: newCard, position });
 };
 
-const submitFormEditProfile = new PopupWithForm('popup-edit-form');
-const submitFormAddCard = new PopupWithForm('popup-add-form');
-const submitFormEditAvatar = new PopupWithForm('popup-avatar-form');
+const submitFormEditProfile = new PopupWithForm({ formSelector: 'popup-edit-form' });
+const submitFormAddCard = new PopupWithForm({ formSelector: 'popup-add-form' });
+const submitFormEditAvatar = new PopupWithForm({ formSelector: 'popup-avatar-form' });
 submitFormEditProfile.setEventListener();
 submitFormAddCard.setEventListener();
 submitFormEditAvatar.setEventListener();
@@ -48,14 +49,15 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
         result.forEach((item) => {
-            renderCards({ data: item, position: 'append', userId: data._id }) //*
+            renderCards({ data: item, position: 'append', userId: data._id })
         })
     })
     .catch((err) => console.error('Could not fetch', err))
 
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
-    Api.editProfile(nameInputFormProfile.value, jobInputFormProfile.value)
+    submitFormEditProfile._getInputValues(nameInputFormProfile, jobInputFormProfile);
+    Api.editProfile(a, b)
         .then((data) => {
             profileTitle.textContent = data.name;
             profileSubtitle.textContent = data.about;
@@ -65,6 +67,7 @@ function handleFormProfileSubmit(evt) {
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
         })
+        .catch((err) => console.error('Could not fetch', err))
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
@@ -77,7 +80,6 @@ function handleOpenPopupProfile() {
     if (formProfile.querySelector('.form__input_type_error')) {
         inputsFormProfile.forEach((input) => {
             validatorFormProfile.hideInputError(input);
-
         })
     };
     buttonSubmitFormEditProfile.setAttribute('disabled', '');

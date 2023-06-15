@@ -2,7 +2,8 @@ export default class Validator {
     #formElement;
     #selectors;
     #config;
-    constructor({ formElement , selectors, config }) {
+
+    constructor({ formElement, selectors, config }) {
         this.#selectors = selectors;
         this.#formElement = formElement;
         this.#config = config;
@@ -37,23 +38,23 @@ export default class Validator {
         }
     }
 
-    setEventListeners = (formElement, selectors) => {
-        const inputList = Array.from(formElement.querySelectorAll(selectors.inputSelector));
-        const buttonElement = formElement.querySelector(selectors.submitButtonSelector);
+    setEventListeners = (formElement) => {
+        const inputList = Array.from(formElement.querySelectorAll(this.#config.inputSelector));
+        const buttonElement = formElement.querySelector(this.#config.submitButtonSelector);
 
-        this.toggleButtonState(inputList, buttonElement, selectors);
+        this.toggleButtonState(inputList, buttonElement, this.#config);
 
         inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this.isValid(inputElement);
-                this.toggleButtonState(inputList, buttonElement, selectors);
+                this.toggleButtonState(inputList, buttonElement, this.#config);
             })
         });
     }
 
     enableValidation = () => {
-        const formList = document.querySelector(this.#config.formSelector);
-            this.setEventListeners(formList, this.#config);
+        const formList = this.#formElement.querySelector(this.#config.formSelector);
+        this.setEventListeners(formList);
     }
 
     hasInvalidInput(inputList) {
