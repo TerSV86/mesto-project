@@ -7,6 +7,7 @@ import Section from "../components/Section.js"
 import PopupWithForm from "../components/PopupWithForm.js"
 import Validator from "../components/validator.js"
 import { PopupWithImage } from '../components/PopupWithImage';
+import UserInfo from '../components/UserInfo';
 
 const selectorsConfig = {
     formSelector: '.form',
@@ -32,6 +33,8 @@ function renderPopupCard(data) {
     return cardPopup
 }
 
+const userData = new UserInfo({name: '.profile__title', job: '.profile__subtitle'})
+
 function renderCards({ data, position, userId }) {
     const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes).createCard();//*
     sectionList.addCard({ elementNode: newCard, position });
@@ -47,6 +50,7 @@ submitFormEditAvatar.setEventListener();
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
+        userData.setUserInfo(data)
         result.forEach((item) => {
             renderCards({ data: item, position: 'append', userId: data._id })
         })
@@ -58,8 +62,7 @@ function handleFormProfileSubmit(evt) {
     const { name, profession } = submitFormEditProfile._getInputValues();
     Api.editProfile(name, profession)
         .then((data) => {
-            profileTitle.textContent = data.name;
-            profileSubtitle.textContent = data.about;
+            userData.setUserInfo(data)           
             profilePopup.closePopup()
         })
         .catch((err) => console.error('Could not fetch', err))
@@ -74,8 +77,7 @@ buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 function handleOpenPopupProfile() {
     validatorFormProfile.enableValidation();
     submitFormEditProfile.setSubmitAction(handleFormProfileSubmit);
-    nameInputFormProfile.value = profileTitle.textContent;
-    jobInputFormProfile.value = profileSubtitle.textContent;
+    userData.getUserInfo()    
     if (formProfile.querySelector('.form__input_type_error')) {
         inputsFormProfile.forEach((input) => {
             validatorFormProfile.hideInputError(input);
@@ -189,9 +191,7 @@ function handeleSubmitPopupRemovalCard(evt) {
 }
 
 function transmitsDataProfile(data) {
-    return imgAvatar.setAttribute('src', data.avatar),
-        profileTitle.textContent = data.name,
-        profileSubtitle.textContent = data.about
+    return imgAvatar.setAttribute('src', data.avatar)
 }
 
 function resetForm(popup) {
