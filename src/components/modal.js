@@ -2,19 +2,26 @@
 export default class Popup {
     constructor(popup) {
         this.popup = popup;
+        this.setEventListener = this.setEventListener.bind(this);
         this.closePopupEsc = (evt) => {
             if (evt.key === 'Escape' && this.popup.classList.contains('popup_opened')) {
                 this.closePopup(this.popup);
             }
         }
     }
+    setEventListener() {
+        const buttonCloseForm = this.popup.querySelector('.form__close')
+        buttonCloseForm.addEventListener('click', () => {
+            this.closePopup()
+        })
+    }
     openPopup() {
         this.popup.classList.add('popup_opened')
-        document.addEventListener('keydown', this.closePopupEsc)        
+        document.addEventListener('keydown', this.closePopupEsc)
     }
     closePopup() {
         this.popup.classList.remove('popup_opened')
-        document.removeEventListener('keydown', this.closePopupEsc)        
+        document.removeEventListener('keydown', this.closePopupEsc)
     }
     closePopupOverlay(ovr) {
         const selectedPopupPic = ovr.closest('.popup__pic');
@@ -23,7 +30,7 @@ export default class Popup {
         if (!selectedForm && !selectedPopupPic) {
             this.closePopup(popup);
         }
-    }  
+    }
 }
 
 

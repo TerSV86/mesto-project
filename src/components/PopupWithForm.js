@@ -8,6 +8,16 @@ export default class PopupWithForm extends Popup {
         super(popup);
         this.#formElement = document.getElementById(formSelector);
         this.#submitHandler = submitHandler;
+        /* console.log(super(popup)) */
+    }
+
+    setEventListener() {
+        super.setEventListener()     
+
+        this.#formElement.addEventListener('submit', (e) => {
+            this.#submitHandler(e);
+        })
+
     }
 
     setSubmitAction(handler) {
@@ -24,9 +34,5 @@ export default class PopupWithForm extends Popup {
         return objectInputs;
     }
 
-    setEventListener() {
-        this.#formElement.addEventListener('submit', (e) => {
-            this.#submitHandler(e);
-        })
-    }
+
 }
