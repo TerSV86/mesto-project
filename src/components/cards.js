@@ -1,5 +1,3 @@
-let idCardRemoval;
-/* let elCardRemoval; */
 
 export class Card {
   #newCard
@@ -54,14 +52,10 @@ export class Card {
     if (!(this.#data.owner._id === this.userId)) {
       elementTrashNewCard.remove()
     }
-    elementTrashNewCard.addEventListener('click', (/* evt */) => {
-      this.handeleSubmitPopupRemovalCard(/* evt, */ this.#data, this.#newCard)
-      /* this.removalCardPopup.openPopup()
-      this.elCardRemoval = evt.target.closest('.element')
-      idCardRemoval = this.#data._id; */
+    elementTrashNewCard.addEventListener('click', () => {
+      this.handeleSubmitPopupRemovalCard(this.#data, this.#newCard)    
     })
     return this.#newCard;
   }
 }
 
-export { idCardRemoval, /* elCardRemoval */ }
