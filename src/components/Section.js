@@ -1,9 +1,9 @@
 export default class Section {
-    #renderer;
+    /* #renderer; */
     #container;
-    constructor(renderer, containerSelector) {
+    constructor(/* renderer, */ containerSelector) {
         this.#container = document.querySelector(containerSelector);
-        this.#renderer = renderer;
+        /* this.#renderer = renderer; */
     }
 
     addCard({ elementNode, position }) {

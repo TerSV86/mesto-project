@@ -1,5 +1,5 @@
 import './index.css'
-import { idCardRemoval, elCardRemoval, Card } from '../components/Cards.js'
+import { idCardRemoval, /* elCardRemoval, */ Card } from '../components/Cards.js'
 import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonCloseFormEdit, buttonCloseFormAdd, buttonClosePopupPic, formNewCard, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonCloseFormAvatar, formAvatar, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar, profileTitle, profileSubtitle, buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc } from '../components/data.js';
 import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
@@ -22,7 +22,7 @@ const validatorFormProfile = new Validator({ formElement: popupEditForm, selecto
 const validatorFormAddCard = new Validator({ formElement: popupAddForm, selectors: selector, config: selectorsConfig });
 const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, selectors: selector, config: selectorsConfig });
 
-const sectionList = new Section(renderCards, '.elements');
+const sectionList = new Section(/* renderCards, */ '.elements');
 
 /* const profilePopup = new Popup(popupEditForm)
 profilePopup.setEventListener() */
@@ -39,8 +39,9 @@ function renderPopupCard(data) {
 const userData = new UserInfo({name: '.profile__title', job: '.profile__subtitle'})
 
 function renderCards({ data, position, userId }) {
-    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes).createCard();
+    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes, handeleSubmitPopupRemovalCard).createCard();
     sectionList.addCard({ elementNode: newCard, position });
+    
 };
 
 const submitFormEditProfile = new PopupWithForm({popup: popupEditForm, formSelector: 'popup-edit-form' });
@@ -191,12 +192,13 @@ popupsBody.forEach((popupBody) => {
 
 buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemovalCard)
 
-function handeleSubmitPopupRemovalCard(evt) {
-    evt.preventDefault();
-    Api.delCard(idCardRemoval)
+function handeleSubmitPopupRemovalCard(/* evt, */ dataNewCard, newCardElem) {
+    /* evt.preventDefault(); */
+    Api.delCard(/* idCardRemova */dataNewCard._id)
         .then((data) => {
             console.log(data.message);
-            elCardRemoval.remove()
+            /* elCardRemoval.remove() */            
+            newCardElem.remove()
         })
         .catch((err) => console.error('Could not fetch', err))
     removalCardPopup.closePopup()

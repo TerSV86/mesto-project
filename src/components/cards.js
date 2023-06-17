@@ -1,5 +1,5 @@
 let idCardRemoval;
-let elCardRemoval;
+/* let elCardRemoval; */
 
 export class Card {
   #newCard
@@ -12,7 +12,7 @@ export class Card {
       .querySelector('.element')
       .cloneNode(true)
   }
-  constructor(data, templateSelector, renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
+  constructor(data, templateSelector, renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes, handeleSubmitPopupRemovalCard) {
     this.#data = data;
     this.#templateSelector = templateSelector;
     this.renderPopupCard = renderPopupCard;
@@ -20,6 +20,7 @@ export class Card {
     this.userId = userId;
     this.handlerDelLikes = handlerDelLikes;
     this.handlePutLikes = handlePutLikes;
+    this.handeleSubmitPopupRemovalCard = handeleSubmitPopupRemovalCard;
   }
   createCard() {
     this.#newCard = this.#getTemplate();
@@ -53,13 +54,14 @@ export class Card {
     if (!(this.#data.owner._id === this.userId)) {
       elementTrashNewCard.remove()
     }
-    elementTrashNewCard.addEventListener('click', (evt) => {
-      this.removalCardPopup.openPopup()
-      elCardRemoval = evt.target.closest('.element')
-      idCardRemoval = this.#data._id;
+    elementTrashNewCard.addEventListener('click', (/* evt */) => {
+      this.handeleSubmitPopupRemovalCard(/* evt, */ this.#data, this.#newCard)
+      /* this.removalCardPopup.openPopup()
+      this.elCardRemoval = evt.target.closest('.element')
+      idCardRemoval = this.#data._id; */
     })
     return this.#newCard;
   }
 }
 
-export { idCardRemoval, elCardRemoval }
+export { idCardRemoval, /* elCardRemoval */ }
