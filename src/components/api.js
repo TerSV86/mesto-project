@@ -23,20 +23,20 @@ class Api {
             .then((res) => this.#getResponseData(res))
     }
 
-    editProfile(name, about) {
+    editProfile({name, profession}) {
         renderLoading(true, buttonSubmitFormProfile)
         return fetch(`${this.#baseUrl}/users/me`, {
             method: "PATCH",
             headers: this.#headers,
             body: JSON.stringify({
                 name: `${name}`,
-                about: `${about}`
+                about: `${profession}`
             })
         })
             .then((res) => this.#getResponseData(res))
     }
 
-    editAvatar(url) {
+    editAvatar({url}) {
         renderLoading(true, buttonSubmitFormAvatar)
         return fetch(`${this.#baseUrl}/users/me/avatar`, {
             method: "PATCH",

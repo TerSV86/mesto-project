@@ -28,10 +28,10 @@ const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, se
 const sectionList = new Section(renderCard, '.elements');
 
 const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, delCard: handeleSubmitPopupRemovalCard })
-
+removalCardPopup.setEventListener()
 const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
-const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img'})
+const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img' })
 
 function renderCard({ data, position, userId }) {
     const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
@@ -40,7 +40,7 @@ function renderCard({ data, position, userId }) {
 
 const submitFormEditProfile = new PopupWithForm({ popup: popupEditForm, formSelector: 'popup-edit-form', inputForm: '.form__item' });
 const submitFormAddCard = new PopupWithForm({ popup: popupAddForm, formSelector: 'popup-add-form' });
-const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form' });
+const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form', inputForm: '.form__item' });
 submitFormEditProfile.setEventListener();
 submitFormAddCard.setEventListener();
 submitFormEditAvatar.setEventListener();
@@ -90,7 +90,6 @@ function handlersFormAdd(evt) {
     }
     Api.createNewCard(data)
         .then((data) => {
-            console.log(data);
             const arrayData = [data];
             sectionList.rendererCards({ cards: arrayData, position: 'prepend', userId: data.owner._id })
             submitFormAddCard.closePopup()
@@ -115,12 +114,12 @@ function handleOpenPopupAvatar() {
     resetForm(popupAvatarForm)
 }
 
-function handlersFormAvatar(evt) {
+function handlersFormAvatar(evt, { url }) {
     evt.preventDefault()
 
-    Api.editAvatar(inputFormAvatar.value)
-        .then((data) => {            
-            userData.setUserInfo(data);            
+    Api.editAvatar({ url })
+        .then((data) => {
+            userData.setUserInfo(data);
             submitFormEditAvatar.closePopup();
         })
         .catch((err) => console.error('Could not fetch', err))
@@ -144,13 +143,10 @@ popupsBody.forEach((popupBody) => {
     })
 })
 
-buttonSubmitPopupRemovalCard.addEventListener('click', (e) => removalCardPopup.handlerSubmitDeleteCard(e))
-
 function handeleSubmitPopupRemovalCard(e, dataNewCard, newCardElem) {
     e.preventDefault()
     Api.delCard(dataNewCard)
         .then((data) => {
-            console.log(data.message);
             newCardElem.remove()
         })
         .catch((err) => console.error('Could not fetch', err))

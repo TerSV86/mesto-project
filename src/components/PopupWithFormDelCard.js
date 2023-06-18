@@ -6,6 +6,7 @@ export default class PopupWithFormDelCard extends Popup {
         this.delCard = delCard;
         this.idCard = null;
         this.elemCard = null
+        console.log(popup);
     }
     openPopup(idCard, elemCard) {
         super.openPopup();
@@ -18,4 +19,11 @@ export default class PopupWithFormDelCard extends Popup {
         this.idCard = null;
         this.elemCard = null;
     }
- класса}
+    setEventListener() {
+        super.setEventListener()
+        this.popup.addEventListener('submit', (e) => {
+           this.handlerSubmitDeleteCard(e)
+        })
+    };
+
+}
