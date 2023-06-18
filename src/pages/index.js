@@ -31,7 +31,7 @@ const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, del
 
 const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
-const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle' })
+const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img'})
 
 function renderCard({ data, position, userId }) {
     const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
@@ -118,9 +118,9 @@ function handlersFormAvatar(evt) {
     evt.preventDefault()
 
     Api.editAvatar(inputFormAvatar.value)
-        .then((data) => {
-            imgAvatar.setAttribute('src', data.avatar)
-            submitFormEditAvatar.closePopup()
+        .then((data) => {            
+            userData.setUserInfo(data);            
+            submitFormEditAvatar.closePopup();
         })
         .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
