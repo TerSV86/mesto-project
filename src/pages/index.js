@@ -59,7 +59,7 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
 function handleFormProfileSubmit(evt, { name, profession }) {
     evt.preventDefault();
     const formInput = submitFormEditProfile.setEventListener();
-    Api.editProfile(name, profession)
+    Api.editProfile({ name, profession })
         .then((data) => {
             userData.setUserInfo(data)
             submitFormEditProfile.closePopup()
