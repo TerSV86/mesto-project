@@ -12,6 +12,7 @@
     background-size: 100%;
     position: relative;
     border: none;
+    cursor: pointer;
 }
 
 @media (max-width: 745px) {
