@@ -56,8 +56,9 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     })
     .catch((err) => console.error('Could not fetch', err))
 
-function handleFormProfileSubmit(evt) {
+function handleFormProfileSubmit(evt, { name, profession }) {
     evt.preventDefault();
+    const formInput = submitFormEditProfile.setEventListener();
     Api.editProfile(name, profession)
         .then((data) => {
             userData.setUserInfo(data)

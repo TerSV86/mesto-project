@@ -12,12 +12,12 @@ export class Card {
   }
   constructor(data, templateSelector, cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
     this.#data = data;
-    this.#templateSelector = templateSelector;   
+    this.#templateSelector = templateSelector;
     this.cardPopup = cardPopup;
     this.removalCardPopup = removalCardPopup;
     this.userId = userId;
     this.handlerDelLikes = handlerDelLikes;
-    this.handlePutLikes = handlePutLikes;    
+    this.handlePutLikes = handlePutLikes;
   }
   createCard() {
     this.#newCard = this.#getTemplate();
@@ -33,7 +33,7 @@ export class Card {
     elementCounterLikesCard.textContent = this.#data.likes.length;
     elementImgNewCard.addEventListener('click', () => {
       this.cardPopup.openPopup(this.#data)
-    });
+    }); 
     elementLikeNewCard.addEventListener('click', () => {
       if ((elementLikeNewCard.classList.contains('element__like_active'))) {
         this.handlerDelLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
@@ -51,7 +51,7 @@ export class Card {
       elementTrashNewCard.remove()
     }
     elementTrashNewCard.addEventListener('click', () => {
-      this.removalCardPopup.openPopup(this.#data._id, this.#newCard)    
+      this.removalCardPopup.openPopup(this.#data._id, this.#newCard)
     })
     return this.#newCard;
   }
