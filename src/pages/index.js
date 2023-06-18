@@ -21,9 +21,9 @@ const selectorsConfig = {
     errorClass: 'form__input-error_active'
 };
 
-const validatorFormProfile = new Validator({ formElement: popupEditForm, selectors: selector, config: selectorsConfig });
-const validatorFormAddCard = new Validator({ formElement: popupAddForm, selectors: selector, config: selectorsConfig });
-const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, selectors: selector, config: selectorsConfig });
+const validatorFormProfile = new Validator({ formElement: popupEditForm, selectors: selector, config: selectorsConfig, buttonOpenForm: '.profile__edit-button' });
+const validatorFormAddCard = new Validator({ formElement: popupAddForm, selectors: selector, config: selectorsConfig, buttonOpenForm: '.profile__add-button' });
+const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, selectors: selector, config: selectorsConfig, buttonOpenForm: '.profile__avatar' });
 
 const sectionList = new Section(renderCard, '.elements');
 
@@ -34,29 +34,30 @@ const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle' })
 
 function renderCard({ data, position, userId }) {
-    const newCard = new Card( data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
+    const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
-
 };
 
-const submitFormEditProfile = new PopupWithForm({ popup: popupEditForm, formSelector: 'popup-edit-form' });
+const submitFormEditProfile = new PopupWithForm({ popup: popupEditForm, formSelector: 'popup-edit-form', inputForm: '.form__item' });
 const submitFormAddCard = new PopupWithForm({ popup: popupAddForm, formSelector: 'popup-add-form' });
 const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form' });
-submitFormEditProfile.setEventListener()
+submitFormEditProfile.setEventListener();
 submitFormAddCard.setEventListener();
 submitFormEditAvatar.setEventListener();
+validatorFormProfile.enableValidation();
+validatorFormAddCard.enableValidation();
+validatorFormEditAvatar.enableValidation();
 
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
-        userData.setUserInfo(data)        
+        userData.setUserInfo(data)
         sectionList.rendererCards({ cards: result, position: 'append', userId: data._id })
     })
     .catch((err) => console.error('Could not fetch', err))
 
 function handleFormProfileSubmit(evt) {
     evt.preventDefault();
-    const { name, profession } = submitFormEditProfile._getInputValues();
     Api.editProfile(name, profession)
         .then((data) => {
             userData.setUserInfo(data)
@@ -65,25 +66,16 @@ function handleFormProfileSubmit(evt) {
         .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
-        })        
+        })
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 
-
 function handleOpenPopupProfile() {
-    validatorFormProfile.enableValidation();
     submitFormEditProfile.setSubmitAction(handleFormProfileSubmit);
     const { name, about } = userData.getUserInfo()
     nameInputFormProfile.value = name;
     jobInputFormProfile.value = about;
-    if (formProfile.querySelector('.form__input_type_error')) {
-        inputsFormProfile.forEach((input) => {
-            validatorFormProfile.hideInputError(input);
-        })
-    };
-    buttonSubmitFormEditProfile.setAttribute('disabled', '');
-    buttonSubmitFormEditProfile.classList.add('form__handlers');
     submitFormEditProfile.openPopup()
 }
 
@@ -109,30 +101,17 @@ function handlersFormAdd(evt) {
 }
 
 function handleOpenPopupAddNewCard() {
-    validatorFormAddCard.enableValidation();
     submitFormAddCard.setSubmitAction(handlersFormAdd);
     submitFormAddCard.openPopup();
     resetForm(popupAddForm);
-    validatorFormAddCard.toggleButtonState(inputsFormAddNewCard, buttonSubmitFormAddNewCard, selector);
-    if (formAddNewCard.querySelector('.form__input_type_error')) {
-        inputsFormAddNewCard.forEach((input) => {
-            validatorFormAddCard.hideInputError(input)
-        })
-    }
 }
 
 buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 
 function handleOpenPopupAvatar() {
-    validatorFormEditAvatar.enableValidation();
     submitFormEditAvatar.setSubmitAction(handlersFormAvatar);
     submitFormEditAvatar.openPopup();
     resetForm(popupAvatarForm)
-    if (popupAvatarForm.querySelector('.form__input_type_error')) {
-        validatorFormEditAvatar.hideInputError(inputFormAvatar)
-    }
-    buttonSubmitFormAvatar.setAttribute('disabled', '');
-    buttonSubmitFormAvatar.classList.add('form__handlers');
 }
 
 function handlersFormAvatar(evt) {
