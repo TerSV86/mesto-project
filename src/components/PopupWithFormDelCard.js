@@ -18,4 +18,4 @@ export default class PopupWithFormDelCard extends Popup {
         this.idCard = null;
         this.elemCard = null;
     }
-}
+ класса}
