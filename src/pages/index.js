@@ -31,10 +31,10 @@ const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, del
 
 const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
-const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img'})
+const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img' })
 
 function renderCard({ data, position, userId }) {
-    const newCard = new Card( data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
+    const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 
 };
@@ -49,15 +49,17 @@ submitFormEditAvatar.setEventListener();
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
-        userData.setUserInfo(data)        
+        userData.setUserInfo(data)
         sectionList.rendererCards({ cards: result, position: 'append', userId: data._id })
     })
     .catch((err) => console.error('Could not fetch', err))
 
-function handleFormProfileSubmit(evt) {
+function handleFormProfileSubmit(evt, {name, profession }) {
+    
     evt.preventDefault();
-    const { name, profession } = submitFormEditProfile._getInputValues();
-    Api.editProfile(name, profession)
+    console.log({ name, profession });
+    /* const { name, profession } = submitFormEditProfile._getInputValues(); */
+    Api.editProfile({name, profession})
         .then((data) => {
             userData.setUserInfo(data)
             submitFormEditProfile.closePopup()
@@ -65,7 +67,7 @@ function handleFormProfileSubmit(evt) {
         .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
-        })        
+        })
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
@@ -97,7 +99,6 @@ function handlersFormAdd(evt) {
     }
     Api.createNewCard(data)
         .then((data) => {
-            console.log(data);
             const arrayData = [data];
             sectionList.rendererCards({ cards: arrayData, position: 'prepend', userId: data.owner._id })
             submitFormAddCard.closePopup()
@@ -139,8 +140,8 @@ function handlersFormAvatar(evt) {
     evt.preventDefault()
 
     Api.editAvatar(inputFormAvatar.value)
-        .then((data) => {            
-            userData.setUserInfo(data);            
+        .then((data) => {
+            userData.setUserInfo(data);
             submitFormEditAvatar.closePopup();
         })
         .catch((err) => console.error('Could not fetch', err))
