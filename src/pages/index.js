@@ -142,8 +142,6 @@ popupsBody.forEach((popupBody) => {
     })
 })
 
-/* buttonSubmitPopupRemovalCard.addEventListener('click', (e) => removalCardPopup.handlerSubmitDeleteCard(e)) */
-
 function handeleSubmitPopupRemovalCard(e, dataNewCard, newCardElem) {
     e.preventDefault()
     Api.delCard(dataNewCard)
