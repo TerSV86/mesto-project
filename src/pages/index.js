@@ -28,7 +28,7 @@ const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, se
 const sectionList = new Section(renderCard, '.elements');
 
 const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, delCard: handeleSubmitPopupRemovalCard })
-
+removalCardPopup.setEventListener()
 const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img' })
@@ -40,7 +40,7 @@ function renderCard({ data, position, userId }) {
 
 const submitFormEditProfile = new PopupWithForm({ popup: popupEditForm, formSelector: 'popup-edit-form', inputForm: '.form__item' });
 const submitFormAddCard = new PopupWithForm({ popup: popupAddForm, formSelector: 'popup-add-form' });
-const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form' });
+const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form', inputForm: '.form__item'});
 submitFormEditProfile.setEventListener();
 submitFormAddCard.setEventListener();
 submitFormEditAvatar.setEventListener();
@@ -56,13 +56,9 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     })
     .catch((err) => console.error('Could not fetch', err))
 
-function handleFormProfileSubmit(evt, {name, profession }) {
-    
+function handleFormProfileSubmit(evt, {name, profession }) {    
     evt.preventDefault();
-
-
-    Api.editProfile(name, profession)
-
+    Api.editProfile({name, profession})
         .then((data) => {
             userData.setUserInfo(data)
             submitFormEditProfile.closePopup()
@@ -117,10 +113,10 @@ function handleOpenPopupAvatar() {
     resetForm(popupAvatarForm)
 }
 
-function handlersFormAvatar(evt) {
+function handlersFormAvatar(evt, {url}) {
     evt.preventDefault()
 
-    Api.editAvatar(inputFormAvatar.value)
+    Api.editAvatar({url})
         .then((data) => {
             userData.setUserInfo(data);
             submitFormEditAvatar.closePopup();
@@ -146,7 +142,7 @@ popupsBody.forEach((popupBody) => {
     })
 })
 
-buttonSubmitPopupRemovalCard.addEventListener('click', (e) => removalCardPopup.handlerSubmitDeleteCard(e))
+/* buttonSubmitPopupRemovalCard.addEventListener('click', (e) => removalCardPopup.handlerSubmitDeleteCard(e)) */
 
 function handeleSubmitPopupRemovalCard(e, dataNewCard, newCardElem) {
     e.preventDefault()

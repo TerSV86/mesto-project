@@ -10,7 +10,6 @@ export default class PopupWithForm extends Popup {
         super(popup);
         this.#formElement = document.getElementById(formSelector);
         this.#submitHandler = submitHandler;
-
         this.#inputForm = inputForm;
         this.#allInputs = Array.from(this.#formElement.querySelectorAll(this.#inputForm));;
     };
@@ -19,14 +18,13 @@ export default class PopupWithForm extends Popup {
     setEventListener() {
         super.setEventListener()
         this.#formElement.addEventListener('submit', (e) => {
-           
             this.#submitHandler(e, this._getInputValues());
-            console.log(this._getInputValues());            
         })
     };
 
     setSubmitAction(handler) {
         this.#submitHandler = handler;
+        console.log(handler);
     };
 
     _getInputValues() {

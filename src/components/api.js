@@ -36,7 +36,7 @@ class Api {
             .then((res) => this.#getResponseData(res))
     }
 
-    editAvatar(url) {
+    editAvatar({url}) {
         renderLoading(true, buttonSubmitFormAvatar)
         return fetch(`${this.#baseUrl}/users/me/avatar`, {
             method: "PATCH",
