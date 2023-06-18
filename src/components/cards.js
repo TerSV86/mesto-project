@@ -10,15 +10,14 @@ export class Card {
       .querySelector('.element')
       .cloneNode(true)
   }
-  constructor(data, templateSelector, renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes, handeleSubmitPopupRemovalCard) {
+  constructor(data, templateSelector, renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
     this.#data = data;
     this.#templateSelector = templateSelector;
     this.renderPopupCard = renderPopupCard;
     this.removalCardPopup = removalCardPopup;
     this.userId = userId;
     this.handlerDelLikes = handlerDelLikes;
-    this.handlePutLikes = handlePutLikes;
-    this.handeleSubmitPopupRemovalCard = handeleSubmitPopupRemovalCard;
+    this.handlePutLikes = handlePutLikes;    
   }
   createCard() {
     this.#newCard = this.#getTemplate();
@@ -53,7 +52,7 @@ export class Card {
       elementTrashNewCard.remove()
     }
     elementTrashNewCard.addEventListener('click', () => {
-      this.handeleSubmitPopupRemovalCard(this.#data, this.#newCard)    
+      this.removalCardPopup.openPopup(this.#data._id, this.#newCard)    
     })
     return this.#newCard;
   }

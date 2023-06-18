@@ -1,6 +1,9 @@
 import './index.css'
 import { Card } from '../components/Cards.js'
-import { formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard,   buttonClosePopupPic,  popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm,  buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,   buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc } from '../components/data.js';
+import {
+    formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonClosePopupPic, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,
+    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc
+} from '../components/data.js';
 import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
@@ -8,6 +11,7 @@ import PopupWithForm from "../components/PopupWithForm.js"
 import Validator from "../components/validator.js"
 import { PopupWithImage } from '../components/PopupWithImage';
 import UserInfo from '../components/UserInfo';
+import PopupWithFormDelCard from '../components/PopupWithFormDelCard';
 
 const selectorsConfig = {
     formSelector: '.form',
@@ -25,7 +29,10 @@ const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, se
 const sectionList = new Section(renderCards, '.elements');
 
 
-const removalCardPopup = new Popup(popupRemovalCard)
+
+
+const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, delCard: handeleSubmitPopupRemovalCard })
+
 function renderPopupCard(data) {
     const cardPopup = new PopupWithImage(data, popupPic, popupPicTitle, popupPicSrc)
     return cardPopup
@@ -34,7 +41,7 @@ function renderPopupCard(data) {
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle' })
 
 function renderCards({ data, position, userId }) {
-    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes, handeleSubmitPopupRemovalCard).createCard();
+    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 
 };
@@ -72,6 +79,7 @@ function handleFormProfileSubmit(evt) {
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
+
 
 function handleOpenPopupProfile() {
     validatorFormProfile.enableValidation();
@@ -164,10 +172,11 @@ popupsBody.forEach((popupBody) => {
     })
 })
 
-buttonSubmitPopupRemovalCard.addEventListener('click', handeleSubmitPopupRemovalCard)
+buttonSubmitPopupRemovalCard.addEventListener('click', (e) => removalCardPopup.handlerSubmitDeleteCard(e))
 
-function handeleSubmitPopupRemovalCard(dataNewCard, newCardElem) {
-    Api.delCard(dataNewCard._id)
+function handeleSubmitPopupRemovalCard(e, dataNewCard, newCardElem) {
+    e.preventDefault()
+    Api.delCard(dataNewCard)
         .then((data) => {
             console.log(data.message);
             newCardElem.remove()

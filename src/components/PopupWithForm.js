@@ -7,12 +7,11 @@ export default class PopupWithForm extends Popup {
     constructor({ formSelector, submitHandler = null, popup = null }) {
         super(popup);
         this.#formElement = document.getElementById(formSelector);
-        this.#submitHandler = submitHandler;
-        /* console.log(super(popup)) */
+        this.#submitHandler = submitHandler;        
     }
 
     setEventListener() {
-        super.setEventListener()     
+        super.setEventListener()
 
         this.#formElement.addEventListener('submit', (e) => {
             this.#submitHandler(e);
