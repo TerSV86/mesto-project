@@ -3,7 +3,7 @@ export default class Section {
     #container;
     constructor(renderer, containerSelector) {
         this.#container = document.querySelector(containerSelector);
-        this.#renderer = renderer;
+        this.#renderer = renderer;       
     }
 
     addCard({ elementNode, position }) {
@@ -19,5 +19,9 @@ export default class Section {
                 break;
         }
 
+    }
+
+    rendererCards({cards, position, userId}) {     
+       cards.forEach(card => this.#renderer({data: card, position, userId}))      
     }
 }

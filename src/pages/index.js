@@ -4,7 +4,6 @@ import {
     formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonClosePopupPic, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,
     buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc
 } from '../components/data.js';
-import Popup from '../components/modal.js'
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import PopupWithForm from "../components/PopupWithForm.js"
@@ -26,10 +25,7 @@ const validatorFormProfile = new Validator({ formElement: popupEditForm, selecto
 const validatorFormAddCard = new Validator({ formElement: popupAddForm, selectors: selector, config: selectorsConfig });
 const validatorFormEditAvatar = new Validator({ formElement: popupAvatarForm, selectors: selector, config: selectorsConfig });
 
-const sectionList = new Section(renderCards, '.elements');
-
-
-
+const sectionList = new Section(renderCard, '.elements');
 
 const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, delCard: handeleSubmitPopupRemovalCard })
 
@@ -37,8 +33,8 @@ const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle' })
 
-function renderCards({ data, position, userId }) {
-    const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
+function renderCard({ data, position, userId }) {
+    const newCard = new Card( data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 
 };
@@ -53,10 +49,8 @@ submitFormEditAvatar.setEventListener();
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
-        userData.setUserInfo(data)
-        result.forEach((item) => {
-            renderCards({ data: item, position: 'append', userId: data._id })
-        })
+        userData.setUserInfo(data)        
+        sectionList.rendererCards({ cards: result, position: 'append', userId: data._id })
     })
     .catch((err) => console.error('Could not fetch', err))
 
@@ -103,7 +97,9 @@ function handlersFormAdd(evt) {
     }
     Api.createNewCard(data)
         .then((data) => {
-            renderCards({ data: data, position: 'prepend', userId: data.owner._id })
+            console.log(data);
+            const arrayData = [data];
+            sectionList.rendererCards({ cards: arrayData, position: 'prepend', userId: data.owner._id })
             submitFormAddCard.closePopup()
         })
         .catch((err) => console.error('Could not fetch', err))
