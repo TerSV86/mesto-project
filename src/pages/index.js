@@ -33,15 +33,12 @@ const sectionList = new Section(renderCards, '.elements');
 
 const removalCardPopup = new PopupWithFormDelCard({ popup: popupRemovalCard, delCard: handeleSubmitPopupRemovalCard })
 
-function renderPopupCard(data) {
-    const cardPopup = new PopupWithImage(data, popupPic, popupPicTitle, popupPicSrc)
-    return cardPopup
-}
+const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle' })
 
 function renderCards({ data, position, userId }) {
-    const newCard = new Card(data, '#addCard', renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
+    const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 
 };
@@ -74,8 +71,7 @@ function handleFormProfileSubmit(evt) {
         .catch((err) => console.error('Could not fetch', err))
         .finally(() => {
             renderLoading(false, buttonSubmitFormProfile)
-        })
-        .catch((err) => console.error('Could not fetch', err))
+        })        
 }
 
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
@@ -157,13 +153,13 @@ function handlersFormAvatar(evt) {
         })
 }
 
-buttonClosePopupPic.addEventListener('click', () => renderPopupCard().closePopup());
+buttonClosePopupPic.addEventListener('click', () => cardPopup.closePopup());
 
 buttonClosePopupRemovalCard.addEventListener('click', () => removalCardPopup.closePopup())
 
 popupsBody.forEach((popupBody) => {
     popupBody.addEventListener('click', (evt) => {
-        (evt.target.closest('#popup-pic')) ? renderPopupCard().closePopupOverlay(evt.target) :
+        (evt.target.closest('#popup-pic')) ? cardPopup.closePopupOverlay(evt.target) :
             (evt.target.closest('#popup-edit-form')) ? submitFormEditProfile.closePopupOverlay(evt.target) :
                 (evt.target.closest('#popup-add-form')) ? submitFormAddCard.closePopupOverlay(evt.target) :
                     (evt.target.closest('#popup-avatar-form')) ? submitFormEditAvatar.closePopupOverlay(evt.target) :

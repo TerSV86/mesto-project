@@ -10,10 +10,10 @@ export class Card {
       .querySelector('.element')
       .cloneNode(true)
   }
-  constructor(data, templateSelector, renderPopupCard, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
+  constructor(data, templateSelector, cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
     this.#data = data;
-    this.#templateSelector = templateSelector;
-    this.renderPopupCard = renderPopupCard;
+    this.#templateSelector = templateSelector;   
+    this.cardPopup = cardPopup;
     this.removalCardPopup = removalCardPopup;
     this.userId = userId;
     this.handlerDelLikes = handlerDelLikes;
@@ -31,9 +31,8 @@ export class Card {
     elementImgNewCard.alt = this.#data.name;
     elementTitleNewCard.textContent = this.#data.name;
     elementCounterLikesCard.textContent = this.#data.likes.length;
-
     elementImgNewCard.addEventListener('click', () => {
-      this.renderPopupCard(this.#data).openPopup()
+      this.cardPopup.openPopup(this.#data)
     });
     elementLikeNewCard.addEventListener('click', () => {
       if ((elementLikeNewCard.classList.contains('element__like_active'))) {

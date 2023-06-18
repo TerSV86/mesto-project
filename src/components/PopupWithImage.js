@@ -2,20 +2,19 @@ import Popup from './modal.js'
 
 class PopupWithImage extends Popup {
     data;
-    constructor(data, popup = null, title, picsrc) {
+    constructor(popup = null, title, picsrc) {
         super(popup);
-        this.data = data;
         this.title = title;
         this.picsrc = picsrc;
-    } 
+    }
 
-    openPopup() {
-        this.title.textContent = this.data.name;
-        this.picsrc.setAttribute('src', this.data.link);
-        this.picsrc.setAttribute('alt', this.data.name);
-        super.openPopup()      
-    }        
-   
+    openPopup(data) {
+        this.title.textContent = data.name;
+        this.picsrc.setAttribute('src', data.link);
+        this.picsrc.setAttribute('alt', data.name);
+        super.openPopup()
+    }
+
 }
 
 export { PopupWithImage }

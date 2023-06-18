@@ -4,8 +4,8 @@ export default class Popup {
         this.popup = popup;
         this.setEventListener = this.setEventListener.bind(this);
         this.closePopupEsc = (evt) => {
-            if (evt.key === 'Escape' && this.popup.classList.contains('popup_opened')) {
-                this.closePopup(this.popup);
+            if (evt.key === 'Escape') {
+                this.closePopup();
             }
         }
     }
