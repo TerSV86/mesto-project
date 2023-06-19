@@ -1,4 +1,3 @@
-
 export class Card {
   #newCard
   #data;
@@ -33,7 +32,7 @@ export class Card {
     elementCounterLikesCard.textContent = this.#data.likes.length;
     elementImgNewCard.addEventListener('click', () => {
       this.cardPopup.openPopup(this.#data)
-    }); 
+    });
     elementLikeNewCard.addEventListener('click', () => {
       if ((elementLikeNewCard.classList.contains('element__like_active'))) {
         this.handlerDelLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
@@ -41,7 +40,7 @@ export class Card {
         this.handlePutLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
       }
     })
-    this.#data.likes.forEach((el) => {
+    this.#data.likes.some((el) => {
       if (el._id === this.userId) {
         elementLikeNewCard.classList.add('element__like_active')
       }
@@ -56,4 +55,3 @@ export class Card {
     return this.#newCard;
   }
 }
-

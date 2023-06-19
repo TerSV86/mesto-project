@@ -2,7 +2,8 @@ import './index.css'
 import { Card } from '../components/Cards.js'
 import {
     buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonClosePopupPic, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonOpenPopupAvatar, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,
-    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, selector, popupPicTitle, popupPicSrc} from '../components/data.js';
+    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, selector, popupPicTitle, popupPicSrc
+} from '../components/data.js';
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import PopupWithForm from "../components/PopupWithForm.js"
@@ -33,7 +34,7 @@ const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img' })
 
-function renderCard({ data, position}) {    
+function renderCard({ data, position }) {
     const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 
@@ -41,26 +42,29 @@ function renderCard({ data, position}) {
 
 const submitFormEditProfile = new PopupWithForm({ popup: popupEditForm, formSelector: 'popup-edit-form', inputForm: '.form__item' });
 const submitFormAddCard = new PopupWithForm({ popup: popupAddForm, formSelector: 'popup-add-form' });
-const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form', inputForm: '.form__item'});
+const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form', inputForm: '.form__item' });
 submitFormEditProfile.setEventListener();
 submitFormAddCard.setEventListener();
 submitFormEditAvatar.setEventListener();
 validatorFormProfile.enableValidation();
 validatorFormAddCard.enableValidation();
 validatorFormEditAvatar.enableValidation();
+submitFormEditProfile.setSubmitAction(handleFormProfileSubmit);
+submitFormAddCard.setSubmitAction(handlersFormAdd);
+submitFormEditAvatar.setSubmitAction(handlersFormAvatar);
 
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
-        userData.setUserInfo(data)     
+        userData.setUserInfo(data)
         userId = data._id;
-        sectionList.rendererCards({ cards: result, position: 'append'})
+        sectionList.rendererCards({ cards: result, position: 'append' })
     })
     .catch((err) => console.error('Could not fetch', err))
 
-function handleFormProfileSubmit(evt, {name, profession }) {    
+function handleFormProfileSubmit(evt, { name, profession }) {
     evt.preventDefault();
-    Api.editProfile({name, profession})
+    Api.editProfile({ name, profession })
         .then((data) => {
             userData.setUserInfo(data)
             submitFormEditProfile.closePopup()
@@ -74,7 +78,6 @@ function handleFormProfileSubmit(evt, {name, profession }) {
 buttonOpenPopupProfile.addEventListener('click', handleOpenPopupProfile);
 
 function handleOpenPopupProfile() {
-    submitFormEditProfile.setSubmitAction(handleFormProfileSubmit);
     const { name, about } = userData.getUserInfo()
     nameInputFormProfile.value = name;
     jobInputFormProfile.value = about;
@@ -102,7 +105,6 @@ function handlersFormAdd(evt) {
 }
 
 function handleOpenPopupAddNewCard() {
-    submitFormAddCard.setSubmitAction(handlersFormAdd);
     submitFormAddCard.openPopup();
     resetForm(popupAddForm);
 }
@@ -110,15 +112,13 @@ function handleOpenPopupAddNewCard() {
 buttonOpenPopupAvatar.addEventListener('click', handleOpenPopupAvatar)
 
 function handleOpenPopupAvatar() {
-    submitFormEditAvatar.setSubmitAction(handlersFormAvatar);
     submitFormEditAvatar.openPopup();
     resetForm(popupAvatarForm)
 }
 
-function handlersFormAvatar(evt, {url}) {
+function handlersFormAvatar(evt, { url }) {
     evt.preventDefault()
-
-    Api.editAvatar({url})
+    Api.editAvatar({ url })
         .then((data) => {
             userData.setUserInfo(data);
             submitFormEditAvatar.closePopup();
