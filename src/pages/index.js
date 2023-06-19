@@ -2,7 +2,7 @@ import './index.css'
 import { Card } from '../components/Cards.js'
 import {
     formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonClosePopupPic, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,
-    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc
+    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc, /* userId */
 } from '../components/data.js';
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
@@ -32,15 +32,18 @@ removalCardPopup.setEventListener()
 const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img' })
-
-function renderCard({ data, position, userId }) {
+let userId = '';
+function renderCard({ data, position/* , userId */ }) {  
+    
+    console.log(userId)
     const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
+
 };
 
 const submitFormEditProfile = new PopupWithForm({ popup: popupEditForm, formSelector: 'popup-edit-form', inputForm: '.form__item' });
 const submitFormAddCard = new PopupWithForm({ popup: popupAddForm, formSelector: 'popup-add-form' });
-const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form', inputForm: '.form__item' });
+const submitFormEditAvatar = new PopupWithForm({ popup: popupAvatarForm, formSelector: 'popup-avatar-form', inputForm: '.form__item'});
 submitFormEditProfile.setEventListener();
 submitFormAddCard.setEventListener();
 submitFormEditAvatar.setEventListener();
@@ -51,15 +54,15 @@ validatorFormEditAvatar.enableValidation();
 Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
     .then(([data, result]) => {
         transmitsDataProfile(data)
-        userData.setUserInfo(data)
-        sectionList.rendererCards({ cards: result, position: 'append', userId: data._id })
+        userData.setUserInfo(data)     
+        userId = data._id;
+        sectionList.rendererCards({ cards: result, position: 'append'/* , userId: data._id */ })
     })
     .catch((err) => console.error('Could not fetch', err))
 
-function handleFormProfileSubmit(evt, { name, profession }) {
+function handleFormProfileSubmit(evt, {name, profession }) {    
     evt.preventDefault();
-    const formInput = submitFormEditProfile.setEventListener();
-    Api.editProfile({ name, profession })
+    Api.editProfile({name, profession})
         .then((data) => {
             userData.setUserInfo(data)
             submitFormEditProfile.closePopup()
@@ -114,10 +117,10 @@ function handleOpenPopupAvatar() {
     resetForm(popupAvatarForm)
 }
 
-function handlersFormAvatar(evt, { url }) {
+function handlersFormAvatar(evt, {url}) {
     evt.preventDefault()
 
-    Api.editAvatar({ url })
+    Api.editAvatar({url})
         .then((data) => {
             userData.setUserInfo(data);
             submitFormEditAvatar.closePopup();
@@ -147,6 +150,7 @@ function handeleSubmitPopupRemovalCard(e, dataNewCard, newCardElem) {
     e.preventDefault()
     Api.delCard(dataNewCard)
         .then((data) => {
+            console.log(data.message);
             newCardElem.remove()
         })
         .catch((err) => console.error('Could not fetch', err))
