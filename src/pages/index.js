@@ -1,9 +1,8 @@
 import './index.css'
 import { Card } from '../components/Cards.js'
 import {
-    formProfile, buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonClosePopupPic, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonOpenPopupAvatar, buttonSubmitPopupRemovalCard, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,
-    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, inputFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, inputsFormAddNewCard, selector, formAddNewCard, inputsFormProfile, buttonSubmitFormEditProfile, popupPicTitle, popupPicSrc, /* userId */
-} from '../components/data.js';
+    buttonOpenPopupProfile, buttonOpenPopupAddNewCard, buttonClosePopupPic, popupsBody, popupPic, popupAddForm, popupEditForm, popupAvatarForm, buttonOpenPopupAvatar, popupRemovalCard, buttonClosePopupRemovalCard, imgAvatar,
+    buttonSubmitFormProfile, nameInputFormProfile, jobInputFormProfile, buttonSubmitFormAvatar, buttonSubmitFormAddNewCard, inputNameFormAddCard, inputLinkAddNewCard, selector, popupPicTitle, popupPicSrc} from '../components/data.js';
 import Api from "../components/Api.js"
 import Section from "../components/Section.js"
 import PopupWithForm from "../components/PopupWithForm.js"
@@ -20,6 +19,7 @@ const selectorsConfig = {
     inputErrorClass: 'form__input_type_error',
     errorClass: 'form__input-error_active'
 };
+let userId = '';
 
 const validatorFormProfile = new Validator({ formElement: popupEditForm, selectors: selector, config: selectorsConfig, buttonOpenForm: '.profile__edit-button' });
 const validatorFormAddCard = new Validator({ formElement: popupAddForm, selectors: selector, config: selectorsConfig, buttonOpenForm: '.profile__add-button' });
@@ -32,10 +32,8 @@ removalCardPopup.setEventListener()
 const cardPopup = new PopupWithImage(popupPic, popupPicTitle, popupPicSrc)
 
 const userData = new UserInfo({ name: '.profile__title', job: '.profile__subtitle', avatar: '.profile__avatar-img' })
-let userId = '';
-function renderCard({ data, position/* , userId */ }) {  
-    
-    console.log(userId)
+
+function renderCard({ data, position}) {    
     const newCard = new Card(data, '#addCard', cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes, removalCardPopup).createCard();
     sectionList.addCard({ elementNode: newCard, position });
 
@@ -56,7 +54,7 @@ Promise.all([Api.requestsDataProfile(), Api.loadingCards()])
         transmitsDataProfile(data)
         userData.setUserInfo(data)     
         userId = data._id;
-        sectionList.rendererCards({ cards: result, position: 'append'/* , userId: data._id */ })
+        sectionList.rendererCards({ cards: result, position: 'append'})
     })
     .catch((err) => console.error('Could not fetch', err))
 

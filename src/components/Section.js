@@ -21,7 +21,7 @@ export default class Section {
 
     }
 
-    rendererCards({cards, position/* , userId */}) {           
-       cards.forEach(card => this.#renderer({data: card, position/* , userId */}))      
+    rendererCards({cards, position}) {           
+       cards.forEach(card => this.#renderer({data: card, position}))      
     }
 }

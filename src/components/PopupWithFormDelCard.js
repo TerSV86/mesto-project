@@ -5,8 +5,7 @@ export default class PopupWithFormDelCard extends Popup {
         super(popup);
         this.delCard = delCard;
         this.idCard = null;
-        this.elemCard = null
-        console.log(popup);
+        this.elemCard = null        
     }
     openPopup(idCard, elemCard) {
         super.openPopup();
