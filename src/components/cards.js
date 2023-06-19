@@ -1,84 +1,57 @@
-import { elementTemplate, userId, conteinerForElementsNewCard, servisInfoCard } from "./data.js";
-import { openPopupPic, handeleOpenPopupRemovalCard } from './modal.js'
-import { putLikesServer, delLikesServer } from "./api.js";
-
-let idCardRemoval;
-let elCardRemoval;
-
-function createCard(data) {
-    const newCard = elementTemplate.cloneNode(true);
-
-    const elementLikeNewCard = newCard.querySelector('.element__like');
-    const elementImgNewCard = newCard.querySelector('.element__mask-group');
-    const elementTitleNewCard = newCard.querySelector('.element__title');
-    const elementCounterLikesCard = newCard.querySelector('.element__counter');
-    const elementCard = newCard.querySelector('.element')
-    const elementTrashNewCard = newCard.querySelector('.element__trash')
-
-
-    elementImgNewCard.src = data.link;
-    elementImgNewCard.alt = data.name;
-    elementTitleNewCard.textContent = data.name;
-    elementCounterLikesCard.textContent = data.count_likes;
-
-
-    elementImgNewCard.addEventListener('click', () => openPopupPic(data));
-    elementLikeNewCard.addEventListener('click', (evt) => {
-        if ((elementLikeNewCard.classList.contains('element__like_active'))) {
-
-            delLikesServer(data.crd_id) 
-                .then((data) => {
-                    
-                    elementLikeNewCard.classList.remove('element__like_active');
-                    elementCounterLikesCard.textContent = data.likes.length
-                })
-                .catch((err) => console.error('Could not fetch', err))
-        } else {
-            putLikesServer(data.crd_id) 
-                .then((data) => {
-                    
-                    elementLikeNewCard.classList.add('element__like_active');
-                    elementCounterLikesCard.textContent = data.likes.length;
-                })
-                .catch((err) => console.error('Could not fetch', err))
-        }
+export class Card {
+  #newCard
+  #data;
+  #templateSelector;
+  #getTemplate() {
+    return document
+      .querySelector(this.#templateSelector)
+      .content
+      .querySelector('.element')
+      .cloneNode(true)
+  }
+  constructor(data, templateSelector, cardPopup, removalCardPopup, userId, handlerDelLikes, handlePutLikes) {
+    this.#data = data;
+    this.#templateSelector = templateSelector;
+    this.cardPopup = cardPopup;
+    this.removalCardPopup = removalCardPopup;
+    this.userId = userId;
+    this.handlerDelLikes = handlerDelLikes;
+    this.handlePutLikes = handlePutLikes;
+  }
+  createCard() {
+    this.#newCard = this.#getTemplate();
+    const elementLikeNewCard = this.#newCard.querySelector('.element__like');
+    const elementImgNewCard = this.#newCard.querySelector('.element__mask-group');
+    const elementTitleNewCard = this.#newCard.querySelector('.element__title');
+    const elementCounterLikesCard = this.#newCard.querySelector('.element__counter');
+    const elementCard = this.#newCard.querySelector('.element')
+    const elementTrashNewCard = this.#newCard.querySelector('.element__trash')
+    elementImgNewCard.src = this.#data.link;
+    elementImgNewCard.alt = this.#data.name;
+    elementTitleNewCard.textContent = this.#data.name;
+    elementCounterLikesCard.textContent = this.#data.likes.length;
+    elementImgNewCard.addEventListener('click', () => {
+      this.cardPopup.openPopup(this.#data)
+    });
+    elementLikeNewCard.addEventListener('click', () => {
+      if ((elementLikeNewCard.classList.contains('element__like_active'))) {
+        this.handlerDelLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
+      } else {
+        this.handlePutLikes(this.#data._id, elementLikeNewCard, elementCounterLikesCard)
+      }
+    })
+    this.#data.likes.some((el) => {
+      if (el._id === this.userId) {
+        elementLikeNewCard.classList.add('element__like_active')
+      }
     })
 
-    data.like.forEach((el) => {
-        if (el._id === userId.id) {
-            elementLikeNewCard.classList.add('element__like_active')
-        }
-    })
-
-    if (!(data.user_id === userId.id)) {
-        elementTrashNewCard.remove()
+    if (!(this.#data.owner._id === this.userId)) {
+      elementTrashNewCard.remove()
     }
-
-    elementTrashNewCard.addEventListener('click', (evt) => {
-        handeleOpenPopupRemovalCard(evt);
-        elCardRemoval = evt.target.closest('.element')
-        idCardRemoval = data.crd_id; 
+    elementTrashNewCard.addEventListener('click', () => {
+      this.removalCardPopup.openPopup(this.#data._id, this.#newCard)
     })
-    servisInfoCard.push({
-        'card': newCard,
-        'card_id': data.crd_id
-    })
-
-    return newCard;
+    return this.#newCard;
+  }
 }
-
-
-
-function renderCard(data) {
-    conteinerForElementsNewCard.append(createCard(data));
-}
-
-
-function renderCardClient(data) {
-    conteinerForElementsNewCard.prepend(createCard(data));
-}
-
-
-
-
-export { renderCard, idCardRemoval, elCardRemoval, renderCardClient }
